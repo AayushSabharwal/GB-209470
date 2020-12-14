@@ -32,16 +32,7 @@ public class MapGenerator : SerializedMonoBehaviour
     public TileType[] Map { get; private set; }
     public List<Vector2Int> Walkable { get; private set; }
 
-    public static MapGenerator Inst;
-
     private void Awake() {
-        if (Inst == null)
-            Inst = this;
-        else if (Inst != this) {
-            Destroy(gameObject);
-            return;
-        }
-
         ChunkCount = new Vector2Int(Mathf.CeilToInt(worldDimensions.x / (float) chunkSize.x),
                                     Mathf.CeilToInt(worldDimensions.y / (float) chunkSize.y));
         _tilemaps = new Tilemap[ChunkCount.x, ChunkCount.y];
@@ -59,14 +50,6 @@ public class MapGenerator : SerializedMonoBehaviour
                                                  new Vector3(chunkSize.x, chunkSize.y, 0f));
             }
     }
-
-    // private void OnDrawGizmos() {
-    //     for(int i = 0; i < ChunkCount.x; i++)
-    //         for (int j = 0; j < ChunkCount.y; j++) {
-    //             Gizmos.color = new Color(i/(float) ChunkCount.x, j/(float) ChunkCount.y, 0f);
-    //             Gizmos.DrawWireCube(TilemapBounds[i, j].center, TilemapBounds[i, j].size);
-    //         }
-    // }
 
     private void Start() {
         GenerateTiles();

@@ -33,6 +33,6 @@ public class HitscanBullet : Bullet
         _lineRenderer.enabled = true;
         yield return Timing.WaitForSeconds(0.2f);
         _lineRenderer.enabled = false;
-        ObjectPooler.Inst.Return(data.poolTag, gameObject);
+        ObjectPooler.Return(data.poolTag, gameObject);
     }
 }

@@ -22,13 +22,13 @@ public class ProjectileBullet : Bullet
     private void Update() {
         _lifetimer -= Time.deltaTime;
         if (_lifetimer <= 0f)
-            ObjectPooler.Inst.Return(data.poolTag, gameObject);
+            ObjectPooler.Return(data.poolTag, gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (((1 << other.gameObject.layer) & data.collisionMask.value) > 0) {
             TryDamage(other.gameObject);
-            ObjectPooler.Inst.Return(data.poolTag, gameObject);   
+            ObjectPooler.Return(data.poolTag, gameObject);   
         }
     }
 }

@@ -9,31 +9,15 @@ public class ObjectPooler : SerializedMonoBehaviour
     private Dictionary<string, PooledObject> pooledObjects;
     private Dictionary<string, Stack<GameObject>> _pools;
 
-    public static ObjectPooler Inst;
-
-    private void Awake()
-    {
-        if (Inst == null)
-            Inst = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-    }
-
-    private void Start()
-    {
+    private void Start() {
         _pools = new Dictionary<string, Stack<GameObject>>();
-        
-        foreach (string key in pooledObjects.Keys)
-        {
+
+        foreach (string key in pooledObjects.Keys) {
             _pools[key] = new Stack<GameObject>();
             pooledObjects[key].pooledObject.SetActive(false);
 
             if (pooledObjects[key].prewarm)
-                for (int i = 0; i < pooledObjects[key].amount; i++)
-                {
+                for (int i = 0; i < pooledObjects[key].amount; i++) {
                     GameObject g = Instantiate(pooledObjects[key].pooledObject, Vector3.zero, Quaternion.identity);
                     g.SetActive(false);
                     _pools[key].Push(g);
@@ -41,10 +25,8 @@ public class ObjectPooler : SerializedMonoBehaviour
         }
     }
 
-    public GameObject Request(string key)
-    {
-        if (!_pools.ContainsKey(key))
-        {
+    public GameObject Request(string key) {
+        if (!_pools.ContainsKey(key)) {
             Debug.LogError($"ObjectPooler/Request: Invalid key {key}");
             return null;
         }
@@ -54,14 +36,12 @@ public class ObjectPooler : SerializedMonoBehaviour
             : _pools[key].Pop();
     }
 
-    public void Return(string key, GameObject go)
-    {
-        if (!_pools.ContainsKey(key))
-        {
+    public void Return(string key, GameObject go) {
+        if (!_pools.ContainsKey(key)) {
             Debug.LogError($"ObjectPooler/Return: Invalid key {key}");
             return;
         }
-        
+
         go.SetActive(false);
         _pools[key].Push(go);
     }

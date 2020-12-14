@@ -35,8 +35,8 @@ public class Health : MonoBehaviour
     public event EventHandler<DamageTakenArgs> OnHeal;
     public event EventHandler OnDeath;
 
-    private void Start()
-    {
+    public void Respawned(float maxHp) {
+        this.maxHp = maxHp;
         CurHp = maxHp;
     }
 

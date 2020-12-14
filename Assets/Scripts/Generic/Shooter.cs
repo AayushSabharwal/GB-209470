@@ -14,8 +14,13 @@ public class Shooter : MonoBehaviour
     private Transform shootPoint;
 
     private float _shotTimer;
+    private ObjectPooler _objectPooler;
 
     public EventHandler OnShoot;
+
+    private void Start() {
+        _objectPooler = ReferenceManager.Inst.ObjectPooler;
+    }
 
     private void Update() {
         if (_shotTimer > 0f)
@@ -39,7 +44,7 @@ public class Shooter : MonoBehaviour
 
     private void MakeBullets(string poolTag, float offsetAngle, float spread, int groupSize) {
         for (int j = 0; j < groupSize; j++) {
-            GameObject bullet = ObjectPooler.Inst.Request(poolTag);
+            GameObject bullet = _objectPooler.Request(poolTag);
             bullet.transform.position = Quaternion.AngleAxis(offsetAngle, Vector3.forward) * shootPoint.position;
             bullet.transform.rotation = shootPoint.rotation *
                                         Quaternion.AngleAxis(offsetAngle + Random.Range(-spread, spread),
