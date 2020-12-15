@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
 
-public class SOVarBase<T> : ScriptableObject
+public class SOVarBase<T> : SerializedScriptableObject
 {
     public T data;
 }

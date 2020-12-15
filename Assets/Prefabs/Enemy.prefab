@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1121325495555726986
 Transform:
   m_ObjectHideFlags: 0
@@ -224,3 +224,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
+  pathUpdateIntervals: {fileID: 11400000, guid: 298e5392f7a7eef4bb5a04eac2b9a607,
+    type: 2}
