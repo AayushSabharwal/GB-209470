@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 3
   spreadAngle: 4
+  useAmmo: 1
+  ammoType: 3
+  clipSize: 10
+  reloadTime: 1
   shots:
   - bullet: {fileID: 11400000, guid: b80b5791822da594fbbd50e053d06fb6, type: 2}
     offsetAngle: 0

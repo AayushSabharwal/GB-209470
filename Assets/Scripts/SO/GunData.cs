@@ -12,6 +12,8 @@ public class GunData : ScriptableObject
     public bool useAmmo;
     [EnumToggleButtons, ShowIf("useAmmo")]
     public AmmoType ammoType;
+    public int clipSize;
+    public float reloadTime;
     
     [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot")]
     public Shot[] shots;

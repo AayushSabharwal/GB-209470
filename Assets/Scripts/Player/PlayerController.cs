@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
-[RequireComponent(typeof(Shooter))]
+[RequireComponent(typeof(PlayerShooter))]
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
