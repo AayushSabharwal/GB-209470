@@ -23,4 +23,10 @@ public class EnemyData : ScriptableObject
     public float approachRadius;
     [MinValue(0.1f)]
     public float pathfindingRadius;
+    [MinMaxSlider(0, 50)]
+    public Vector2Int coinsToDrop;
+    [PropertyRange(0f, 1f)]
+    public float ammoDropChance;
+    [MinMaxSlider(0f, 5f)]
+    public Vector2 scatterRadius;
 }

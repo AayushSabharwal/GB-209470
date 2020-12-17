@@ -14,6 +14,8 @@ public class ReferenceManager : SerializedMonoBehaviour
     public ObjectPooler ObjectPooler { get; private set; }
     [OdinSerialize, ShowInInspector]
     public CurrencyManager CurrencyManager { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public CoinManager CoinManager { get; private set; }
     
     private void Awake() {
         if (Inst == null)

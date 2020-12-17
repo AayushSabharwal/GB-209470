@@ -20,3 +20,6 @@ MonoBehaviour:
   speed: 2
   approachRadius: 2
   pathfindingRadius: 0.1
+  coinsToDrop: {x: 10, y: 20}
+  ammoDropChance: 0.5
+  scatterRadius: {x: 1.0305976, y: 3.3460822}

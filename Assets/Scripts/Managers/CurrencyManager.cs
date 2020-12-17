@@ -9,6 +9,7 @@ public class CurrencyManager : MonoBehaviour
 
     private void Start() {
         Currency = 0;
+        UpdateUI();
     }
 
     private void UpdateUI() {
@@ -17,6 +18,7 @@ public class CurrencyManager : MonoBehaviour
 
     public void AddCurrency(int amount) {
         Currency += amount;
+        UpdateUI();
     }
 
     public bool TrySubtractCurrency(int amount) {

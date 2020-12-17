@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ee181ec21042c59bdbd514c7b5de7e, type: 3}
+  m_Name: Single
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: e48387a23e90a3c4198f7ef9cdc9b8f9, type: 3}
+  color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+  poolTag: Coin
+  lifetime: 5
+  value: 1
