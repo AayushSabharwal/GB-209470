@@ -36,13 +36,13 @@ public class EnemySpawner : MonoBehaviour
         float p = Random.value;
         int indexToRemove = -1;
         for (int i = 0; i < enemies.Count; i++) {
-            if (p > enemies[i].probability) {
-                p -= enemies[i].probability;
+            if (p > enemies[i].probabilityMultiplier) {
+                p -= enemies[i].probabilityMultiplier;
                 continue;
             }
 
             enemies[i].spawnedCount += 1;
-            if (enemies[i].spawnedCount >= enemies[i].maxSpawnAmount) {
+            if (enemies[i].spawnedCount >= enemies[i].spawnCap) {
                 indexToRemove = i;
             }
             GameObject g = _objectPooler.Request(enemies[i].enemy.poolTag);
@@ -55,24 +55,25 @@ public class EnemySpawner : MonoBehaviour
 
         if (indexToRemove == -1) return;
         
-        float divideBy = 1f - enemies[indexToRemove].probability;
+        float divideBy = 1f - enemies[indexToRemove].probabilityMultiplier;
         enemies.RemoveAt(indexToRemove);
         for (int i = 0; i < enemies.Count; i++) {
-            enemies[i].probability /= divideBy;
+            enemies[i].probabilityMultiplier /= divideBy;
         }
-        
     }
 }
 
 [Serializable]
-public class EnemySpawnData
+public class EnemySpawnData : IFloatingProbability
 {
     [InlineEditor]
     public EnemyData enemy;
-    [PropertyRange(0f, 1f)]
-    public float probability;
-    public int maxSpawnAmount;
+    [HorizontalGroup, LabelWidth(70f)]
+    public int spawnCap;
+    [HorizontalGroup, LabelWidth(120f)]
+    public float probabilityMultiplier;
 
     [HideInInspector]
     public int spawnedCount;
+    public float FloatingProbability => probabilityMultiplier;
 }

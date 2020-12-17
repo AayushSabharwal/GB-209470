@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
@@ -47,6 +49,8 @@ public class SODataEditor : OdinMenuEditorWindow
     }
 
     protected override void DrawEditors() {
+        if (!_canDrawEnum) return;
+
         switch (_soType) {
             case SOType.Enemy:
                 _drawEnemies.SetSelected(MenuTree.Selection.SelectedValue);
@@ -79,15 +83,15 @@ public class SODataEditor : OdinMenuEditorWindow
 
         switch (_soType) {
             case SOType.Enemy:
-                tree.AddAllAssetsAtPath("Bullet Data", _enemiesPath, typeof(EnemyData));
+                tree.AddAllAssetsAtPath("Bullet Data", _enemiesPath, typeof(EnemyData), true);
                 break;
 
             case SOType.Gun:
-                tree.AddAllAssetsAtPath("Gun Data", _gunsPath, typeof(GunData));
+                tree.AddAllAssetsAtPath("Gun Data", _gunsPath, typeof(GunData), true);
                 break;
 
             case SOType.Bullet:
-                tree.AddAllAssetsAtPath("Bullet Data", _bulletsPath, typeof(BulletData));
+                tree.AddAllAssetsAtPath("Bullet Data", _bulletsPath, typeof(BulletData), true);
                 break;
         }
 
@@ -115,7 +119,7 @@ public class DrawSelected<T> where T : ScriptableObject
     private string _path;
 
     [HorizontalGroup("Horizontal")]
-    [GUIColor(0.7f, 0.7f, 1f)]
+    // [GUIColor(0.7f, 0.7f, 1f)]
     [Button]
     public void CreateNew() {
         if (NameForNew == "")
@@ -133,7 +137,19 @@ public class DrawSelected<T> where T : ScriptableObject
     }
 
     [HorizontalGroup("Horizontal")]
-    [GUIColor(1f, 0.7f, 0.7f)]
+    [Button]
+    public void Rename() {
+        if (NameForNew == "")
+            return;
+        string path = AssetDatabase.GetAssetPath(Selected);
+        string[] steps = path.Split('\\');
+        steps = steps.AsEnumerable().Take(steps.Length - 1).Append(NameForNew + ".asset").ToArray();
+        string newPath = string.Join("/", steps);
+        AssetDatabase.RenameAsset(path, newPath);
+    }
+
+    [HorizontalGroup("Horizontal")]
+    // [GUIColor(1f, 0.7f, 0.7f)]
     [Button]
     public void DeleteSelected() {
         if (Selected == null) return;

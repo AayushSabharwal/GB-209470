@@ -17,22 +17,29 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private AIPath _aiPath;
     private AIDestinationSetter _destinationSetter;
-    private Health _health;
+    public Health Health { get; private set; }
     private Transform _player;
+    private ObjectPooler _objectPooler;
     
     private void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _aiPath = GetComponent<AIPath>();
         _destinationSetter = GetComponent<AIDestinationSetter>();
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
+        
+        Health.OnDeath += OnDeath;
     }
-
+    
     private void Start() {
         _player = ReferenceManager.Inst.Player;
+        _objectPooler = ReferenceManager.Inst.ObjectPooler;
+        
         _destinationSetter.target = _player;
     }
 
     private void OnEnable() {
+        if(data == null)    return;
+        
         _spriteRenderer.sprite = data.sprite;
         _spriteRenderer.color = data.color;
         
@@ -40,7 +47,7 @@ public class Enemy : MonoBehaviour
         _aiPath.endReachedDistance = data.approachRadius;
         _aiPath.maxSpeed = data.speed;
         
-        _health.Respawned(data.health);
+        Health.Respawned(data.health);
     }
 
     private void Update() {
@@ -51,5 +58,9 @@ public class Enemy : MonoBehaviour
             _aiPath.repathRate = pathUpdateIntervals.data[i].Value;
             break;
         }
+    }
+    
+    protected virtual void OnDeath(object sender, EventArgs e) {
+        _objectPooler.Return(data.poolTag, gameObject);
     }
 }

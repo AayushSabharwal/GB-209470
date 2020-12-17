@@ -14,6 +14,8 @@ public class HitscanBullet : Bullet
     }
 
     private void OnEnable() {
+        if(data == null)    return;
+        
         _lineRenderer.colorGradient = data.color;
         _lineRenderer.startWidth = data.size;
         _lineRenderer.endWidth = data.size;

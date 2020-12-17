@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField]
-    private float maxHp;
+    private float _maxHp = 10f;
 
     [ShowInInspector]
     [ReadOnly]
@@ -28,16 +27,17 @@ public class Health : MonoBehaviour
     public bool test;
 
     [ShowIf("test"), OnValueChanged("@(_testHp-CurHp > 0f) ? Heal(_testHp-CurHp) : TakeDamage(CurHp-_testHp)"),
-     PropertyRange(0f, "maxHp"), ShowInInspector]
+     PropertyRange(0f, "_maxHp"), ShowInInspector]
     private float _testHp;
 
     public event EventHandler<DamageTakenArgs> OnTakeDamage;
     public event EventHandler<DamageTakenArgs> OnHeal;
     public event EventHandler OnDeath;
 
-    public void Respawned(float maxHp) {
-        this.maxHp = maxHp;
-        CurHp = maxHp;
+    public void Respawned(float maxHealth) {
+        _maxHp = maxHealth;
+        CurHp = maxHealth;
+        UpdateUI();
     }
 
     private void UpdateUI()
@@ -45,7 +45,7 @@ public class Health : MonoBehaviour
         if (!hasUI)
             return;
 
-        _sliderImage.fillAmount = CurHp / maxHp;
+        _sliderImage.fillAmount = CurHp / _maxHp;
         _sliderImage.color = lerpColour ? colourGradient.Evaluate(_sliderImage.fillAmount) : baseColour;
     }
 
@@ -65,7 +65,7 @@ public class Health : MonoBehaviour
 
     public void Heal(float damage)
     {
-        damage = Mathf.Min(damage, maxHp - CurHp);
+        damage = Mathf.Min(damage, _maxHp - CurHp);
         CurHp += damage;
 
         OnHeal?.Invoke(this, new DamageTakenArgs(damage));

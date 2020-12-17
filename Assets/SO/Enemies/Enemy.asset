@@ -18,5 +18,5 @@ MonoBehaviour:
   health: 10
   damage: 10
   speed: 2
-  approachRadius: 1
+  approachRadius: 2
   pathfindingRadius: 0.1

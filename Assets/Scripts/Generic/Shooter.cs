@@ -32,7 +32,7 @@ public class Shooter : MonoBehaviour
             return;
 
         for (int i = 0; i < gun.shots.Length; i++) {
-            MakeBullets(gun.shots[i].bullet.poolTag,
+            MakeBullets(gun.shots[i].bullet,
                         gun.shots[i].offsetAngle,
                         gun.shots[i].applySpread ? gun.spreadAngle : 0f,
                         gun.shots[i].groupSize);
@@ -42,13 +42,14 @@ public class Shooter : MonoBehaviour
         OnShoot?.Invoke(this, EventArgs.Empty);
     }
 
-    private void MakeBullets(string poolTag, float offsetAngle, float spread, int groupSize) {
+    private void MakeBullets(BulletData bulletType, float offsetAngle, float spread, int groupSize) {
         for (int j = 0; j < groupSize; j++) {
-            GameObject bullet = _objectPooler.Request(poolTag);
+            GameObject bullet = _objectPooler.Request(bulletType.poolTag);
             bullet.transform.position = Quaternion.AngleAxis(offsetAngle, Vector3.forward) * shootPoint.position;
             bullet.transform.rotation = shootPoint.rotation *
                                         Quaternion.AngleAxis(offsetAngle + Random.Range(-spread, spread),
                                                              Vector3.forward);
+            bullet.GetComponent<Bullet>().data = bulletType;
             bullet.SetActive(true);
         }
     }

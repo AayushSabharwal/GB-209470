@@ -11,6 +11,8 @@ public class ProjectileBullet : Bullet
     }
 
     private void OnEnable() {
+        if (data == null) return;
+
         _lifetimer = data.lifetime;
         _rb.velocity = transform.right * data.speed;
     }
@@ -25,10 +27,10 @@ public class ProjectileBullet : Bullet
             ObjectPooler.Return(data.poolTag, gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnTriggerEnter2D(Collider2D other) {
         if (((1 << other.gameObject.layer) & data.collisionMask.value) > 0) {
             TryDamage(other.gameObject);
-            ObjectPooler.Return(data.poolTag, gameObject);   
+            ObjectPooler.Return(data.poolTag, gameObject);
         }
     }
 }

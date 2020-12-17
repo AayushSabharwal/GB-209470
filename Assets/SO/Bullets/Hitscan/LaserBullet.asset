@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfffd6d4a55e06b40b82658cfc605516, type: 3}
-  m_Name: Hits
+  m_Name: LaserBullet
   m_EditorClassIdentifier: 
   damage: 1
   poolTag: HitscanBullet
   childProjectiles: []
-  isProjectile: 1
+  isProjectile: 0
   speed: 10
   lifetime: 2
   range: 10
@@ -51,4 +51,4 @@ MonoBehaviour:
   size: 0.2
   collisionMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768

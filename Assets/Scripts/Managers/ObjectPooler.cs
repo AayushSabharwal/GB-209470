@@ -14,7 +14,6 @@ public class ObjectPooler : SerializedMonoBehaviour
 
         foreach (string key in pooledObjects.Keys) {
             _pools[key] = new Stack<GameObject>();
-            pooledObjects[key].pooledObject.SetActive(false);
 
             if (pooledObjects[key].prewarm)
                 for (int i = 0; i < pooledObjects[key].amount; i++) {

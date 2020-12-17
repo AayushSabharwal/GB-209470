@@ -12,6 +12,9 @@ public class ReferenceManager : SerializedMonoBehaviour
     public MapGenerator MapGenerator { get; private set; }
     [OdinSerialize, ShowInInspector]
     public ObjectPooler ObjectPooler { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public CurrencyManager CurrencyManager { get; private set; }
+    
     private void Awake() {
         if (Inst == null)
             Inst = this;

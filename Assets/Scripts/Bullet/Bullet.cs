@@ -1,11 +1,10 @@
-﻿using System;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField, InlineEditor]
-    protected BulletData data;
+    [InlineEditor]
+    public BulletData data;
 
     protected ObjectPooler ObjectPooler;
 

@@ -9,6 +9,10 @@ public class GunData : ScriptableObject
     public float fireRate;
     [MinValue(0f), SuffixLabel("Degrees")]
     public float spreadAngle;
+    public bool useAmmo;
+    [EnumToggleButtons, ShowIf("useAmmo")]
+    public AmmoType ammoType;
+    
     [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot")]
     public Shot[] shots;
 }
@@ -23,4 +27,12 @@ public class Shot
     [HorizontalGroup("Line1"), MinValue(1), LabelWidth(80f)]
     public int groupSize;
     public bool applySpread;
+}
+
+public enum AmmoType
+{
+    Handgun,
+    Automatic,
+    Shell,
+    Energy
 }
