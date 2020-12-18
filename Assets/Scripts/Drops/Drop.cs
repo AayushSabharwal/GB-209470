@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Drop : MonoBehaviour
 {
     [SerializeField]
-    public CoinData data;
+    public DropData data;
 
     private ObjectPooler _objectPooler;
-    private CurrencyManager _currencyManager;
     private SpriteRenderer _spriteRenderer;
 
     private float _lifetimer;
     
-    private void Awake() {
+    protected virtual void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
-        _currencyManager = ReferenceManager.Inst.CurrencyManager;
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -31,10 +29,14 @@ public class Coin : MonoBehaviour
             _objectPooler.Return(data.poolTag, gameObject);
     }
 
+    protected virtual void OnPickup() {
+        
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.layer != 10) return;
-
-        _currencyManager.AddCurrency(data.value);
+        
+        OnPickup();
         _objectPooler.Return(data.poolTag, gameObject);
     }
 }

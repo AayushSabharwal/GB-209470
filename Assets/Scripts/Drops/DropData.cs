@@ -1,8 +1,8 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CoinData", menuName = "Coin Type")]
-public class CoinData : ScriptableObject
+[CreateAssetMenu(fileName = "DropData", menuName = "Drop")]
+public class DropData : ScriptableObject
 {
     [PreviewField, LabelWidth(60f), HorizontalGroup("L0")]
     public Sprite sprite;

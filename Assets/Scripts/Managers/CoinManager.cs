@@ -5,9 +5,9 @@ using UnityEngine;
 public class CoinManager : MonoBehaviour
 {
     [SerializeField]
-    private CoinData single;
+    private DropData single;
     [SerializeField]
-    private CoinData ten;
+    private DropData ten;
 
     private Dictionary<int, Coin> _scriptMap;
     private ObjectPooler _objectPooler;

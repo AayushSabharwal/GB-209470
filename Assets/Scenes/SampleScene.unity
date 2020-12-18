@@ -1350,6 +1350,116 @@ MonoBehaviour:
     - Name: Gun
       Entry: 10
       Data: 0
+    - Name: ammo
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[AmmoType, Assembly-CSharp],[AmmoTracker,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[AmmoType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 2|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
+      Entry: 3
+      Data: 0
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 120
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 3|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
+      Entry: 3
+      Data: 60
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 300
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 4|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
+      Entry: 3
+      Data: 0
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 80
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 5|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
+      Entry: 3
+      Data: 0
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 80
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   shootPoint: {fileID: 1533634518}
   guns:
   - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
@@ -1359,7 +1469,6 @@ MonoBehaviour:
   defaultGun: 0
   ammoText: {fileID: 1030944280}
   reloadProgress: {fileID: 485697234}
-  _ammo: 64000000640000006400000064000000
 --- !u!114 &1002093042
 MonoBehaviour:
   m_ObjectHideFlags: 0
