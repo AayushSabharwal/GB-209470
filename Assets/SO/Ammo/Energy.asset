@@ -9,18 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d68e514fa304a808c257be2f521ef62, type: 3}
-  m_Name: Enemy
+  m_Script: {fileID: 11500000, guid: 56a88eb0a7794d5f97f677fd8af527f2, type: 3}
+  m_Name: Energy
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: ba5bbfacc7605084598518b0d6c5c90a, type: 3}
-  color: {r: 1, g: 0.13679248, b: 0.13679248, a: 1}
-  poolTag: Enemy
-  health: 10
-  damage: 10
-  speed: 2
-  approachRadius: 2
-  pathfindingRadius: 0.1
-  coinsToDrop: {x: 10, y: 20}
-  ammoDropChance: 1
-  ammoDropCount: {x: 1, y: 1}
-  scatterRadius: {x: 1.0305976, y: 3.3460822}
+  color: {r: 0.09772462, g: 0.65882355, b: 0, a: 1}
+  poolTag: Ammo
+  lifetime: 5
+  value: 4
+  type: 3

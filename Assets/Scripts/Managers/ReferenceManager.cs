@@ -15,7 +15,7 @@ public class ReferenceManager : SerializedMonoBehaviour
     [OdinSerialize, ShowInInspector]
     public CurrencyManager CurrencyManager { get; private set; }
     [OdinSerialize, ShowInInspector]
-    public CoinManager CoinManager { get; private set; }
+    public DropManager DropManager { get; private set; }
     [OdinSerialize, ShowInInspector]
     public ProgressManager ProgressManager { get; private set; }
     

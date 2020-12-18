@@ -493,6 +493,7 @@ MonoBehaviour:
     - {fileID: 1534702694}
     - {fileID: 566985744}
     - {fileID: 1458133661}
+    - {fileID: 374765937}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -510,12 +511,12 @@ MonoBehaviour:
     - Name: CurrencyManager
       Entry: 10
       Data: 3
-    - Name: CoinManager
+    - Name: DropManager
       Entry: 10
       Data: 4
     - Name: ProgressManager
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 5
 --- !u!4 &180914987
 Transform:
   m_ObjectHideFlags: 0
@@ -2548,7 +2549,7 @@ GameObject:
   - component: {fileID: 1458133662}
   - component: {fileID: 1458133661}
   m_Layer: 0
-  m_Name: CoinManager
+  m_Name: DropManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2566,6 +2567,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6daa88639da4a6bb7937494320ddeee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}
+    - {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
+    - {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}
+    - {fileID: 11400000, guid: 825de9f2f9acee74186e56ad0f64396d, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ammoProbability
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[AmmoProbabilityContainer, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 1|AmmoProbabilityContainer, Assembly-CSharp
+    - Name: Data
+      Entry: 10
+      Data: 0
+    - Name: ProbabilityMultiplier
+      Entry: 4
+      Data: 1.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|AmmoProbabilityContainer, Assembly-CSharp
+    - Name: Data
+      Entry: 10
+      Data: 1
+    - Name: ProbabilityMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|AmmoProbabilityContainer, Assembly-CSharp
+    - Name: Data
+      Entry: 10
+      Data: 2
+    - Name: ProbabilityMultiplier
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|AmmoProbabilityContainer, Assembly-CSharp
+    - Name: Data
+      Entry: 10
+      Data: 3
+    - Name: ProbabilityMultiplier
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   single: {fileID: 11400000, guid: fbf48e325e01d1d47ae721392424805d, type: 2}
   ten: {fileID: 11400000, guid: 8b2b27ca90819bf429415c55bdbcb476, type: 2}
 --- !u!4 &1458133662
@@ -2649,6 +2724,7 @@ MonoBehaviour:
     - {fileID: 6142310369973631815, guid: e56c9263b8286184ca044e866eee013d, type: 3}
     - {fileID: 1121325495555726988, guid: 61d0d52dc4898904ea2839ed845a621a, type: 3}
     - {fileID: 8076363791527710716, guid: aad7635db27c3714d91403993084c25e, type: 3}
+    - {fileID: 716029180609316578, guid: 263d6aa22305a6640841c3f4663a7c49, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -2667,7 +2743,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 5
     - Name: 
       Entry: 7
       Data: 
@@ -2758,6 +2834,30 @@ MonoBehaviour:
     - Name: amount
       Entry: 3
       Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Ammo
+    - Name: $v
+      Entry: 7
+      Data: PooledObject, Assembly-CSharp
+    - Name: pooledObject
+      Entry: 10
+      Data: 4
+    - Name: prewarm
+      Entry: 5
+      Data: true
+    - Name: amount
+      Entry: 3
+      Data: 5
     - Name: 
       Entry: 8
       Data: 

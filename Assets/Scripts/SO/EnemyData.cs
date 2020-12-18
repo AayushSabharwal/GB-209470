@@ -27,6 +27,8 @@ public class EnemyData : ScriptableObject
     public Vector2Int coinsToDrop;
     [PropertyRange(0f, 1f)]
     public float ammoDropChance;
+    [MinMaxSlider(1, 10)]
+    public Vector2Int ammoDropCount;
     [MinMaxSlider(0f, 5f)]
     public Vector2 scatterRadius;
 }
