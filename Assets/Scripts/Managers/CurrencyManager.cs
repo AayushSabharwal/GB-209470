@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class CurrencyManager : MonoBehaviour
+public class CurrencyManager : MonoBehaviour, ISaveLoad
 {
     public int Currency { get; private set; }
     [SerializeField]
@@ -27,5 +27,13 @@ public class CurrencyManager : MonoBehaviour
         Currency -= amount;
         UpdateUI();
         return true;
+    }
+
+    public void Save() {
+        ReferenceManager.Inst.ProgressManager.Data.currency = Currency;
+    }
+
+    public void Load() {
+        Currency = ReferenceManager.Inst.ProgressManager.Data.currency;
     }
 }

@@ -14,9 +14,11 @@ public class PlayerShooter : Shooter, ISaveLoad
     private TextMeshProUGUI ammoText;
     [SerializeField]
     private Image reloadProgress;
-    [SerializeField, ValidateInput("@ammo != null && ammo.Count == System.Enum.GetNames(typeof(AmmoType)).Length", "Account for all AmmoType")]
+    [SerializeField,
+     ValidateInput("@ammo != null && ammo.Count == System.Enum.GetNames(typeof(AmmoType)).Length",
+                   "Account for all AmmoType")]
     private Dictionary<AmmoType, AmmoTracker> ammo;
-    
+
     private int _currentGun;
     private AmmoData[] _ammoData;
 
@@ -45,14 +47,15 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     private void UpdateUI() {
-        ammoText.text = $"{AmmoData.RemainingAmmo}/{(Gun.useAmmo ? ammo[Gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
+        ammoText.text =
+            $"{AmmoData.RemainingAmmo}/{(Gun.useAmmo ? ammo[Gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
     }
 
     public void Reload() {
         if (AmmoData.RemainingAmmo == Gun.clipSize || ammo[Gun.ammoType].CurrentAmmo == 0) return;
-        
+
         // TODO: Visual notification for being unable to reload
-        
+
         AmmoData.Reload(ammo[Gun.ammoType].CurrentAmmo >= Gun.clipSize ? -1 : ammo[Gun.ammoType].CurrentAmmo);
         ammo[Gun.ammoType].CurrentAmmo = Mathf.Max(ammo[Gun.ammoType].CurrentAmmo - Gun.clipSize, 0);
     }
@@ -69,11 +72,13 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public void Save() {
-        
+        foreach (KeyValuePair<AmmoType, AmmoTracker> kvp in ammo)
+            ReferenceManager.Inst.ProgressManager.Data.Ammo[kvp.Key] = kvp.Value.CurrentAmmo;
     }
 
     public void Load() {
-        
+        foreach (KeyValuePair<AmmoType, int> kvp in ReferenceManager.Inst.ProgressManager.Data.Ammo)
+            ammo[kvp.Key] = new AmmoTracker(kvp.Value, ammo[kvp.Key].MaxAmmo);
     }
 }
 
@@ -81,4 +86,9 @@ public class AmmoTracker
 {
     public int CurrentAmmo;
     public readonly int MaxAmmo;
+
+    public AmmoTracker(int currentAmmo, int maxAmmo) {
+        CurrentAmmo = currentAmmo;
+        MaxAmmo = maxAmmo;
+    }
 }

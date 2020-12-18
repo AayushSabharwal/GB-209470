@@ -16,6 +16,8 @@ public class ReferenceManager : SerializedMonoBehaviour
     public CurrencyManager CurrencyManager { get; private set; }
     [OdinSerialize, ShowInInspector]
     public CoinManager CoinManager { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public ProgressManager ProgressManager { get; private set; }
     
     private void Awake() {
         if (Inst == null)

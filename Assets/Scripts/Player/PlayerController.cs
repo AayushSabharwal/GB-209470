@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
 
-        transform.position = new Vector3(initialPosition.data.x, initialPosition.data.y);
+        transform.position = new Vector3(initialPosition.data.x + 0.5f, initialPosition.data.y + 0.5f);
         _health.Respawned(maxHP);
     }
 
