@@ -494,6 +494,7 @@ MonoBehaviour:
     - {fileID: 566985744}
     - {fileID: 1458133661}
     - {fileID: 374765937}
+    - {fileID: 995545967}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -517,6 +518,9 @@ MonoBehaviour:
     - Name: ProgressManager
       Entry: 10
       Data: 5
+    - Name: SharedDataManager
+      Entry: 10
+      Data: 6
 --- !u!4 &180914987
 Transform:
   m_ObjectHideFlags: 0
@@ -1338,8 +1342,6 @@ MonoBehaviour:
     yRange: {x: 4, y: 6}
     radiusRange: {x: 0, y: 0}
     count: 2
-  playerStartPosition: {fileID: 11400000, guid: 85e5133d7b00abc4ea878c07531419f3,
-    type: 2}
 --- !u!114 &626952753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,6 +1404,106 @@ Transform:
   m_Father: {fileID: 1390076829}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &995545965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 995545966}
+  - component: {fileID: 995545967}
+  m_Layer: 0
+  m_Name: SharedDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &995545966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995545965}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1390076829}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &995545967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995545965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50b76e62c1f4b14975276e166761bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: repathRateScaling
+      Entry: 7
+      Data: 0|DistanceThreshold[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: DistanceThreshold, Assembly-CSharp
+    - Name: Distance
+      Entry: 4
+      Data: 20
+    - Name: Value
+      Entry: 4
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: DistanceThreshold, Assembly-CSharp
+    - Name: Distance
+      Entry: 4
+      Data: 10
+    - Name: Value
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: DistanceThreshold, Assembly-CSharp
+    - Name: Distance
+      Entry: 4
+      Data: 0
+    - Name: Value
+      Entry: 4
+      Data: 0.25
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &1002093038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1745,6 @@ MonoBehaviour:
   maxHP: 10
   moveSpeed: 5
   shootDeadzone: 0.1
-  initialPosition: {fileID: 11400000, guid: 85e5133d7b00abc4ea878c07531419f3, type: 2}
 --- !u!114 &1002093043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2465,6 +2566,7 @@ Transform:
   - {fileID: 566985745}
   - {fileID: 1458133662}
   - {fileID: 374765938}
+  - {fileID: 995545966}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

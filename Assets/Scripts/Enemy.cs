@@ -11,14 +11,13 @@ public class Enemy : MonoBehaviour
 {
     [InlineEditor]
     public EnemyData data;
-    [SerializeField]
-    private DistanceThresholdsVar pathUpdateIntervals;
 
     private SpriteRenderer _spriteRenderer;
     private Health _health;
     private Transform _player;
     private ObjectPooler _objectPooler;
     private DropManager _dropManager;
+    private SharedDataManager _sharedDataManager;
     private Seeker _seeker;
     private Rigidbody2D _rb;
 
@@ -36,6 +35,7 @@ public class Enemy : MonoBehaviour
         _player = ReferenceManager.Inst.Player;
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
         _dropManager = ReferenceManager.Inst.DropManager;
+        _sharedDataManager = ReferenceManager.Inst.SharedDataManager;
         _rb = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
 
@@ -60,7 +60,8 @@ public class Enemy : MonoBehaviour
             _repathTimer = _repathRate;
         }
 
-        _reachedEndOfPath = (transform.position - _player.position).sqrMagnitude < data.approachRadius * data.approachRadius;
+        _reachedEndOfPath = (transform.position - _player.position).sqrMagnitude <
+                            data.approachRadius * data.approachRadius;
     }
 
     private void FixedUpdate() {
@@ -69,16 +70,17 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        
-        _rb.AddForce( _targetDirNorm * data.speed);
+
+        _rb.AddForce(_targetDirNorm * data.speed);
         transform.right = _rb.velocity;
 
-        if ((_path.vectorPath[_currentWaypoint]-transform.position).sqrMagnitude > data.pathfindingRadius * data.pathfindingRadius) return;
-        
+        if ((_path.vectorPath[_currentWaypoint] - transform.position).sqrMagnitude >
+            data.pathfindingRadius * data.pathfindingRadius) return;
+
         _currentWaypoint++;
-        
+
         if (_currentWaypoint >= _path.vectorPath.Count) return;
-        
+
         _targetDir = _path.vectorPath[_currentWaypoint] - transform.position;
         _targetDirNorm = _targetDir.normalized;
     }
@@ -90,11 +92,12 @@ public class Enemy : MonoBehaviour
     }
 
     private void CheckRepathRate() {
-        for (int i = 0; i < pathUpdateIntervals.data.Length; i++) {
+        for (int i = 0; i < _sharedDataManager.repathRateScaling.Length; i++) {
             if (!((transform.position - _player.position).sqrMagnitude >
-                  pathUpdateIntervals.data[i].Distance * pathUpdateIntervals.data[i].Distance)) continue;
+                  _sharedDataManager.repathRateScaling[i].Distance *
+                  _sharedDataManager.repathRateScaling[i].Distance)) continue;
 
-            _repathRate = pathUpdateIntervals.data[i].Value;
+            _repathRate = _sharedDataManager.repathRateScaling[i].Value;
             break;
         }
     }

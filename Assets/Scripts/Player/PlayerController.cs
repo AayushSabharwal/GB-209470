@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 5f;
     [SerializeField]
     private float shootDeadzone = 0.1f;
-    [SerializeField]
-    private Vector2IntVar initialPosition;
 
     private void Start() {
         _health = GetComponent<Health>();
@@ -26,7 +24,8 @@ public class PlayerController : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
 
-        transform.position = new Vector3(initialPosition.data.x + 0.5f, initialPosition.data.y + 0.5f);
+        transform.position = new Vector3(ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.x + 0.5f,
+                                         ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.y + 0.5f);
         _health.Respawned(maxHP);
     }
 

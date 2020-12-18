@@ -19,8 +19,6 @@ public class MapGenerator : SerializedMonoBehaviour
     public Vector2Int chunkSize;
     [SerializeField]
     private GenerationLayer[] generationLayers;
-    [SerializeField]
-    private Vector2IntVar playerStartPosition;
 
     private Tilemap[,] _tilemaps;
 
@@ -81,7 +79,7 @@ public class MapGenerator : SerializedMonoBehaviour
 
         allWalkable.Clear();
 
-        playerStartPosition.data = Walkable[Random.Range(0, Walkable.Count)];
+        ReferenceManager.Inst.SharedDataManager.PlayerStartPosition = Walkable[Random.Range(0, Walkable.Count)];
 
         ClearTilemaps();
 

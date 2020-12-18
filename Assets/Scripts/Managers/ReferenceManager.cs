@@ -18,6 +18,8 @@ public class ReferenceManager : SerializedMonoBehaviour
     public DropManager DropManager { get; private set; }
     [OdinSerialize, ShowInInspector]
     public ProgressManager ProgressManager { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public SharedDataManager SharedDataManager { get; private set; }
     
     private void Awake() {
         if (Inst == null)
