@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, ISaveLoad
 {
     [SerializeField]
     private List<EnemySpawnData> enemies;
@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     private MapGenerator _mapGenerator;
     private ObjectPooler _objectPooler;
     private float _spawnTimer;
+    private int _level;
 
     private void Start() {
         _mapGenerator = ReferenceManager.Inst.MapGenerator;
@@ -21,6 +22,8 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++) {
             enemies[i].spawnedCount = 0;
+            enemies[i].SpawnAmount = Mathf.Min((int) enemies[i].spawnAmountGenerator.Generate(_level),
+                                               enemies[i].spawnCap);
         }
     }
 
@@ -42,24 +45,31 @@ public class EnemySpawner : MonoBehaviour
             }
 
             enemies[i].spawnedCount += 1;
-            if (enemies[i].spawnedCount >= enemies[i].spawnCap) {
+            if (enemies[i].spawnedCount >= enemies[i].SpawnAmount)
                 indexToRemove = i;
-            }
+
             GameObject g = _objectPooler.Request(enemies[i].enemy.poolTag);
             Vector2Int pos = _mapGenerator.Walkable[Random.Range(0, _mapGenerator.Walkable.Count)];
-            g.transform.position = new Vector3(pos.x, pos.y, 0f);
+            g.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0f);
             g.GetComponent<Enemy>().data = enemies[i].enemy;
             g.SetActive(true);
             break;
         }
 
         if (indexToRemove == -1) return;
-        
+
         float divideBy = 1f - enemies[indexToRemove].probabilityMultiplier;
         enemies.RemoveAt(indexToRemove);
-        for (int i = 0; i < enemies.Count; i++) {
+        for (int i = 0; i < enemies.Count; i++)
             enemies[i].probabilityMultiplier /= divideBy;
-        }
+    }
+
+    public void Save() {
+        ReferenceManager.Inst.ProgressManager.Data.level = _level + 1;
+    }
+
+    public void Load() {
+        _level = ReferenceManager.Inst.ProgressManager.Data.level;
     }
 }
 
@@ -68,6 +78,10 @@ public class EnemySpawnData : IFloatingProbability
 {
     [InlineEditor]
     public EnemyData enemy;
+    [InlineEditor]
+    public ValueGenerator spawnAmountGenerator;
+    [NonSerialized]
+    public int SpawnAmount;
     [HorizontalGroup, LabelWidth(70f)]
     public int spawnCap;
     [HorizontalGroup, LabelWidth(120f)]

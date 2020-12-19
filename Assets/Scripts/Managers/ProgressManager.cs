@@ -37,4 +37,5 @@ public class DataContainer
 {
     public Dictionary<AmmoType, int> Ammo;
     public int currency;
+    public int level;
 }

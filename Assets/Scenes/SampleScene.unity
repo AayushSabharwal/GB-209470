@@ -570,6 +570,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 1002093041}
     - {fileID: 566985744}
+    - {fileID: 741160597}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -580,13 +581,16 @@ MonoBehaviour:
       Data: 0|ISaveLoad[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 10
       Data: 0
     - Name: 
       Entry: 10
       Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
     - Name: 
       Entry: 13
       Data: 
@@ -673,6 +677,9 @@ MonoBehaviour:
     - Name: currency
       Entry: 3
       Data: 10
+    - Name: level
+      Entry: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -1386,8 +1393,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - enemy: {fileID: 11400000, guid: 9ba38e239990a9a498b5f3b53e886add, type: 2}
+    spawnAmountGenerator: {fileID: 11400000, guid: 0dd67be2e23e3e04b929fe46eb0431ab,
+      type: 2}
     spawnCap: 6
-    probabilityMultiplier: 0.71
+    probabilityMultiplier: 1
+    spawnedCount: 0
+  - enemy: {fileID: 11400000, guid: 9ba38e239990a9a498b5f3b53e886add, type: 2}
+    spawnAmountGenerator: {fileID: 11400000, guid: 0dd67be2e23e3e04b929fe46eb0431ab,
+      type: 2}
+    spawnCap: 6
+    probabilityMultiplier: 0.3333
     spawnedCount: 0
   spawnInterval: 2
 --- !u!4 &741160598

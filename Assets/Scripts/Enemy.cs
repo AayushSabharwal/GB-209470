@@ -63,6 +63,8 @@ public class Enemy : MonoBehaviour
 
         ReachedEndOfPath = (transform.position - _player.position).sqrMagnitude <
                             data.approachRadius * data.approachRadius;
+
+        if (ReachedEndOfPath) transform.right = _player.position - transform.position;
     }
 
     private void FixedUpdate() {
