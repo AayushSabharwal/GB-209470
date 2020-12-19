@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     private TextMeshProUGUI ammoText;
     [SerializeField]
     private Image reloadProgress;
-    [SerializeField,
+    [OdinSerialize,
      ValidateInput("@ammo != null && ammo.Count == System.Enum.GetNames(typeof(AmmoType)).Length",
                    "Account for all AmmoType")]
     private Dictionary<AmmoType, AmmoTracker> ammo;
@@ -22,12 +23,12 @@ public class PlayerShooter : Shooter, ISaveLoad
     private int _currentGun;
     private AmmoData[] _ammoData;
 
-    protected override void Start() {
+    private void Start() {
         _currentGun = defaultGun;
         _ammoData = new AmmoData[guns.Length];
         for (int i = 0; i < guns.Length; i++)
-            _ammoData[i] = new AmmoData(guns[i].clipSize, guns[i].reloadTime);
-        Gun = guns[defaultGun];
+            _ammoData[i] = new AmmoData(guns[i].clipSize, guns[i].reloadTime, guns[i].isInfiniteAmmo);
+        gun = guns[defaultGun];
         AmmoData = _ammoData[defaultGun];
 
         UpdateUI();
@@ -37,7 +38,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     protected override void Update() {
         base.Update();
-        if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = AmmoData.ReloadTimer / Gun.reloadTime;
+        if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = AmmoData.ReloadTimer / gun.reloadTime;
     }
 
     private void HandleAmmo() {
@@ -48,21 +49,21 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     private void UpdateUI() {
         ammoText.text =
-            $"{AmmoData.RemainingAmmo}/{(Gun.useAmmo ? ammo[Gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
+            $"{AmmoData.RemainingAmmo}/{(!gun.isInfiniteAmmo ? ammo[gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
     }
 
     public void Reload() {
-        if (AmmoData.RemainingAmmo == Gun.clipSize || ammo[Gun.ammoType].CurrentAmmo == 0) return;
+        if (AmmoData.RemainingAmmo == gun.clipSize || ammo[gun.ammoType].CurrentAmmo == 0) return;
 
         // TODO: Visual notification for being unable to reload
 
-        AmmoData.Reload(ammo[Gun.ammoType].CurrentAmmo >= Gun.clipSize ? -1 : ammo[Gun.ammoType].CurrentAmmo);
-        ammo[Gun.ammoType].CurrentAmmo = Mathf.Max(ammo[Gun.ammoType].CurrentAmmo - Gun.clipSize, 0);
+        AmmoData.Reload(ammo[gun.ammoType].CurrentAmmo >= gun.clipSize ? -1 : ammo[gun.ammoType].CurrentAmmo);
+        ammo[gun.ammoType].CurrentAmmo = Mathf.Max(ammo[gun.ammoType].CurrentAmmo - gun.clipSize, 0);
     }
 
     public void ChangeGun(int to) {
         _ammoData[_currentGun] = AmmoData;
-        Gun = guns[to];
+        gun = guns[to];
         AmmoData = _ammoData[to];
         _currentGun = to;
     }

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0567feef6d691c24d9c0eb0e4587ea5b, type: 3}
-  m_Name: Pistol
+  m_Name: EnemyAR
   m_EditorClassIdentifier: 
-  fireRate: 1.5
-  spreadAngle: 3
-  isInfiniteAmmo: 0
+  fireRate: 1
+  spreadAngle: 10
+  isInfiniteAmmo: 1
   ammoType: 0
-  clipSize: 6
-  reloadTime: 1
+  clipSize: 0
+  reloadTime: 0
   shots:
-  - bullet: {fileID: 11400000, guid: 07f3209e9449569428ab245cc214f5ad, type: 2}
+  - bullet: {fileID: 11400000, guid: 142ad03682b562b478273db7d0ecb704, type: 2}
     offsetAngle: 0
     groupSize: 1
     applySpread: 1

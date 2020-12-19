@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 5
   spreadAngle: 10
-  useAmmo: 1
+  isInfiniteAmmo: 0
   ammoType: 1
   clipSize: 30
   reloadTime: 1

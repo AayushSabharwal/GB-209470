@@ -11,12 +11,13 @@ public class Enemy : MonoBehaviour
 {
     [InlineEditor]
     public EnemyData data;
-
+    
+    
     private SpriteRenderer _spriteRenderer;
     private Health _health;
+    private DropManager _dropManager;
     private Transform _player;
     private ObjectPooler _objectPooler;
-    private DropManager _dropManager;
     private SharedDataManager _sharedDataManager;
     private Seeker _seeker;
     private Rigidbody2D _rb;
@@ -25,11 +26,11 @@ public class Enemy : MonoBehaviour
     private float _repathRate;
     private float _repathTimer;
     private int _currentWaypoint;
-    private bool _reachedEndOfPath;
+    public bool ReachedEndOfPath { get; private set; }
     private Vector2 _targetDir;
     private Vector2 _targetDirNorm;
 
-    private void Awake() {
+    protected virtual void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _health = GetComponent<Health>();
         _player = ReferenceManager.Inst.Player;
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
         _health.OnDeath += OnDeath;
     }
 
-    private void OnEnable() {
+    protected virtual void OnEnable() {
         if (data == null) return;
 
         _spriteRenderer.sprite = data.sprite;
@@ -51,22 +52,21 @@ public class Enemy : MonoBehaviour
         _health.Respawned(data.health);
     }
 
-    private void Update() {
+    protected virtual void Update() {
         CheckRepathRate();
 
         _repathTimer -= Time.deltaTime;
-        if (_repathTimer <= 0f && _seeker.IsDone() && !_reachedEndOfPath) {
+        if (_repathTimer <= 0f && _seeker.IsDone() && !ReachedEndOfPath) {
             _seeker.StartPath(_rb.position, _player.position, OnPathComplete);
             _repathTimer = _repathRate;
         }
 
-        _reachedEndOfPath = (transform.position - _player.position).sqrMagnitude <
+        ReachedEndOfPath = (transform.position - _player.position).sqrMagnitude <
                             data.approachRadius * data.approachRadius;
     }
 
     private void FixedUpdate() {
-        if (_path == null || _path.error || _currentWaypoint >= _path.vectorPath.Count || _reachedEndOfPath) {
-            _rb.velocity = Vector2.zero;
+        if (_path == null || _path.error || _currentWaypoint >= _path.vectorPath.Count || ReachedEndOfPath) {
             return;
         }
 

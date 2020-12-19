@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
 
     [SerializeField]
-    private float maxHP = 10f;
+    private float maxHp = 10f;
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position = new Vector3(ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.x + 0.5f,
                                          ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.y + 0.5f);
-        _health.Respawned(maxHP);
+        _health.Respawned(maxHp);
     }
 
     private void Update() {

@@ -9,10 +9,12 @@ public class GunData : ScriptableObject
     public float fireRate;
     [MinValue(0f), SuffixLabel("Degrees")]
     public float spreadAngle;
-    public bool useAmmo;
-    [EnumToggleButtons, ShowIf("useAmmo")]
+    public bool isInfiniteAmmo;
+    [EnumToggleButtons, HideIf("isInfiniteAmmo")]
     public AmmoType ammoType;
+    [HideIf("isInfiniteAmmo")]
     public int clipSize;
+    [HideIf("isInfiniteAmmo")]
     public float reloadTime;
     
     [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot")]

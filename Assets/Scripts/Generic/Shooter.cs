@@ -1,55 +1,57 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Shooter : SerializedMonoBehaviour
 {
-    [InlineEditor, OdinSerialize, PropertyOrder(-1f)]
-    protected virtual GunData Gun { get; set; }
+    [InlineEditor, SerializeField, PropertyOrder(-1f)]
+    public GunData gun;
     [SceneObjectsOnly, SerializeField]
     protected Transform shootPoint;
 
-    protected float ShotTimer;
-    protected AmmoData AmmoData;
-    protected ObjectPooler ObjectPooler;
+    private float _shotTimer;
+    [HideInInspector]
+    public AmmoData AmmoData;
+    private ObjectPooler _objectPooler;
     [NonSerialized]
     public EventHandler OnShoot;
 
     private void Awake() {
-        ObjectPooler = ReferenceManager.Inst.ObjectPooler;
+        _objectPooler = ReferenceManager.Inst.ObjectPooler;
     }
 
-    protected virtual void Start() {
-        AmmoData = new AmmoData(Gun.clipSize, Gun.reloadTime);
+    protected virtual void OnEnable() {
+        if(gun == null)
+            return;
+        AmmoData = new AmmoData(gun.clipSize, gun.reloadTime, gun.isInfiniteAmmo);
     }
 
     protected virtual void Update() {
-        if (ShotTimer > 0f)
-            ShotTimer -= Time.deltaTime;
+        if (_shotTimer > 0f)
+            _shotTimer -= Time.deltaTime;
         AmmoData.Update();
     }
 
     public virtual void Shoot() {
-        if (ShotTimer > 0f || !AmmoData.CanShoot)
+        if (_shotTimer > 0f || !AmmoData.CanShoot)
             return;
 
         AmmoData.Shoot();
-        for (int i = 0; i < Gun.shots.Length; i++) {
-            MakeBullets(Gun.shots[i].bullet,
-                        Gun.shots[i].offsetAngle,
-                        Gun.shots[i].applySpread ? Gun.spreadAngle : 0f,
-                        Gun.shots[i].groupSize);
+        for (int i = 0; i < gun.shots.Length; i++) {
+            MakeBullets(gun.shots[i].bullet,
+                        gun.shots[i].offsetAngle,
+                        gun.shots[i].applySpread ? gun.spreadAngle : 0f,
+                        gun.shots[i].groupSize);
         }
 
-        ShotTimer = 1f / Gun.fireRate;
+        _shotTimer = 1f / gun.fireRate;
         OnShoot?.Invoke(this, EventArgs.Empty);
     }
 
     protected void MakeBullets(BulletData bulletType, float offsetAngle, float spread, int groupSize) {
         for (int j = 0; j < groupSize; j++) {
-            GameObject bullet = ObjectPooler.Request(bulletType.poolTag);
+            GameObject bullet = _objectPooler.Request(bulletType.poolTag);
             bullet.transform.position = Quaternion.AngleAxis(offsetAngle, Vector3.forward) * shootPoint.position;
             bullet.transform.rotation = shootPoint.rotation *
                                         Quaternion.AngleAxis(offsetAngle + Random.Range(-spread, spread),
@@ -65,15 +67,17 @@ public struct AmmoData
 {
     public int RemainingAmmo { get; private set; }
     public float ReloadTimer { get; private set; }
-    public bool CanShoot => RemainingAmmo > 0 && ReloadTimer <= 0f;
+    public bool CanShoot => _infiniteAmmo || RemainingAmmo > 0 && ReloadTimer <= 0f;
+    private bool _infiniteAmmo;
     private int _maxAmmo;
     private int _reloadAmount;
     private float _reloadTime;
 
-    public AmmoData(int maxAmmo, float reloadTime) {
+    public AmmoData(int maxAmmo, float reloadTime, bool infiniteAmmo) {
         _maxAmmo = maxAmmo;
         _reloadTime = reloadTime;
         _reloadAmount = _maxAmmo;
+        _infiniteAmmo = infiniteAmmo;
         RemainingAmmo = _maxAmmo;
         ReloadTimer = 0f;
     }
@@ -90,6 +94,7 @@ public struct AmmoData
     }
 
     public void Update() {
+        if(_infiniteAmmo)    return;
         if (ReloadTimer < 0f) {
             ReloadTimer = 0f;
             RemainingAmmo = _reloadAmount;

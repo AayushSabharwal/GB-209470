@@ -1385,7 +1385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - enemy: {fileID: 11400000, guid: a64bc5ae4a350ff48a18e0fa6d361382, type: 2}
+  - enemy: {fileID: 11400000, guid: 9ba38e239990a9a498b5f3b53e886add, type: 2}
     spawnCap: 6
     probabilityMultiplier: 0.71
     spawnedCount: 0
@@ -1601,16 +1601,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Gun
-      Entry: 10
-      Data: 0
     - Name: ammo
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[AmmoType, Assembly-CSharp],[AmmoTracker,
@@ -1645,7 +1641,7 @@ MonoBehaviour:
       Data: 0
     - Name: MaxAmmo
       Entry: 3
-      Data: 120
+      Data: 60
     - Name: 
       Entry: 8
       Data: 
@@ -1663,10 +1659,10 @@ MonoBehaviour:
       Data: 3|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
-      Data: 60
+      Data: 30
     - Name: MaxAmmo
       Entry: 3
-      Data: 300
+      Data: 120
     - Name: 
       Entry: 8
       Data: 
@@ -1687,7 +1683,7 @@ MonoBehaviour:
       Data: 0
     - Name: MaxAmmo
       Entry: 3
-      Data: 80
+      Data: 60
     - Name: 
       Entry: 8
       Data: 
@@ -1708,7 +1704,7 @@ MonoBehaviour:
       Data: 0
     - Name: MaxAmmo
       Entry: 3
-      Data: 80
+      Data: 100
     - Name: 
       Entry: 8
       Data: 
@@ -1721,6 +1717,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  gun: {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
   shootPoint: {fileID: 1533634518}
   guns:
   - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
@@ -1742,7 +1739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea34c006f439494eb34437f03d96a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
+  maxHp: 10
   moveSpeed: 5
   shootDeadzone: 0.1
 --- !u!114 &1002093043
@@ -2827,6 +2824,7 @@ MonoBehaviour:
     - {fileID: 1121325495555726988, guid: 61d0d52dc4898904ea2839ed845a621a, type: 3}
     - {fileID: 8076363791527710716, guid: aad7635db27c3714d91403993084c25e, type: 3}
     - {fileID: 716029180609316578, guid: 263d6aa22305a6640841c3f4663a7c49, type: 3}
+    - {fileID: 1121325495555726988, guid: 820beab6e03e6e84a8ef44971740fdbe, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -2845,7 +2843,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 7
       Data: 
@@ -2899,7 +2897,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: Enemy
+      Data: MeleeEnemy
     - Name: $v
       Entry: 7
       Data: PooledObject, Assembly-CSharp
@@ -2911,7 +2909,7 @@ MonoBehaviour:
       Data: true
     - Name: amount
       Entry: 3
-      Data: 10
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -2954,6 +2952,30 @@ MonoBehaviour:
     - Name: pooledObject
       Entry: 10
       Data: 4
+    - Name: prewarm
+      Entry: 5
+      Data: true
+    - Name: amount
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ShooterEnemy
+    - Name: $v
+      Entry: 7
+      Data: PooledObject, Assembly-CSharp
+    - Name: pooledObject
+      Entry: 10
+      Data: 5
     - Name: prewarm
       Entry: 5
       Data: true
