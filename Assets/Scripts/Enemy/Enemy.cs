@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
 {
     [InlineEditor]
     public EnemyData data;
-    
-    
+
+
     private SpriteRenderer _spriteRenderer;
     private Health _health;
     private DropManager _dropManager;
@@ -29,18 +29,42 @@ public class Enemy : MonoBehaviour
     public bool ReachedEndOfPath { get; private set; }
     private Vector2 _targetDir;
     private Vector2 _targetDirNorm;
+    private bool _isPaused;
+    private bool _isPlayerDead;
+    private Vector2 _savedVelocity;
 
     protected virtual void Awake() {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _health = GetComponent<Health>();
-        _player = ReferenceManager.Inst.Player;
+        _player = ReferenceManager.Inst.PlayerHealth.transform;
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
         _dropManager = ReferenceManager.Inst.DropManager;
         _sharedDataManager = ReferenceManager.Inst.SharedDataManager;
         _rb = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
+        _isPlayerDead = false;
+        _isPaused = false;
 
         _health.OnDeath += OnDeath;
+        ReferenceManager.Inst.PlayerHealth.OnDeath += OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath(object sender, EventArgs e) {
+        _isPlayerDead = true;
+    }
+
+    protected virtual void Start() {
+        ReferenceManager.Inst.UIManager.OnPause += OnPause;
+    }
+
+    private void OnPause(bool isPaused) {
+        _isPaused = isPaused;
+        if (_isPaused) {
+            _savedVelocity = _rb.velocity;
+            _rb.velocity = Vector2.zero;
+        }
+        else
+            _rb.velocity = _savedVelocity;
     }
 
     protected virtual void OnEnable() {
@@ -53,6 +77,8 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void Update() {
+        if (_isPaused || _isPlayerDead) return;
+
         CheckRepathRate();
 
         _repathTimer -= Time.deltaTime;
@@ -62,15 +88,15 @@ public class Enemy : MonoBehaviour
         }
 
         ReachedEndOfPath = (transform.position - _player.position).sqrMagnitude <
-                            data.approachRadius * data.approachRadius;
+                           data.approachRadius * data.approachRadius;
 
         if (ReachedEndOfPath) transform.right = _player.position - transform.position;
     }
 
     private void FixedUpdate() {
-        if (_path == null || _path.error || _currentWaypoint >= _path.vectorPath.Count || ReachedEndOfPath) {
+        if (_path == null || _path.error || _currentWaypoint >= _path.vectorPath.Count || 
+            ReachedEndOfPath || _isPaused || _isPlayerDead)
             return;
-        }
 
 
         _rb.AddForce(_targetDirNorm * data.speed);

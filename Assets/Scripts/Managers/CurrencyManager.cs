@@ -30,10 +30,10 @@ public class CurrencyManager : MonoBehaviour, ISaveLoad
     }
 
     public void Save() {
-        ReferenceManager.Inst.ProgressManager.Data.currency = Currency;
+        ReferenceManager.Inst.ProgressManager.Data.Currency = Currency;
     }
 
     public void Load() {
-        Currency = ReferenceManager.Inst.ProgressManager.Data.currency;
+        Currency = ReferenceManager.Inst.ProgressManager.Data.Currency;
     }
 }

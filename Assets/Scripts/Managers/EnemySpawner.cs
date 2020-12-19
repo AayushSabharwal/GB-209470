@@ -13,21 +13,45 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
 
     private MapGenerator _mapGenerator;
     private ObjectPooler _objectPooler;
+    private Dictionary<int, Enemy> _enemyMap;
+    private int EnemiesLeftToKill {
+        get => _enemiesLeftToKill;
+        set {
+            _enemiesLeftToKill = value; 
+            if(_enemiesLeftToKill == 0)
+                OnLevelEnd?.Invoke();
+        }
+    }
     private float _spawnTimer;
     private int _level;
-
+    private int _enemiesLeftToKill;
+    private bool _isPaused;
+    
+    public event Action OnLevelEnd;
+    
     private void Start() {
         _mapGenerator = ReferenceManager.Inst.MapGenerator;
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
+        _enemyMap = new Dictionary<int, Enemy>();
 
         for (int i = 0; i < enemies.Count; i++) {
             enemies[i].spawnedCount = 0;
             enemies[i].SpawnAmount = Mathf.Min((int) enemies[i].spawnAmountGenerator.Generate(_level),
                                                enemies[i].spawnCap);
+            _enemiesLeftToKill = enemies[i].SpawnAmount;
         }
+
+        _isPaused = false;
+        ReferenceManager.Inst.UIManager.OnPause += OnPause;
+    }
+
+    private void OnPause(bool isPaused) {
+        _isPaused = isPaused;
     }
 
     private void Update() {
+        if (_isPaused) return;
+        
         _spawnTimer -= Time.deltaTime;
         if (_spawnTimer <= 0f) {
             SpawnEnemy();
@@ -51,7 +75,8 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
             GameObject g = _objectPooler.Request(enemies[i].enemy.poolTag);
             Vector2Int pos = _mapGenerator.Walkable[Random.Range(0, _mapGenerator.Walkable.Count)];
             g.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0f);
-            g.GetComponent<Enemy>().data = enemies[i].enemy;
+            
+            GetEnemy(g).data = enemies[i].enemy;
             g.SetActive(true);
             break;
         }
@@ -64,12 +89,22 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
             enemies[i].probabilityMultiplier /= divideBy;
     }
 
+    private Enemy GetEnemy(GameObject g) {
+        int instanceId = g.GetInstanceID();
+        if (!_enemyMap.ContainsKey(instanceId)) {
+            _enemyMap[instanceId] = g.GetComponent<Enemy>();
+            g.GetComponent<Health>().OnDeath += (_, __) => EnemiesLeftToKill--;
+        }
+            
+        return _enemyMap[instanceId];
+    }
+
     public void Save() {
-        ReferenceManager.Inst.ProgressManager.Data.level = _level + 1;
+        ReferenceManager.Inst.ProgressManager.Data.Level = _level + 1;
     }
 
     public void Load() {
-        _level = ReferenceManager.Inst.ProgressManager.Data.level;
+        _level = ReferenceManager.Inst.ProgressManager.Data.Level;
     }
 }
 

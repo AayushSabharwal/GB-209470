@@ -10,15 +10,26 @@ public class Shooter : SerializedMonoBehaviour
     [SceneObjectsOnly, SerializeField]
     protected Transform shootPoint;
 
-    private float _shotTimer;
     [HideInInspector]
     public AmmoData AmmoData;
-    private ObjectPooler _objectPooler;
     [NonSerialized]
     public EventHandler OnShoot;
-
+    
+    private float _shotTimer;
+    private ObjectPooler _objectPooler;
+    protected bool IsPaused;
+    
     private void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
+    }
+
+    protected virtual void Start() {
+        IsPaused = false;
+        ReferenceManager.Inst.UIManager.OnPause += OnPause;        
+    }
+
+    private void OnPause(bool isPaused) {
+        IsPaused = isPaused;
     }
 
     protected virtual void OnEnable() {
@@ -28,6 +39,7 @@ public class Shooter : SerializedMonoBehaviour
     }
 
     protected virtual void Update() {
+        if (IsPaused) return;
         if (_shotTimer > 0f)
             _shotTimer -= Time.deltaTime;
         AmmoData.Update();
@@ -49,7 +61,7 @@ public class Shooter : SerializedMonoBehaviour
         OnShoot?.Invoke(this, EventArgs.Empty);
     }
 
-    protected void MakeBullets(BulletData bulletType, float offsetAngle, float spread, int groupSize) {
+    private void MakeBullets(BulletData bulletType, float offsetAngle, float spread, int groupSize) {
         for (int j = 0; j < groupSize; j++) {
             GameObject bullet = _objectPooler.Request(bulletType.poolTag);
             bullet.transform.position = Quaternion.AngleAxis(offsetAngle, Vector3.forward) * shootPoint.position;

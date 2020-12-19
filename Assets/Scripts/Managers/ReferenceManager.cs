@@ -1,13 +1,14 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEngine;
 
 public class ReferenceManager : SerializedMonoBehaviour
 {
     public static ReferenceManager Inst;
 
     [OdinSerialize, ShowInInspector]
-    public Transform Player { get; private set; }
+    public Health PlayerHealth { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public PlayerShooter PlayerShooter { get; private set; }
     [OdinSerialize, ShowInInspector]
     public MapGenerator MapGenerator { get; private set; }
     [OdinSerialize, ShowInInspector]
@@ -20,6 +21,10 @@ public class ReferenceManager : SerializedMonoBehaviour
     public ProgressManager ProgressManager { get; private set; }
     [OdinSerialize, ShowInInspector]
     public SharedDataManager SharedDataManager { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public EnemySpawner EnemySpawner { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public UIManager UIManager { get; private set; }
     
     private void Awake() {
         if (Inst == null)

@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     protected ObjectPooler ObjectPooler;
 
-    private void Start() {
+    protected virtual void Start() {
         ObjectPooler = ReferenceManager.Inst.ObjectPooler;
     }
 

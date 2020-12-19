@@ -4,10 +4,20 @@ public class ShooterEnemy : MonoBehaviour
 {
     private Enemy _self;
     private Shooter _shooter;
+    private bool _isPaused;
 
     private void Awake() {
         _self = GetComponent<Enemy>();
         _shooter = GetComponent<Shooter>();
+    }
+
+    private void Start() {
+        _isPaused = false;
+        ReferenceManager.Inst.UIManager.OnPause += OnPause;
+    }
+
+    private void OnPause(bool isPaused) {
+        _isPaused = isPaused;
     }
 
     private void OnEnable() {
@@ -16,6 +26,8 @@ public class ShooterEnemy : MonoBehaviour
     }
 
     private void Update() {
+        if (_isPaused) return;
+
         if (_self.ReachedEndOfPath)
             _shooter.Shoot();
     }

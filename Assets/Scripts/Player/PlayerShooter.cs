@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TMPro;
@@ -22,8 +23,10 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     private int _currentGun;
     private AmmoData[] _ammoData;
+    private bool _isDead;
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         _currentGun = defaultGun;
         _ammoData = new AmmoData[guns.Length];
         for (int i = 0; i < guns.Length; i++)
@@ -32,11 +35,17 @@ public class PlayerShooter : Shooter, ISaveLoad
         AmmoData = _ammoData[defaultGun];
 
         UpdateUI();
-        OnShoot += (_, __) => UpdateUI();
-        OnShoot += (_, __) => HandleAmmo();
+        _isDead = false;
+        ReferenceManager.Inst.PlayerHealth.OnDeath += OnDeath;
+    }
+
+    private void OnDeath(object sender, EventArgs e) {
+        _isDead = true;
     }
 
     protected override void Update() {
+        if (IsPaused || _isDead) return;
+        
         base.Update();
         if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = AmmoData.ReloadTimer / gun.reloadTime;
     }
@@ -45,6 +54,12 @@ public class PlayerShooter : Shooter, ISaveLoad
         if (AmmoData.RemainingAmmo > 0)
             return;
         Reload();
+    }
+
+    public override void Shoot() {
+        base.Shoot();
+        UpdateUI();
+        HandleAmmo();
     }
 
     private void UpdateUI() {

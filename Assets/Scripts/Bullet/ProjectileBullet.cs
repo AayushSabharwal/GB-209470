@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 
-// ReSharper disable once CheckNamespace
+
 public class ProjectileBullet : Bullet
 {
     private float _lifetimer;
     private Rigidbody2D _rb;
-
+    private bool _isPaused;
+    
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
+    }
+
+    protected override void Start() {
+        base.Start();
+        ReferenceManager.Inst.UIManager.OnPause += OnPause;
     }
 
     private void OnEnable() {
@@ -32,5 +38,10 @@ public class ProjectileBullet : Bullet
             TryDamage(other.gameObject);
             ObjectPooler.Return(data.poolTag, gameObject);
         }
+    }
+    
+    private void OnPause(bool isPaused) {
+        _isPaused = isPaused;
+        _rb.velocity = _isPaused ? Vector2.zero : (Vector2) transform.right * data.speed;
     }
 }
