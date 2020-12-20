@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TMPro;
@@ -28,16 +27,24 @@ public class PlayerShooter : Shooter, ISaveLoad
         base.Start();
         _currentGun = defaultGun;
         _ammoData = new AmmoData[guns.Length];
-        for (int i = 0; i < guns.Length; i++)
-            _ammoData[i] = new AmmoData(guns[i].clipSize, guns[i].reloadTime, guns[i].isInfiniteAmmo);
+        for (int i = 0; i < guns.Length; i++) {
+            _ammoData[i] = new AmmoData(ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? 
+                                            guns[i].clipSize : 
+                                            ammo[guns[i].ammoType].CurrentAmmo,
+                                        guns[i].reloadTime, 
+                                        guns[i].isInfiniteAmmo);
+            ammo[guns[i].ammoType].CurrentAmmo -= _ammoData[i].RemainingAmmo;
+        }
+
         gun = guns[defaultGun];
         AmmoData = _ammoData[defaultGun];
 
         UpdateUI();
     }
+
     protected override void Update() {
         if (IsPaused || IsPlayerDead) return;
-        
+
         base.Update();
         if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = AmmoData.ReloadTimer / gun.reloadTime;
     }
@@ -80,13 +87,18 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public void Save() {
+        for (int i = 0; i < guns.Length; i++)
+            ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
+
         foreach (KeyValuePair<AmmoType, AmmoTracker> kvp in ammo)
             ReferenceManager.Inst.ProgressManager.Data.Ammo[kvp.Key] = kvp.Value.CurrentAmmo;
+        ReferenceManager.Inst.ProgressManager.Data.EquippedGuns = guns;
     }
 
     public void Load() {
         foreach (KeyValuePair<AmmoType, int> kvp in ReferenceManager.Inst.ProgressManager.Data.Ammo)
             ammo[kvp.Key] = new AmmoTracker(kvp.Value, ammo[kvp.Key].MaxAmmo);
+        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns;
     }
 }
 

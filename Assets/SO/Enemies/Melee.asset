@@ -17,11 +17,11 @@ MonoBehaviour:
   poolTag: MeleeEnemy
   health: 10
   speed: 2
-  approachRadius: 5
+  approachRadius: 1.2
   pathfindingRadius: 0.1
   isMelee: 1
-  damage: 0
-  hitRate: 0.1
+  damage: 1
+  hitRate: 1
   isRanged: 0
   gun: {fileID: 0}
   coinsToDrop: {x: 10, y: 20}

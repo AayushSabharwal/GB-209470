@@ -834,6 +834,12 @@ MonoBehaviour:
     - {fileID: 1002093041}
     - {fileID: 566985744}
     - {fileID: 741160597}
+    - {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
+    - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
+    - {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
+    - {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}
+    - {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
+    - {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -937,6 +943,49 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: EquippedGuns
+      Entry: 7
+      Data: 4|GunData[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: DroppableAmmo
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[AmmoDropData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: Currency
       Entry: 3
       Data: 0
@@ -946,6 +995,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  soReferenceCache: {fileID: 11400000, guid: fa85b3becef9d004d850fd1eff7ed845, type: 2}
 --- !u!4 &374765938
 Transform:
   m_ObjectHideFlags: 0
@@ -3399,36 +3449,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166006009}
   m_CullTransparentMesh: 0
---- !u!1 &1206604065
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1206604066}
-  m_Layer: 0
-  m_Name: 'TODO: Player death callbacks'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1206604066
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206604065}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215827173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4237,79 +4257,15 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}
-    - {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
-    - {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}
-    - {fileID: 11400000, guid: 825de9f2f9acee74186e56ad0f64396d, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: ammoProbability
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[AmmoProbabilityContainer, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 1|AmmoProbabilityContainer, Assembly-CSharp
-    - Name: Data
-      Entry: 10
-      Data: 0
-    - Name: ProbabilityMultiplier
-      Entry: 4
-      Data: 1.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 2|AmmoProbabilityContainer, Assembly-CSharp
-    - Name: Data
-      Entry: 10
-      Data: 1
-    - Name: ProbabilityMultiplier
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 3|AmmoProbabilityContainer, Assembly-CSharp
-    - Name: Data
-      Entry: 10
-      Data: 2
-    - Name: ProbabilityMultiplier
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 4|AmmoProbabilityContainer, Assembly-CSharp
-    - Name: Data
-      Entry: 10
-      Data: 3
-    - Name: ProbabilityMultiplier
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   single: {fileID: 11400000, guid: fbf48e325e01d1d47ae721392424805d, type: 2}
   ten: {fileID: 11400000, guid: 8b2b27ca90819bf429415c55bdbcb476, type: 2}
+  droppableAmmo: []
 --- !u!4 &1458133662
 Transform:
   m_ObjectHideFlags: 0

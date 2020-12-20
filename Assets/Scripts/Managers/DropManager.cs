@@ -2,15 +2,15 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class DropManager : SerializedMonoBehaviour
+public class DropManager : SerializedMonoBehaviour, ISaveLoad
 {
     [SerializeField]
     private DropData single;
     [SerializeField]
     private DropData ten;
     [SerializeField, FloatingProbabilitySettings(60f)]
-    private List<AmmoProbabilityContainer> ammoProbability;
-    
+    private List<AmmoDropData> droppableAmmo;
+
     private Dictionary<int, Coin> _coinScriptMap;
     private Dictionary<int, AmmoDrop> _ammoScriptMap;
     private ObjectPooler _objectPooler;
@@ -25,7 +25,7 @@ public class DropManager : SerializedMonoBehaviour
     }
 
     public void RequestCoins(int value, out List<GameObject> coins) {
-        coins = new List<GameObject>(value/10 + value%10);
+        coins = new List<GameObject>(value / 10 + value % 10);
         for (int i = 0; i < value / 10; i++) {
             GameObject g = _objectPooler.Request(ten.poolTag);
             if (_coinScriptMap.ContainsKey(g.GetInstanceID()))
@@ -34,6 +34,7 @@ public class DropManager : SerializedMonoBehaviour
                 _coinScriptMap[g.GetInstanceID()] = g.GetComponent<Coin>();
                 _coinScriptMap[g.GetInstanceID()].data = ten;
             }
+
             coins.Add(g);
         }
 
@@ -45,6 +46,7 @@ public class DropManager : SerializedMonoBehaviour
                 _coinScriptMap[g.GetInstanceID()] = g.GetComponent<Coin>();
                 _coinScriptMap[g.GetInstanceID()].data = single;
             }
+
             coins.Add(g);
         }
     }
@@ -52,16 +54,17 @@ public class DropManager : SerializedMonoBehaviour
     public void RequestAmmo(int amount, out List<GameObject> ammo) {
         ammo = new List<GameObject>(amount);
         for (int i = 0; i < amount; i++) {
-            AmmoDropData data = ammoProbability[0].Data;
+            AmmoDropData data = droppableAmmo[0];
             float f = Random.value;
-            for (int j = 0; j < ammoProbability.Count; j++) {
-                if (f > ammoProbability[i].FloatingProbability) {
-                    f -= ammoProbability[i].FloatingProbability;
+            for (int j = 0; j < droppableAmmo.Count; j++) {
+                if (f > droppableAmmo[i].FloatingProbability) {
+                    f -= droppableAmmo[i].FloatingProbability;
                     continue;
                 }
 
-                data = ammoProbability[i].Data;
+                data = droppableAmmo[i];
             }
+
             GameObject g = _objectPooler.Request(data.poolTag);
             if (_ammoScriptMap.ContainsKey(g.GetInstanceID()))
                 _ammoScriptMap[g.GetInstanceID()].data = data;
@@ -69,15 +72,14 @@ public class DropManager : SerializedMonoBehaviour
                 _ammoScriptMap[g.GetInstanceID()] = g.GetComponent<AmmoDrop>();
                 _ammoScriptMap[g.GetInstanceID()].data = data;
             }
+
             ammo.Add(g);
         }
     }
-}
 
-public class AmmoProbabilityContainer : IFloatingProbability
-{
-    [InlineEditor]
-    public AmmoDropData Data;
-    public float ProbabilityMultiplier;
-    public float FloatingProbability => ProbabilityMultiplier;
+    public void Save() { }
+
+    public void Load() {
+        droppableAmmo = ReferenceManager.Inst.ProgressManager.Data.DroppableAmmo;
+    }
 }

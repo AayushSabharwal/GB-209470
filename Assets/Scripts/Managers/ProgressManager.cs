@@ -7,6 +7,8 @@ using UnityEngine;
 public class ProgressManager : SerializedMonoBehaviour
 {
     [SerializeField]
+    private ScriptableObjectReferenceCache soReferenceCache;
+    [SerializeField]
     private ISaveLoad[] saveableItems;
     [SerializeField]
     private DataContainer defaultSave;
@@ -24,14 +26,23 @@ public class ProgressManager : SerializedMonoBehaviour
         for (int i = 0; i < saveableItems.Length; i++)
             saveableItems[i].Save();
 
-        byte[] data = SerializationUtility.SerializeValue(Data, DataFormat.JSON);
+        SerializationContext context = new SerializationContext
+                                       {
+                                           StringReferenceResolver = soReferenceCache
+                                       };
+        
+        byte[] data = SerializationUtility.SerializeValue(Data, DataFormat.JSON, context);
         File.WriteAllBytes(Application.persistentDataPath + "/savegame.json", data);
     }
 
     private void Load() {
         if (File.Exists(Application.persistentDataPath + "/savegame.json")) {
             byte[] data = File.ReadAllBytes(Application.persistentDataPath + "/savegame.json");
-            Data = SerializationUtility.DeserializeValue<DataContainer>(data, DataFormat.JSON);
+            DeserializationContext context = new DeserializationContext
+                                             {
+                                                 StringReferenceResolver = soReferenceCache
+                                             };
+            Data = SerializationUtility.DeserializeValue<DataContainer>(data, DataFormat.JSON, context);
         }
         else
             Data = defaultSave;
@@ -50,6 +61,8 @@ public class ProgressManager : SerializedMonoBehaviour
 public class DataContainer
 {
     public Dictionary<AmmoType, int> Ammo;
+    public GunData[] EquippedGuns;
+    public List<AmmoDropData> DroppableAmmo;
     public int Currency;
     public int Level;
 }

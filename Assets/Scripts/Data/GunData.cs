@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Gun Type")]
-public class GunData : ScriptableObject
+public class GunData : ScriptableObject, ISerializeReferenceByAssetGuid
 {
     [MinValue(0.1f)]
     public float fireRate;
