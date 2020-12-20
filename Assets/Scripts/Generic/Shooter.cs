@@ -18,6 +18,7 @@ public class Shooter : SerializedMonoBehaviour
     private float _shotTimer;
     private ObjectPooler _objectPooler;
     protected bool IsPaused;
+    protected bool IsPlayerDead;
     
     private void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
@@ -25,7 +26,13 @@ public class Shooter : SerializedMonoBehaviour
 
     protected virtual void Start() {
         IsPaused = false;
-        ReferenceManager.Inst.UIManager.OnPause += OnPause;        
+        IsPlayerDead = false;
+        ReferenceManager.Inst.UIManager.OnPause += OnPause;
+        ReferenceManager.Inst.PlayerHealth.OnDeath += OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath(object sender, EventArgs e) {
+        IsPlayerDead = true;
     }
 
     private void OnPause(bool isPaused) {
@@ -39,7 +46,7 @@ public class Shooter : SerializedMonoBehaviour
     }
 
     protected virtual void Update() {
-        if (IsPaused) return;
+        if (IsPaused || IsPlayerDead) return;
         if (_shotTimer > 0f)
             _shotTimer -= Time.deltaTime;
         AmmoData.Update();

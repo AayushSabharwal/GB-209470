@@ -23,7 +23,6 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     private int _currentGun;
     private AmmoData[] _ammoData;
-    private bool _isDead;
 
     protected override void Start() {
         base.Start();
@@ -35,16 +34,9 @@ public class PlayerShooter : Shooter, ISaveLoad
         AmmoData = _ammoData[defaultGun];
 
         UpdateUI();
-        _isDead = false;
-        ReferenceManager.Inst.PlayerHealth.OnDeath += OnDeath;
     }
-
-    private void OnDeath(object sender, EventArgs e) {
-        _isDead = true;
-    }
-
     protected override void Update() {
-        if (IsPaused || _isDead) return;
+        if (IsPaused || IsPlayerDead) return;
         
         base.Update();
         if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = AmmoData.ReloadTimer / gun.reloadTime;

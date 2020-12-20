@@ -26,7 +26,7 @@ public class ShooterEnemy : MonoBehaviour
     }
 
     private void Update() {
-        if (_isPaused) return;
+        if (_isPaused || _self.IsPlayerDead) return;
 
         if (_self.ReachedEndOfPath)
             _shooter.Shoot();

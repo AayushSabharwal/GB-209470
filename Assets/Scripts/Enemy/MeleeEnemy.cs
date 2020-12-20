@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MeleeEnemy : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class MeleeEnemy : MonoBehaviour
     private Enemy _self;
     private float _attackTimer;
     private bool _isPaused;
-
+    
     private void Awake() {
         _self = GetComponent<Enemy>();
         _playerHealth = ReferenceManager.Inst.PlayerHealth;
@@ -22,7 +23,7 @@ public class MeleeEnemy : MonoBehaviour
     }
 
     private void Update() {
-        if (_isPaused) return;
+        if (_isPaused || _self.IsPlayerDead) return;
 
         if (_self.ReachedEndOfPath && _attackTimer <= 0f) {
             _playerHealth.TakeDamage(_self.data.damage);

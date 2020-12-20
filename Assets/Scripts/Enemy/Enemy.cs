@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     private Vector2 _targetDir;
     private Vector2 _targetDirNorm;
     private bool _isPaused;
-    private bool _isPlayerDead;
+    public bool IsPlayerDead { get; private set; }
     private Vector2 _savedVelocity;
 
     protected virtual void Awake() {
@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         _sharedDataManager = ReferenceManager.Inst.SharedDataManager;
         _rb = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
-        _isPlayerDead = false;
+        IsPlayerDead = false;
         _isPaused = false;
 
         _health.OnDeath += OnDeath;
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnPlayerDeath(object sender, EventArgs e) {
-        _isPlayerDead = true;
+        IsPlayerDead = true;
     }
 
     protected virtual void Start() {
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void Update() {
-        if (_isPaused || _isPlayerDead) return;
+        if (_isPaused || IsPlayerDead) return;
 
         CheckRepathRate();
 
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate() {
         if (_path == null || _path.error || _currentWaypoint >= _path.vectorPath.Count || 
-            ReachedEndOfPath || _isPaused || _isPlayerDead)
+            ReachedEndOfPath || _isPaused || IsPlayerDead)
             return;
 
 

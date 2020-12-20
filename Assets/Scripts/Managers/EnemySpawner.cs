@@ -26,7 +26,8 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
     private int _level;
     private int _enemiesLeftToKill;
     private bool _isPaused;
-    
+    private bool _isPlayerDead;
+
     public event Action OnLevelEnd;
     
     private void Start() {
@@ -42,7 +43,13 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
         }
 
         _isPaused = false;
+        _isPlayerDead = false;
         ReferenceManager.Inst.UIManager.OnPause += OnPause;
+        ReferenceManager.Inst.PlayerHealth.OnDeath += OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath(object sender, EventArgs e) {
+        _isPlayerDead = true;
     }
 
     private void OnPause(bool isPaused) {
@@ -50,7 +57,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
     }
 
     private void Update() {
-        if (_isPaused) return;
+        if (_isPaused || _isPlayerDead) return;
         
         _spawnTimer -= Time.deltaTime;
         if (_spawnTimer <= 0f) {
