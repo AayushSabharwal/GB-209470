@@ -17,8 +17,8 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
     private int EnemiesLeftToKill {
         get => _enemiesLeftToKill;
         set {
-            _enemiesLeftToKill = value; 
-            if(_enemiesLeftToKill == 0)
+            _enemiesLeftToKill = value;
+            if (_enemiesLeftToKill == 0)
                 OnLevelEnd?.Invoke();
         }
     }
@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
     private bool _isPlayerDead;
 
     public event Action OnLevelEnd;
-    
+
     private void Start() {
         _mapGenerator = ReferenceManager.Inst.MapGenerator;
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
@@ -49,6 +49,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
     }
 
     private void OnPlayerDeath(object sender, EventArgs e) {
+        _level--;
         _isPlayerDead = true;
     }
 
@@ -58,7 +59,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
 
     private void Update() {
         if (_isPaused || _isPlayerDead) return;
-        
+
         _spawnTimer -= Time.deltaTime;
         if (_spawnTimer <= 0f) {
             SpawnEnemy();
@@ -82,7 +83,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
             GameObject g = _objectPooler.Request(enemies[i].enemy.poolTag);
             Vector2Int pos = _mapGenerator.Walkable[Random.Range(0, _mapGenerator.Walkable.Count)];
             g.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0f);
-            
+
             GetEnemy(g).data = enemies[i].enemy;
             g.SetActive(true);
             break;
@@ -102,7 +103,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
             _enemyMap[instanceId] = g.GetComponent<Enemy>();
             g.GetComponent<Health>().OnDeath += (_, __) => EnemiesLeftToKill--;
         }
-            
+
         return _enemyMap[instanceId];
     }
 

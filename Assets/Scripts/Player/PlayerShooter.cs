@@ -89,15 +89,13 @@ public class PlayerShooter : Shooter, ISaveLoad
     public void Save() {
         for (int i = 0; i < guns.Length; i++)
             ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
-
-        foreach (KeyValuePair<AmmoType, AmmoTracker> kvp in ammo)
-            ReferenceManager.Inst.ProgressManager.Data.Ammo[kvp.Key] = kvp.Value.CurrentAmmo;
+        
+        ReferenceManager.Inst.ProgressManager.Data.Ammo = ammo;
         ReferenceManager.Inst.ProgressManager.Data.EquippedGuns = guns;
     }
 
     public void Load() {
-        foreach (KeyValuePair<AmmoType, int> kvp in ReferenceManager.Inst.ProgressManager.Data.Ammo)
-            ammo[kvp.Key] = new AmmoTracker(kvp.Value, ammo[kvp.Key].MaxAmmo);
+        ammo = ReferenceManager.Inst.ProgressManager.Data.Ammo;
         guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns;
     }
 }

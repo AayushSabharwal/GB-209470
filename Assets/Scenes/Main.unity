@@ -533,6 +533,9 @@ MonoBehaviour:
     - Name: UIManager
       Entry: 10
       Data: 9
+    - Name: ShopManager
+      Entry: 6
+      Data: 
 --- !u!4 &180914987
 Transform:
   m_ObjectHideFlags: 0
@@ -837,6 +840,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
     - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
     - {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
+    - {fileID: 11400000, guid: 893f711e23869e8419b163e1f40600dc, type: 2}
     - {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}
     - {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
     - {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}
@@ -871,8 +875,8 @@ MonoBehaviour:
       Data: 1|DataContainer, Assembly-CSharp
     - Name: Ammo
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[AmmoType, Assembly-CSharp],[System.Int32,
-        mscorlib]], mscorlib
+      Data: 2|System.Collections.Generic.Dictionary`2[[AmmoType, Assembly-CSharp],[AmmoTracker,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[AmmoType, Assembly-CSharp]],
@@ -896,8 +900,17 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: $v
+      Entry: 7
+      Data: 4|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
       Entry: 3
-      Data: 0
+      Data: 20
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 60
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -908,8 +921,17 @@ MonoBehaviour:
       Entry: 3
       Data: 1
     - Name: $v
+      Entry: 7
+      Data: 5|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
       Entry: 3
-      Data: 30
+      Data: 0
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 120
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -920,8 +942,17 @@ MonoBehaviour:
       Entry: 3
       Data: 2
     - Name: $v
+      Entry: 7
+      Data: 6|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
       Entry: 3
       Data: 0
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 40
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -932,8 +963,17 @@ MonoBehaviour:
       Entry: 3
       Data: 3
     - Name: $v
+      Entry: 7
+      Data: 7|AmmoTracker, Assembly-CSharp
+    - Name: CurrentAmmo
       Entry: 3
       Data: 0
+    - Name: MaxAmmo
+      Entry: 3
+      Data: 60
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -945,7 +985,7 @@ MonoBehaviour:
       Data: 
     - Name: EquippedGuns
       Entry: 7
-      Data: 4|GunData[], Assembly-CSharp
+      Data: 8|GunData[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 3
@@ -964,22 +1004,54 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: AllGuns
+      Entry: 7
+      Data: 9|System.Collections.Generic.Dictionary`2[[GunShopItemData, Assembly-CSharp],[System.Boolean,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 10|System.Collections.Generic.ObjectEqualityComparer`1[[GunShopItemData,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
+      Data: 6
+    - Name: $v
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: DroppableAmmo
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[AmmoDropData, Assembly-CSharp]],
+      Data: 11|System.Collections.Generic.List`1[[AmmoDropData, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 10
       Data: 7
     - Name: 
       Entry: 10
       Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
     - Name: 
       Entry: 13
       Data: 

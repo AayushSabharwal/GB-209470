@@ -26,3 +26,5 @@ MonoBehaviour:
     scriptableObject: {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
   - guid: 8cbe827dca58857429cb0d1c687bb68d
     scriptableObject: {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
+  - guid: 893f711e23869e8419b163e1f40600dc
+    scriptableObject: {fileID: 11400000, guid: 893f711e23869e8419b163e1f40600dc, type: 2}

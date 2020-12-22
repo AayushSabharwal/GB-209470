@@ -25,6 +25,8 @@ public class ReferenceManager : SerializedMonoBehaviour
     public EnemySpawner EnemySpawner { get; private set; }
     [OdinSerialize, ShowInInspector]
     public UIManager UIManager { get; private set; }
+    [OdinSerialize, ShowInInspector]
+    public ShopManager ShopManager { get; private set; }
     
     private void Awake() {
         if (Inst == null)

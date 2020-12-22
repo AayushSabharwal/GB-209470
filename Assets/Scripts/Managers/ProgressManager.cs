@@ -12,6 +12,7 @@ public class ProgressManager : SerializedMonoBehaviour
     private ISaveLoad[] saveableItems;
     [SerializeField]
     private DataContainer defaultSave;
+    [ShowInInspector, ReadOnly]
     public DataContainer Data { get; private set; }
 
     private void Awake() {
@@ -19,7 +20,8 @@ public class ProgressManager : SerializedMonoBehaviour
     }
 
     private void Start() {
-        ReferenceManager.Inst.EnemySpawner.OnLevelEnd += Save;
+        if(ReferenceManager.Inst.EnemySpawner != null)
+            ReferenceManager.Inst.EnemySpawner.OnLevelEnd += Save;
     }
 
     private void Save() {
@@ -60,8 +62,9 @@ public class ProgressManager : SerializedMonoBehaviour
 
 public class DataContainer
 {
-    public Dictionary<AmmoType, int> Ammo;
+    public Dictionary<AmmoType, AmmoTracker> Ammo;
     public GunData[] EquippedGuns;
+    public Dictionary<GunShopItemData, bool> AllGuns;
     public List<AmmoDropData> DroppableAmmo;
     public int Currency;
     public int Level;

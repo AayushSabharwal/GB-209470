@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Gun Type")]
 public class GunData : ScriptableObject, ISerializeReferenceByAssetGuid
 {
+    [PreviewField]
+    public Sprite image;
     [MinValue(0.1f)]
     public float fireRate;
     [MinValue(0f), SuffixLabel("Degrees")]
