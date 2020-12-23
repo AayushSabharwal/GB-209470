@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(PlayerShooter))]
@@ -15,11 +16,19 @@ public class PlayerController : MonoBehaviour
     private float maxHp = 10f;
     [SerializeField]
     private float moveSpeed = 5f;
+    [SerializeField, FoldoutGroup("Dash")]
+    private float dashSpeed = 10f;
+    [SerializeField, FoldoutGroup("Dash")]
+    private float dashDuration = 0.5f;
+    [SerializeField, FoldoutGroup("Dash")]
+    private float cooldown = 5f;
     [SerializeField]
-    private float shootDeadzone = 0.1f;
+    private float stickDeadzone = 0.1f;
 
     private bool _isPaused;
-    
+    private float _dashTimer;
+    private Vector2 _dashDirection;
+
     private void Start() {
         _health = GetComponent<Health>();
         _shooter = GetComponent<Shooter>();
@@ -42,12 +51,27 @@ public class PlayerController : MonoBehaviour
     private void Update() {
         if (_isPaused)
             return;
-        
-        _rb.velocity = _input.Move * moveSpeed;
-        if (_input.Shoot.sqrMagnitude >= shootDeadzone * shootDeadzone) {
+        if (_input.Shoot.sqrMagnitude >= stickDeadzone * stickDeadzone) {
             transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(_input.Shoot.y, _input.Shoot.x) * Mathf.Rad2Deg,
                                                       Vector3.forward);
             _shooter.Shoot();
         }
+    }
+
+    private void FixedUpdate() {
+        if (_dashTimer <= 0f)
+            _rb.velocity = _input.Move * moveSpeed;
+        else {
+            _rb.velocity = _dashDirection * dashSpeed;
+            _dashTimer -= Time.fixedDeltaTime;
+        }
+    }
+
+    public bool Dash() {
+        if (_input.Move.sqrMagnitude < stickDeadzone * stickDeadzone) return false;
+
+        _dashDirection = _input.Move.normalized;
+        _dashTimer = dashDuration;
+        return true;
     }
 }
