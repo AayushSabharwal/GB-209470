@@ -18,6 +18,8 @@ MonoBehaviour:
   isProjectile: 1
   speed: 10
   lifetime: 2
+  isExplosive: 0
+  explosionRadius: 0
   range: 10
   color:
     serializedVersion: 2
@@ -52,3 +54,6 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 1280
+  damageMask:
+    serializedVersion: 2
+    m_Bits: 1024

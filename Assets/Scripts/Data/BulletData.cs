@@ -12,6 +12,10 @@ public class BulletData : ScriptableObject
     public float speed;
     [BoxGroup("Projectile Options")]
     public float lifetime;
+    [BoxGroup("Projectile Options")]
+    public bool isExplosive;
+    [BoxGroup("Projectile Options"), ShowIf("isExplosive"), MinValue(0.1f)]
+    public float explosionRadius;
     
     [BoxGroup("Hitscan Options", VisibleIf = "@!isProjectile")]
     public float range;
@@ -21,4 +25,5 @@ public class BulletData : ScriptableObject
     public float size;
     
     public LayerMask collisionMask;
+    public LayerMask damageMask;
 }

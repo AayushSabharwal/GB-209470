@@ -16,6 +16,14 @@ MonoBehaviour:
   - Assets/SO
   autoFetchInPlaymode: 1
   cachedReferences:
+  - guid: 179e72533f6f76f4ca6966358426efdf
+    scriptableObject: {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
+  - guid: 825de9f2f9acee74186e56ad0f64396d
+    scriptableObject: {fileID: 11400000, guid: 825de9f2f9acee74186e56ad0f64396d, type: 2}
+  - guid: b9874d80ef54d2446882514aec3b41d9
+    scriptableObject: {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}
+  - guid: f18594f86bff8814eb2c72e68b452941
+    scriptableObject: {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}
   - guid: bdf9c09645eebbd40b85e6e182ef9f95
     scriptableObject: {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
   - guid: 6ad93d6b9984d4940a5dbbeebeafc9c5
@@ -28,3 +36,7 @@ MonoBehaviour:
     scriptableObject: {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
   - guid: 893f711e23869e8419b163e1f40600dc
     scriptableObject: {fileID: 11400000, guid: 893f711e23869e8419b163e1f40600dc, type: 2}
+  - guid: 2aa905d4b14f9c6429b82588f632346b
+    scriptableObject: {fileID: 11400000, guid: 2aa905d4b14f9c6429b82588f632346b, type: 2}
+  - guid: 1c6b5529718d7fb4caf987b5f4292cf1
+    scriptableObject: {fileID: 11400000, guid: 1c6b5529718d7fb4caf987b5f4292cf1, type: 2}

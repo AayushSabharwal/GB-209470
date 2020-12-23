@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProgressManager : SerializedMonoBehaviour
 {
     [SerializeField]
     private ScriptableObjectReferenceCache soReferenceCache;
     [SerializeField]
-    private ISaveLoad[] saveableItems;
+    private List<ISaveLoad> saveableItems;
     [SerializeField]
     private DataContainer defaultSave;
     [ShowInInspector, ReadOnly]
@@ -24,8 +26,20 @@ public class ProgressManager : SerializedMonoBehaviour
             ReferenceManager.Inst.EnemySpawner.OnLevelEnd += Save;
     }
 
+    [Button("Find All ISaveLoad")]
+    private void FindAllISaveLoad() {
+        saveableItems = new List<ISaveLoad>();
+        GameObject[] roots = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject g in roots) {
+            ISaveLoad[] isl = g.GetComponentsInChildren<ISaveLoad>();
+            foreach (ISaveLoad sl in isl) {
+                saveableItems.Add(sl);
+            }
+        }
+    }
+
     private void Save() {
-        for (int i = 0; i < saveableItems.Length; i++)
+        for (int i = 0; i < saveableItems.Count; i++)
             saveableItems[i].Save();
 
         SerializationContext context = new SerializationContext
@@ -49,7 +63,7 @@ public class ProgressManager : SerializedMonoBehaviour
         else
             Data = defaultSave;
 
-        for (int i = 0; i < saveableItems.Length; i++)
+        for (int i = 0; i < saveableItems.Count; i++)
             saveableItems[i].Load();
     }
 
@@ -65,6 +79,7 @@ public class DataContainer
     public Dictionary<AmmoType, AmmoTracker> Ammo;
     public GunData[] EquippedGuns;
     public Dictionary<GunShopItemData, bool> AllGuns;
+    [FloatingProbabilitySettings]
     public List<AmmoDropData> DroppableAmmo;
     public int Currency;
     public int Level;

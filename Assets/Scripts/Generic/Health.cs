@@ -14,13 +14,13 @@ public class Health : MonoBehaviour
     [SerializeField]
     private bool hasUI;
 
-    [ShowIfGroup("hasUI"), BoxGroup("hasUI/HPUI"), SerializeField]
-    private Image _sliderImage;
-    [ShowIfGroup("hasUI"), BoxGroup("hasUI/HPUI"), SerializeField]
+    [FoldoutGroup("HP UI", VisibleIf = "hasUI"), SerializeField]
+    private Image sliderImage;
+    [FoldoutGroup("HP UI"), SerializeField]
     private bool lerpColour;
-    [BoxGroup("hasUI/HPUI"), ShowIf("@!lerpColour"), SerializeField]
+    [HideIfGroup("HP UI/nonlerp", VisibleIf = "lerpColour"), SerializeField]
     private Color baseColour = Color.red;
-    [BoxGroup("hasUI/HPUI"), ShowIf("lerpColour"), SerializeField]
+    [ShowIfGroup("HP UI/lerp", VisibleIf = "lerpColour"),  SerializeField]
     private Gradient colourGradient;
 
     [ShowInInspector]
@@ -45,8 +45,8 @@ public class Health : MonoBehaviour
         if (!hasUI)
             return;
 
-        _sliderImage.fillAmount = CurHp / _maxHp;
-        _sliderImage.color = lerpColour ? colourGradient.Evaluate(_sliderImage.fillAmount) : baseColour;
+        sliderImage.fillAmount = CurHp / _maxHp;
+        sliderImage.color = lerpColour ? colourGradient.Evaluate(sliderImage.fillAmount) : baseColour;
     }
 
     public void TakeDamage(float damage)

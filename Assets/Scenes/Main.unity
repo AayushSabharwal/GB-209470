@@ -965,8 +965,9 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 1002093041}
-    - {fileID: 566985744}
     - {fileID: 741160597}
+    - {fileID: 566985744}
+    - {fileID: 1458133661}
     - {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
     - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
     - {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
@@ -983,10 +984,10 @@ MonoBehaviour:
     SerializationNodes:
     - Name: saveableItems
       Entry: 7
-      Data: 0|ISaveLoad[], Assembly-CSharp
+      Data: 0|System.Collections.Generic.List`1[[ISaveLoad, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 10
       Data: 0
@@ -996,6 +997,9 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
     - Name: 
       Entry: 13
       Data: 
@@ -1123,13 +1127,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 10
       Data: 4
     - Name: 
       Entry: 10
       Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
     - Name: 
       Entry: 13
       Data: 
@@ -1155,7 +1159,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 6
+      Data: 7
     - Name: $v
       Entry: 5
       Data: false
@@ -1167,7 +1171,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 7
+      Data: 8
     - Name: $v
       Entry: 5
       Data: true
@@ -1179,7 +1183,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 8
+      Data: 9
     - Name: $v
       Entry: 5
       Data: false
@@ -1201,13 +1205,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
-      Data: 9
-    - Name: 
-      Entry: 10
       Data: 10
     - Name: 
       Entry: 10
       Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
     - Name: 
       Entry: 13
       Data: 
@@ -1564,7 +1568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.888947, y: 0, z: -10}
+  m_LocalPosition: {x: 1, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2585,7 +2589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasUI: 1
-  _sliderImage: {fileID: 2022819119}
+  sliderImage: {fileID: 2022819119}
   lerpColour: 1
   baseColour: {r: 1, g: 0, b: 0, a: 1}
   colourGradient:

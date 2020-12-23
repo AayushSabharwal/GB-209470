@@ -8,8 +8,8 @@ public class DropManager : SerializedMonoBehaviour, ISaveLoad
     private DropData single;
     [SerializeField]
     private DropData ten;
-    [SerializeField, FloatingProbabilitySettings(60f)]
-    private List<AmmoDropData> droppableAmmo;
+    [ShowInInspector, ReadOnly]
+    private List<AmmoDropData> _droppableAmmo;
 
     private Dictionary<int, Coin> _coinScriptMap;
     private Dictionary<int, AmmoDrop> _ammoScriptMap;
@@ -54,15 +54,15 @@ public class DropManager : SerializedMonoBehaviour, ISaveLoad
     public void RequestAmmo(int amount, out List<GameObject> ammo) {
         ammo = new List<GameObject>(amount);
         for (int i = 0; i < amount; i++) {
-            AmmoDropData data = droppableAmmo[0];
+            AmmoDropData data = _droppableAmmo[0];
             float f = Random.value;
-            for (int j = 0; j < droppableAmmo.Count; j++) {
-                if (f > droppableAmmo[i].FloatingProbability) {
-                    f -= droppableAmmo[i].FloatingProbability;
+            for (int j = 0; j < _droppableAmmo.Count; j++) {
+                if (f > _droppableAmmo[i].FloatingProbability) {
+                    f -= _droppableAmmo[i].FloatingProbability;
                     continue;
                 }
 
-                data = droppableAmmo[i];
+                data = _droppableAmmo[i];
             }
 
             GameObject g = _objectPooler.Request(data.poolTag);
@@ -80,6 +80,6 @@ public class DropManager : SerializedMonoBehaviour, ISaveLoad
     public void Save() { }
 
     public void Load() {
-        droppableAmmo = ReferenceManager.Inst.ProgressManager.Data.DroppableAmmo;
+        _droppableAmmo = ReferenceManager.Inst.ProgressManager.Data.DroppableAmmo;
     }
 }
