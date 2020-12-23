@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, BoxGroup("UI References")]
     private GameObject hud;
-    [SerializeField]
+    [SerializeField, BoxGroup("UI References")]
     private GameObject pauseScreen;
-    [SerializeField]
+    [SerializeField, BoxGroup("UI References")]
     private GameObject gameOverScreen;
-    [SerializeField]
+    [SerializeField, BoxGroup("UI References")]
     private GameObject levelOverScreen;
 
+    [SerializeField, BoxGroup("Scenes")]
+    private int shopSceneBuildIndex;
+    
     public delegate void OnPauseDelegate(bool isPaused);
 
     public event OnPauseDelegate OnPause;
@@ -40,6 +44,10 @@ public class UIManager : MonoBehaviour
 
     public void Restart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void NextLevel() {
+        SceneManager.LoadScene(shopSceneBuildIndex);
     }
 
     private void GameOver() {

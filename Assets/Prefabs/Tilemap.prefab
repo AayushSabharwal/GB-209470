@@ -22641,12 +22641,12 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 100, y: 100, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
   m_Mode: 1
-  m_DetectChunkCullingBounds: 1
+  m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!19719996 &7830964360343599660
 TilemapCollider2D:

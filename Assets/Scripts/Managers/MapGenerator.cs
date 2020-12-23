@@ -19,6 +19,8 @@ public class MapGenerator : SerializedMonoBehaviour
     public Vector2Int chunkSize;
     [SerializeField]
     private GenerationLayer[] generationLayers;
+    [SerializeField]
+    private BoxCollider2D cameraZone;
 
     private Tilemap[,] _tilemaps;
 
@@ -47,6 +49,9 @@ public class MapGenerator : SerializedMonoBehaviour
                 TilemapBounds[i, j] = new Bounds(new Vector3((i + 0.5f) * ChunkSize.x, (j + 0.5f) * chunkSize.y, 0f),
                                                  new Vector3(chunkSize.x, chunkSize.y, 0f));
             }
+
+        cameraZone.size = worldDimensions;
+        cameraZone.offset = worldDimensions / 2;
     }
 
     private void Start() {
@@ -60,7 +65,6 @@ public class MapGenerator : SerializedMonoBehaviour
         AstarPath.active.Scan(AstarPath.active.graphs);
     }
 
-    [ButtonGroup("TileGroup")]
     private void GenerateTiles() {
         Map = new TileType[worldDimensions.x * worldDimensions.y];
         for (int i = 0; i < Map.Length; i++) Map[i] = TileType.Wall;
@@ -91,11 +95,10 @@ public class MapGenerator : SerializedMonoBehaviour
                 else
                     _tilemaps[x / chunkSize.x, y / chunkSize.y]
                         .SetTile(new Vector3Int(x, y, 0), tileTypeMap[Map[PositionToIndex(x, y)]]);
-
+        
         StartCoroutine(AstarScan());
     }
 
-    [ButtonGroup("TileGroup")]
     private void ClearTilemaps() {
         for (int i = 0; i < ChunkCount.x; i++)
             for (int j = 0; j < ChunkCount.y; j++)
