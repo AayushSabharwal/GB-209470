@@ -34,7 +34,7 @@ public class Drop : MonoBehaviour
         _lifetimer = data.lifetime;
     }
 
-    private void Update() {
+    protected virtual void Update() {
         if (_isPaused) return;
         _lifetimer -= Time.deltaTime;
         if (_lifetimer <= 0f)

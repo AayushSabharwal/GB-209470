@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -12,6 +11,8 @@ public class ProgressManager : SerializedMonoBehaviour
     private ScriptableObjectReferenceCache soReferenceCache;
     [SerializeField]
     private List<ISaveLoad> saveableItems;
+    [SerializeField, LabelText("Saveable SOs")]
+    private List<ISaveLoad> saveableSOs;
     [SerializeField]
     private DataContainer defaultSave;
     [ShowInInspector, ReadOnly]
@@ -22,7 +23,7 @@ public class ProgressManager : SerializedMonoBehaviour
     }
 
     private void Start() {
-        if(ReferenceManager.Inst.EnemySpawner != null)
+        if (ReferenceManager.Inst.EnemySpawner != null)
             ReferenceManager.Inst.EnemySpawner.OnLevelEnd += Save;
     }
 
@@ -41,12 +42,14 @@ public class ProgressManager : SerializedMonoBehaviour
     private void Save() {
         for (int i = 0; i < saveableItems.Count; i++)
             saveableItems[i].Save();
-
+        for(int i = 0; i < saveableSOs.Count; i++)
+            saveableSOs[i].Save();
+        
         SerializationContext context = new SerializationContext
                                        {
                                            StringReferenceResolver = soReferenceCache
                                        };
-        
+
         byte[] data = SerializationUtility.SerializeValue(Data, DataFormat.JSON, context);
         File.WriteAllBytes(Application.persistentDataPath + "/savegame.json", data);
     }
@@ -65,11 +68,13 @@ public class ProgressManager : SerializedMonoBehaviour
 
         for (int i = 0; i < saveableItems.Count; i++)
             saveableItems[i].Load();
+        for(int i = 0; i < saveableSOs.Count; i++)
+            saveableSOs[i].Load();
     }
 
     [Button]
     private void DeleteSave() {
-        if(File.Exists(Application.persistentDataPath + "/savegame.json"))
+        if (File.Exists(Application.persistentDataPath + "/savegame.json"))
             File.Delete(Application.persistentDataPath + "/savegame.json");
     }
 }
@@ -81,6 +86,7 @@ public class DataContainer
     public Dictionary<GunShopItemData, bool> AllGuns;
     [FloatingProbabilitySettings]
     public List<AmmoDropData> DroppableAmmo;
+    public Dictionary<string, int> UpgradableItemLevels;
     public int Currency;
     public int Level;
 }

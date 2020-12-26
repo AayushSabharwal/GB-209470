@@ -34,12 +34,13 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
         _mapGenerator = ReferenceManager.Inst.MapGenerator;
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
         _enemyMap = new Dictionary<int, Enemy>();
+        _spawnTimer = spawnInterval;
 
         for (int i = 0; i < enemies.Count; i++) {
             enemies[i].spawnedCount = 0;
             enemies[i].SpawnAmount = Mathf.Min((int) enemies[i].spawnAmountGenerator.Generate(_level),
                                                enemies[i].spawnCap);
-            _enemiesLeftToKill = enemies[i].SpawnAmount;
+            _enemiesLeftToKill += enemies[i].SpawnAmount;
         }
 
         _isPaused = false;

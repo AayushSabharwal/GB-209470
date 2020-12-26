@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     private float dashSpeed = 10f;
     [SerializeField, FoldoutGroup("Dash")]
     private float dashDuration = 0.5f;
-    [SerializeField, FoldoutGroup("Dash")]
-    private float cooldown = 5f;
     [SerializeField]
     private float stickDeadzone = 0.1f;
 

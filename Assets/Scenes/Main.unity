@@ -968,6 +968,7 @@ MonoBehaviour:
     - {fileID: 741160597}
     - {fileID: 566985744}
     - {fileID: 1458133661}
+    - {fileID: 11400000, guid: 36922ee53b1492e419641fba07ad9e5f, type: 2}
     - {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
     - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
     - {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
@@ -1006,16 +1007,31 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: saveableSOs
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[ISaveLoad, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: defaultSave
       Entry: 7
-      Data: 1|DataContainer, Assembly-CSharp
+      Data: 2|DataContainer, Assembly-CSharp
     - Name: Ammo
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[AmmoType, Assembly-CSharp],[AmmoTracker,
+      Data: 3|System.Collections.Generic.Dictionary`2[[AmmoType, Assembly-CSharp],[AmmoTracker,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[AmmoType, Assembly-CSharp]],
+      Data: 4|System.Collections.Generic.EnumEqualityComparer`1[[AmmoType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1037,7 +1053,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 7
-      Data: 4|AmmoTracker, Assembly-CSharp
+      Data: 5|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
       Data: 20
@@ -1058,7 +1074,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 5|AmmoTracker, Assembly-CSharp
+      Data: 6|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
       Data: 0
@@ -1079,7 +1095,7 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 6|AmmoTracker, Assembly-CSharp
+      Data: 7|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
       Data: 0
@@ -1100,7 +1116,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 7
-      Data: 7|AmmoTracker, Assembly-CSharp
+      Data: 8|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
       Data: 0
@@ -1121,19 +1137,19 @@ MonoBehaviour:
       Data: 
     - Name: EquippedGuns
       Entry: 7
-      Data: 8|GunData[], Assembly-CSharp
+      Data: 9|GunData[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 3
-    - Name: 
-      Entry: 10
-      Data: 4
     - Name: 
       Entry: 10
       Data: 5
     - Name: 
       Entry: 10
       Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
     - Name: 
       Entry: 13
       Data: 
@@ -1142,11 +1158,11 @@ MonoBehaviour:
       Data: 
     - Name: AllGuns
       Entry: 7
-      Data: 9|System.Collections.Generic.Dictionary`2[[GunShopItemData, Assembly-CSharp],[System.Boolean,
+      Data: 10|System.Collections.Generic.Dictionary`2[[GunShopItemData, Assembly-CSharp],[System.Boolean,
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 10|System.Collections.Generic.ObjectEqualityComparer`1[[GunShopItemData,
+      Data: 11|System.Collections.Generic.ObjectEqualityComparer`1[[GunShopItemData,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 8
@@ -1159,7 +1175,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 7
+      Data: 8
     - Name: $v
       Entry: 5
       Data: false
@@ -1171,7 +1187,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 8
+      Data: 9
     - Name: $v
       Entry: 5
       Data: true
@@ -1183,7 +1199,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 9
+      Data: 10
     - Name: $v
       Entry: 5
       Data: false
@@ -1198,20 +1214,52 @@ MonoBehaviour:
       Data: 
     - Name: DroppableAmmo
       Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[AmmoDropData, Assembly-CSharp]],
+      Data: 12|System.Collections.Generic.List`1[[AmmoDropData, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 10
-      Data: 10
-    - Name: 
-      Entry: 10
       Data: 11
     - Name: 
       Entry: 10
       Data: 12
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: UpgradableItemLevels
+      Entry: 7
+      Data: 13|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 14|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Magnet
+    - Name: $v
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -2983,7 +3031,6 @@ MonoBehaviour:
   moveSpeed: 5
   dashSpeed: 10
   dashDuration: 0.5
-  cooldown: 5
   stickDeadzone: 0.1
 --- !u!114 &1002093043
 MonoBehaviour:
