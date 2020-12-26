@@ -19,20 +19,26 @@ public class PlayerShooter : Shooter, ISaveLoad
      ValidateInput("@ammo != null && ammo.Count == System.Enum.GetNames(typeof(AmmoType)).Length",
                    "Account for all AmmoType")]
     private Dictionary<AmmoType, AmmoTracker> ammo;
+    [SerializeField, InlineEditor, ValidateInput("@enrage != null && enrage.itemName == \"Enrage\"")]
+    private UpgradableShopItemData enrage;
+    [SerializeField, PropertyRange(0f, 1f)]
+    private float enrageThreshold;
 
     private int _currentGun;
+    private PlayerHealth _health;
     private AmmoData[] _ammoData;
 
     protected override void Start() {
         base.Start();
+        _health = GetComponent<PlayerHealth>();
         _currentGun = defaultGun;
         _ammoData = new AmmoData[guns.Length];
         for (int i = 0; i < guns.Length; i++) {
-            _ammoData[i] = new AmmoData(ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? 
-                                            guns[i].clipSize : 
-                                            ammo[guns[i].ammoType].CurrentAmmo,
-                                        guns[i].reloadTime, 
-                                        guns[i].isInfiniteAmmo);
+            _ammoData[i] =
+                new
+                    AmmoData(ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? guns[i].clipSize : ammo[guns[i].ammoType].CurrentAmmo,
+                             guns[i].reloadTime,
+                             guns[i].isInfiniteAmmo);
             ammo[guns[i].ammoType].CurrentAmmo -= _ammoData[i].RemainingAmmo;
         }
 
@@ -59,6 +65,12 @@ public class PlayerShooter : Shooter, ISaveLoad
         base.Shoot();
         UpdateUI();
         HandleAmmo();
+    }
+
+    protected override void ApplyBulletAttributes(Bullet bullet, BulletData bulletType) {
+        base.ApplyBulletAttributes(bullet, bulletType);
+        if (_health.CurHp / _health.MaxHp <= enrageThreshold)
+            bullet.DamageMultiplier = enrage.effectiveness[enrage.Level].effectiveness;
     }
 
     private void UpdateUI() {
@@ -89,7 +101,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     public void Save() {
         for (int i = 0; i < guns.Length; i++)
             ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
-        
+
         ReferenceManager.Inst.ProgressManager.Data.Ammo = ammo;
         ReferenceManager.Inst.ProgressManager.Data.EquippedGuns = guns;
     }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    protected float _maxHp = 10f;
+    [NonSerialized]
+    public float MaxHp = 10f;
 
     [ShowInInspector]
     [ReadOnly]
@@ -35,7 +36,7 @@ public class Health : MonoBehaviour
     public event EventHandler OnDeath;
 
     public virtual void Respawned(float maxHealth) {
-        _maxHp = maxHealth;
+        MaxHp = maxHealth;
         CurHp = maxHealth;
         UpdateUI();
     }
@@ -44,7 +45,7 @@ public class Health : MonoBehaviour
         if (!hasUI)
             return;
 
-        sliderImage.fillAmount = CurHp / _maxHp;
+        sliderImage.fillAmount = CurHp / MaxHp;
         sliderImage.color = lerpColour ? colourGradient.Evaluate(sliderImage.fillAmount) : baseColour;
     }
 
@@ -69,7 +70,7 @@ public class Health : MonoBehaviour
     }
 
     public void Heal(float damage) {
-        damage = Mathf.Min(damage, _maxHp - CurHp);
+        damage = Mathf.Min(damage, MaxHp - CurHp);
         CurHp += damage;
 
         OnHeal?.Invoke(this, new DamageTakenArgs(damage));

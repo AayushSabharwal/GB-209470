@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
         get => _enemiesLeftToKill;
         set {
             _enemiesLeftToKill = value;
-            if (_enemiesLeftToKill == 0)
+            if (_enemiesLeftToKill == 0 && !_isPlayerDead)
                 OnLevelEnd?.Invoke();
         }
     }

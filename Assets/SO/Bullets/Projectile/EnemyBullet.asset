@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfffd6d4a55e06b40b82658cfc605516, type: 3}
   m_Name: EnemyBullet
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 1
   poolTag: ProjectileBullet
   childProjectiles: []
   isProjectile: 1

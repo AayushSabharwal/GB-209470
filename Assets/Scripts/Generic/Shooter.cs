@@ -14,12 +14,12 @@ public class Shooter : SerializedMonoBehaviour
     public AmmoData AmmoData;
     [NonSerialized]
     public EventHandler OnShoot;
-    
+
     private float _shotTimer;
     private ObjectPooler _objectPooler;
     protected bool IsPaused;
     protected bool IsPlayerDead;
-    
+
     private void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
     }
@@ -40,7 +40,7 @@ public class Shooter : SerializedMonoBehaviour
     }
 
     protected virtual void OnEnable() {
-        if(gun == null)
+        if (gun == null)
             return;
         AmmoData = new AmmoData(gun.clipSize, gun.reloadTime, gun.isInfiniteAmmo);
     }
@@ -75,9 +75,13 @@ public class Shooter : SerializedMonoBehaviour
             bullet.transform.rotation = shootPoint.rotation *
                                         Quaternion.AngleAxis(offsetAngle + Random.Range(-spread, spread),
                                                              Vector3.forward);
-            bullet.GetComponent<Bullet>().data = bulletType;
+            ApplyBulletAttributes(bullet.GetComponent<Bullet>(), bulletType);
             bullet.SetActive(true);
         }
+    }
+
+    protected virtual void ApplyBulletAttributes(Bullet bullet, BulletData bulletType) {
+        bullet.data = bulletType;
     }
 }
 
@@ -113,12 +117,12 @@ public struct AmmoData
     }
 
     public void Update() {
-        if(_infiniteAmmo)    return;
+        if (_infiniteAmmo) return;
         if (ReloadTimer < 0f) {
             ReloadTimer = 0f;
             RemainingAmmo = _reloadAmount;
         }
-        else if(ReloadTimer > 0f)
+        else if (ReloadTimer > 0f)
             ReloadTimer -= Time.deltaTime;
     }
 }
