@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,16 @@ public class PlayerHealth : Health
     private Color baseShieldColour = Color.red;
     [ShowIfGroup("Shield UI/lerp", VisibleIf = "lerpShieldColour"), SerializeField]
     private Gradient shieldGradient;
-
+    [SerializeField]
+    private float outOfCombatTime = 4f;
+    [SerializeField]
+    private float outOfCombatHealRate = 3f;
     private float MaxShieldHp => shield.effectiveness[shield.Level].effectiveness;
+    private float _outOfCombatTimer;
+
+    private void Start() {
+        ReferenceManager.Inst.PlayerShooter.OnShoot += (_, __) => _outOfCombatTimer = outOfCombatTime;
+    }
 
     public override void Respawned(float maxHealth) {
         CurShieldHp = MaxShieldHp;
@@ -32,9 +41,18 @@ public class PlayerHealth : Health
         base.UpdateUI();
     }
 
+    private void Update() {
+        if (_outOfCombatTimer > 0f)
+            _outOfCombatTimer -= Time.deltaTime;
+        else {
+            _outOfCombatTimer = 0f;
+            Heal(outOfCombatHealRate*Time.deltaTime);
+        }
+    }
+
     public override void TakeDamage(float damage) {
         float shieldDamage = Mathf.Min(damage, CurShieldHp);
-
+        _outOfCombatTimer = outOfCombatTime;
         CurShieldHp -= shieldDamage;
         CurHp -= damage - shieldDamage;
         InvokeOnTakeDamage(new DamageTakenArgs(damage));

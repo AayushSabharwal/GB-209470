@@ -52,7 +52,7 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
     }
 
     public bool IsEquipped(GunData gun) {
-        for (int i = 0; i < equippableGuns; i++)
+        for (int i = 0; i < _equippedGuns.Length; i++)
             if (_equippedGuns[i] == gun)
                 return true;
         return false;
