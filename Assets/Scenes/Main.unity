@@ -1068,7 +1068,7 @@ MonoBehaviour:
   - {fileID: 1231650071}
   - {fileID: 359027388}
   - {fileID: 1272281481}
-  shopSceneBuildIndex: 1
+  shopSceneBuildIndex: 2
 --- !u!1 &374765936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,8 +1110,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bc2a45cababd1ba43825d387ce652e5c, type: 2}
     - {fileID: 11400000, guid: bfad78841cdebd142a80a6b36bd57205, type: 2}
     - {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
-    - {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}
-    - {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}
     - {fileID: 11400000, guid: 893f711e23869e8419b163e1f40600dc, type: 2}
     - {fileID: 11400000, guid: 2aa905d4b14f9c6429b82588f632346b, type: 2}
     - {fileID: 11400000, guid: 1c6b5529718d7fb4caf987b5f4292cf1, type: 2}
@@ -1223,7 +1221,7 @@ MonoBehaviour:
       Data: 6|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
-      Data: 20
+      Data: 0
     - Name: MaxAmmo
       Entry: 3
       Data: 120
@@ -1244,7 +1242,7 @@ MonoBehaviour:
       Data: 7|AmmoTracker, Assembly-CSharp
     - Name: CurrentAmmo
       Entry: 3
-      Data: 20
+      Data: 0
     - Name: MaxAmmo
       Entry: 3
       Data: 40
@@ -1286,16 +1284,10 @@ MonoBehaviour:
       Data: 9|GunData[], Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 10
       Data: 7
-    - Name: 
-      Entry: 10
-      Data: 8
-    - Name: 
-      Entry: 10
-      Data: 9
     - Name: 
       Entry: 13
       Data: 
@@ -1321,7 +1313,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 10
+      Data: 8
     - Name: $v
       Entry: 5
       Data: false
@@ -1333,7 +1325,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 11
+      Data: 9
     - Name: $v
       Entry: 5
       Data: true
@@ -1345,7 +1337,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 10
-      Data: 12
+      Data: 10
     - Name: $v
       Entry: 5
       Data: false
@@ -1367,13 +1359,13 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 10
       Data: 13
-    - Name: 
-      Entry: 10
-      Data: 14
-    - Name: 
-      Entry: 10
-      Data: 15
     - Name: 
       Entry: 13
       Data: 

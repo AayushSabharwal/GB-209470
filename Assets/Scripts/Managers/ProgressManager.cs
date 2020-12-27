@@ -39,7 +39,7 @@ public class ProgressManager : SerializedMonoBehaviour
         }
     }
 
-    private void Save() {
+    public void Save() {
         for (int i = 0; i < saveableItems.Count; i++)
             saveableItems[i].Save();
         for(int i = 0; i < saveableSOs.Count; i++)

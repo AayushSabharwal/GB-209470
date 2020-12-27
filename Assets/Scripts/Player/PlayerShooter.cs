@@ -94,6 +94,8 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public void ChangeGun(int to) {
+        if (to >= guns.Length)
+            return;
         _ammoData[_currentGun] = AmmoData;
         gun = guns[to];
         AmmoData = _ammoData[to];

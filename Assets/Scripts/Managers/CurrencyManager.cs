@@ -35,7 +35,6 @@ public class CurrencyManager : MonoBehaviour, ISaveLoad
     }
 
     public void Load() {
-        print($"HERE {ReferenceManager.Inst.ProgressManager.Data.Currency}");
         Currency = ReferenceManager.Inst.ProgressManager.Data.Currency;
     }
 }

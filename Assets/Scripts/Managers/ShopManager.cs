@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShopManager : SerializedMonoBehaviour, ISaveLoad
@@ -14,13 +15,19 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
     private GunData[] _equippedGuns;
     [SerializeField]
     private Image[] equipSlots;
+    [SerializeField]
+    private int levelBuildIndex;
 
     public event Action OnGunShopItemUpdateUI;
-    
+
     private void Start() {
         OnGunShopItemUpdateUI?.Invoke();
-        for (int i = 0; i < equippableGuns; i++)
-            equipSlots[i].sprite = _equippedGuns[i]?.image;
+        for (int i = 0; i < equippableGuns; i++) {
+            if (i < _equippedGuns.Length)
+                equipSlots[i].sprite = _equippedGuns[i]?.image;
+            else
+                equipSlots[i].color = new Color(0f, 0f, 0f, 0f);
+        }
     }
 
     public bool TryPurchaseGun(GunShopItemData gun) {
@@ -34,7 +41,7 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
     }
 
     public void EquipSlot(GunData gun, int index) {
-        if(index >= equippableGuns) return;
+        if (index >= equippableGuns) return;
         _equippedGuns[index] = gun;
         equipSlots[index].sprite = gun.image;
         OnGunShopItemUpdateUI?.Invoke();
@@ -45,16 +52,19 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
     }
 
     public bool IsEquipped(GunData gun) {
-        for(int i = 0; i < equippableGuns; i++)
+        for (int i = 0; i < equippableGuns; i++)
             if (_equippedGuns[i] == gun)
                 return true;
         return false;
     }
 
-
-    public void Save() {
-        throw new System.NotImplementedException();
+    public void NextLevel() {
+        ReferenceManager.Inst.ProgressManager.Save();
+        SceneManager.LoadScene(levelBuildIndex);
     }
+
+
+    public void Save() { }
 
     public void Load() {
         _equippedGuns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns;
