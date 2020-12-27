@@ -55,6 +55,11 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start() {
         ReferenceManager.Inst.UIManager.OnPause += OnPause;
+        ReferenceManager.Inst.EnemySpawner.OnLevelEnd += OnLevelEnd;
+    }
+
+    private void OnLevelEnd() {
+        _isPaused = true;
     }
 
     private void OnPause(bool isPaused) {

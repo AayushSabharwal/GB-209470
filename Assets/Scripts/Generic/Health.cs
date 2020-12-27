@@ -58,6 +58,9 @@ public class Health : MonoBehaviour
     }
 
     public virtual void TakeDamage(float damage) {
+        if (CurHp <= 0f)
+            return;
+        
         CurHp -= damage;
         InvokeOnTakeDamage(new DamageTakenArgs(damage));
 

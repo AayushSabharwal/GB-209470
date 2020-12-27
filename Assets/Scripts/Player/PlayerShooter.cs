@@ -39,13 +39,18 @@ public class PlayerShooter : Shooter, ISaveLoad
                     AmmoData(ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? guns[i].clipSize : ammo[guns[i].ammoType].CurrentAmmo,
                              guns[i].reloadTime,
                              guns[i].isInfiniteAmmo);
+            _ammoData[i].OnReload += UpdateUI;
             ammo[guns[i].ammoType].CurrentAmmo -= _ammoData[i].RemainingAmmo;
         }
 
         gun = guns[defaultGun];
         AmmoData = _ammoData[defaultGun];
-
+        ReferenceManager.Inst.EnemySpawner.OnLevelEnd += OnLevelEnd;
         UpdateUI();
+    }
+
+    private void OnLevelEnd() {
+        IsPaused = true;
     }
 
     protected override void Update() {
@@ -56,7 +61,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     private void HandleAmmo() {
-        if (AmmoData.RemainingAmmo > 0)
+        if (AmmoData.RemainingAmmo > 0 || AmmoData.ReloadTimer > 0f || AmmoData.ReloadTimer < 0f)
             return;
         Reload();
     }
@@ -85,6 +90,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 
         AmmoData.Reload(ammo[gun.ammoType].CurrentAmmo >= gun.clipSize ? -1 : ammo[gun.ammoType].CurrentAmmo);
         ammo[gun.ammoType].CurrentAmmo = Mathf.Max(ammo[gun.ammoType].CurrentAmmo - gun.clipSize, 0);
+        UpdateUI();
     }
 
     public void ChangeGun(int to) {
@@ -92,6 +98,8 @@ public class PlayerShooter : Shooter, ISaveLoad
         gun = guns[to];
         AmmoData = _ammoData[to];
         _currentGun = to;
+        
+        UpdateUI();
     }
 
     public void AddAmmo(AmmoType type, int amount) {

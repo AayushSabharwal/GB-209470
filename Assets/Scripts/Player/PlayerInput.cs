@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -18,9 +19,23 @@ public class PlayerInput : MonoBehaviour
     private void Start() {
         _isPaused = false;
         ReferenceManager.Inst.UIManager.OnPause += OnPause;
+        ReferenceManager.Inst.PlayerHealth.OnDeath += OnPlayerDeath;
+        ReferenceManager.Inst.EnemySpawner.OnLevelEnd += OnLevelEnd;
+    }
+
+    private void OnLevelEnd() {
+        _isPaused = true;
+    }
+
+    private void OnPlayerDeath(object sender, EventArgs e) {
+        moveStick.OnPointerUp(null);
+        shootStick.OnPointerUp(null);
+        _isPaused = true;
     }
 
     private void OnPause(bool isPaused) {
+        moveStick.OnPointerUp(null);
+        shootStick.OnPointerUp(null);
         _isPaused = isPaused;
     }
 

@@ -1,6 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class UIManager : MonoBehaviour
     private GameObject gameOverScreen;
     [SerializeField, BoxGroup("UI References")]
     private GameObject levelOverScreen;
-
+    [SerializeField, BoxGroup("UI References")]
+    private Image[] gunSlots;
     [SerializeField, BoxGroup("Scenes")]
     private int shopSceneBuildIndex;
     
@@ -33,6 +35,13 @@ public class UIManager : MonoBehaviour
 
         ReferenceManager.Inst.PlayerHealth.OnDeath += (_, __) => GameOver();
         ReferenceManager.Inst.EnemySpawner.OnLevelEnd += LevelOver;
+        ProgressManager progressManager = ReferenceManager.Inst.ProgressManager;
+        for (int i = 0; i < 3; i++) {
+            if (i >= progressManager.Data.EquippedGuns.Length || progressManager.Data.EquippedGuns[i] == null)
+                gunSlots[i].color = new Color(0f, 0f, 0f, 0f);
+            else
+                gunSlots[i].sprite = progressManager.Data.EquippedGuns[i].image;
+        }
     }
 
     public void Pause() {

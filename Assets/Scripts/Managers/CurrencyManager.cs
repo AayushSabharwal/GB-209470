@@ -1,14 +1,15 @@
-﻿using TMPro;
+﻿using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour, ISaveLoad
 {
+    [ShowInInspector, ReadOnly]
     public int Currency { get; private set; }
     [SerializeField]
     private TextMeshProUGUI displayText;
 
     private void Start() {
-        Currency = 0;
         UpdateUI();
     }
 
@@ -34,6 +35,7 @@ public class CurrencyManager : MonoBehaviour, ISaveLoad
     }
 
     public void Load() {
+        print($"HERE {ReferenceManager.Inst.ProgressManager.Data.Currency}");
         Currency = ReferenceManager.Inst.ProgressManager.Data.Currency;
     }
 }

@@ -95,6 +95,7 @@ public struct AmmoData
     private int _maxAmmo;
     private int _reloadAmount;
     private float _reloadTime;
+    public event Action OnReload;
 
     public AmmoData(int maxAmmo, float reloadTime, bool infiniteAmmo) {
         _maxAmmo = maxAmmo;
@@ -103,6 +104,7 @@ public struct AmmoData
         _infiniteAmmo = infiniteAmmo;
         RemainingAmmo = _maxAmmo;
         ReloadTimer = 0f;
+        OnReload = null;
     }
 
     public void Shoot() {
@@ -121,6 +123,7 @@ public struct AmmoData
         if (ReloadTimer < 0f) {
             ReloadTimer = 0f;
             RemainingAmmo = _reloadAmount;
+            OnReload?.Invoke();
         }
         else if (ReloadTimer > 0f)
             ReloadTimer -= Time.deltaTime;

@@ -14,6 +14,11 @@ public class ShooterEnemy : MonoBehaviour
     private void Start() {
         _isPaused = false;
         ReferenceManager.Inst.UIManager.OnPause += OnPause;
+        ReferenceManager.Inst.EnemySpawner.OnLevelEnd += OnLevelEnd;
+    }
+
+    private void OnLevelEnd() {
+        _isPaused = true;
     }
 
     private void OnPause(bool isPaused) {
