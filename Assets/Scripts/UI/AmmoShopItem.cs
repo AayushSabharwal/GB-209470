@@ -18,9 +18,11 @@ public class AmmoShopItem : MonoBehaviour
 
     private int _purchasableAmmo;
     private ProgressManager _progressManager;
+    private InfoDialog _infoDialog;
 
     private void Awake() {
         _progressManager = ReferenceManager.Inst.ProgressManager;
+        _infoDialog = ReferenceManager.Inst.InfoDialog;
     }
 
     private void Start() {
@@ -41,5 +43,9 @@ public class AmmoShopItem : MonoBehaviour
         if (!ReferenceManager.Inst.CurrencyManager.TrySubtractCurrency(_purchasableAmmo * item.costPerAmmo)) return;
         _progressManager.Data.Ammo[item.ammo.type].CurrentAmmo += _purchasableAmmo;
         UpdateUI();
+    }
+
+    public void Info() {
+        _infoDialog.Show(item.displayName, item.GetDescription());
     }
 }

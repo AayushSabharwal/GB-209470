@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shell
   m_EditorClassIdentifier: 
   displayName: Shotgun Ammo
+  description: Ammo used by shotguns, costs %CPA% per shot.
   maxPurchaseAmount: 5
   costPerAmmo: 20
   ammo: {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}

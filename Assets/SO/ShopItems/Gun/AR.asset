@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: AR
   m_EditorClassIdentifier: 
   displayName: Automatic Rifle
+  description: Rapid fire gun with moderate spread. Uses %AMMO% ammo
   cost: 10
   gun: {fileID: 11400000, guid: bdf9c09645eebbd40b85e6e182ef9f95, type: 2}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Handgun
   m_EditorClassIdentifier: 
   displayName: Handgun Ammo
+  description: Ammo used by handguns. Costs %CPA% per shot
   maxPurchaseAmount: 6
   costPerAmmo: 10
   ammo: {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}

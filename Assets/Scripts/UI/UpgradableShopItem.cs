@@ -16,6 +16,12 @@ public class UpgradableShopItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI titleText;
 
+    private InfoDialog _infoDialog;
+
+    private void Awake() {
+        _infoDialog = ReferenceManager.Inst.InfoDialog;
+    }
+
     private void Start() {
         UpdateUI();
     }
@@ -31,5 +37,9 @@ public class UpgradableShopItem : MonoBehaviour
     public void Upgrade() {
         item.Upgrade();
         UpdateUI();
+    }
+
+    public void Info() {
+        _infoDialog.Show(item.itemName, item.GetDescription());
     }
 }

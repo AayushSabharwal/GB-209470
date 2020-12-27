@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Handgun
   m_EditorClassIdentifier: 
   displayName: Handgun
+  description: The default gun. Reliably accurate, moderately fast. Uses %AMMO% ammo.
   cost: 10
   gun: {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}

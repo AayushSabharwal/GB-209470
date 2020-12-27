@@ -17,13 +17,16 @@ public class GunShopItem : MonoBehaviour
     private TextMeshProUGUI buyButtonText;
     [SerializeField]
     private GameObject equipButton;
-    [SerializeField]
-    private EquipGunDialog equipGunDialog;
-
+    
+    private EquipGunDialog _equipGunDialog;
+    private InfoDialog _infoDialog;
     private ShopManager _shopManager;
 
     private void Awake() {
         _shopManager = ReferenceManager.Inst.ShopManager;
+        _equipGunDialog = ReferenceManager.Inst.EquipGunDialog;
+        _infoDialog = ReferenceManager.Inst.InfoDialog;
+        
         _shopManager.OnGunShopItemUpdateUI += UpdateUI;
     }
 
@@ -45,7 +48,11 @@ public class GunShopItem : MonoBehaviour
     }
 
     public void Equip() {
-        equipGunDialog.Equip(item.gun);
+        _equipGunDialog.Equip(item.gun);
         equipButton.SetActive(false);
+    }
+
+    public void Info() {
+        _infoDialog.Show(item.displayName, item.GetDescription());
     }
 }

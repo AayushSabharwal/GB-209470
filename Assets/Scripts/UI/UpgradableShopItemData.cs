@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,10 +12,19 @@ public class UpgradableShopItemData : ScriptableObject, ISaveLoad
     public string itemName;
     [NonSerialized, VerticalGroup("H/V"), LabelWidth(80f), ReadOnly, ShowInInspector]
     public int Level;
+    [SerializeField, Multiline]
+    private string description;
     public UpgradeLevel[] effectiveness;
 
     public bool IsUpgradable => Level < effectiveness.Length - 1;
 
+    public string GetDescription() {
+        return description.Replace("%CEFF%", $"Current: {effectiveness[Level].effectiveness}")
+                          .Replace("%NEFF%", IsUpgradable ? 
+                                       $"Next: {effectiveness[Level+1].effectiveness}" : 
+                                       string.Empty);
+    }
+    
     public bool Upgrade() {
         if (!IsUpgradable ||
             !ReferenceManager.Inst.CurrencyManager.TrySubtractCurrency(effectiveness[Level + 1].cost)) return false;

@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 54628aafa20f64b40ae661038ee7abf0, type: 3}
   itemName: Shield
+  description: 'Add an extra shield to absorb some damage
+
+    %CEFF%
+
+    %NEFF%'
   effectiveness:
   - effectiveness: 0
     cost: 0

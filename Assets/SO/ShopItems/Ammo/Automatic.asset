@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Automatic
   m_EditorClassIdentifier: 
   displayName: Automatic Ammo
+  description: Ammo used for various automatic weapons. Costs %CPA% per bullet.
   maxPurchaseAmount: 30
   costPerAmmo: 3
   ammo: {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
