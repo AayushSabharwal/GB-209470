@@ -4,6 +4,7 @@ using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerShooter : Shooter, ISaveLoad
 {
@@ -13,8 +14,14 @@ public class PlayerShooter : Shooter, ISaveLoad
     private int defaultGun;
     [SerializeField]
     private TextMeshProUGUI ammoText;
-    [SerializeField]
+    [SerializeField, FoldoutGroup("GUI")]
     private Image reloadProgress;
+    [SerializeField, FoldoutGroup("GUI")]
+    private Transform ammoTracker;
+    [SerializeField, FoldoutGroup("GUI")]
+    private float punchForce = 3f;
+    [SerializeField, FoldoutGroup("GUI")]
+    private float punchDuration = 0.4f;
     [OdinSerialize,
      ValidateInput("@ammo != null && ammo.Count == System.Enum.GetNames(typeof(AmmoType)).Length",
                    "Account for all AmmoType")]
@@ -57,7 +64,7 @@ public class PlayerShooter : Shooter, ISaveLoad
         if (IsPaused || IsPlayerDead) return;
 
         base.Update();
-        if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = AmmoData.ReloadTimer / gun.reloadTime;
+        if (AmmoData.ReloadTimer >= 0f) reloadProgress.fillAmount = 1f - AmmoData.ReloadTimer / gun.reloadTime;
     }
 
     private void HandleAmmo() {
@@ -84,12 +91,15 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public void Reload() {
-        if (AmmoData.RemainingAmmo == gun.clipSize || ammo[gun.ammoType].CurrentAmmo == 0) return;
+        if (AmmoData.RemainingAmmo == gun.clipSize || ammo[gun.ammoType].CurrentAmmo == 0) {
+            ammoTracker.DOPunchPosition(Vector3.right * punchForce, punchDuration);
+            return;
+        }
 
         // TODO: Visual notification for being unable to reload
 
         AmmoData.Reload(ammo[gun.ammoType].CurrentAmmo >= gun.clipSize ? -1 : ammo[gun.ammoType].CurrentAmmo);
-        ammo[gun.ammoType].CurrentAmmo = Mathf.Max(ammo[gun.ammoType].CurrentAmmo - gun.clipSize, 0);
+        ammo[gun.ammoType].CurrentAmmo = Mathf.Max(ammo[gun.ammoType].CurrentAmmo - gun.clipSize + AmmoData.RemainingAmmo, 0);
         UpdateUI();
     }
 

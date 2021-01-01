@@ -10,7 +10,7 @@ public class UpgradableShopItem : MonoBehaviour
     [SerializeField]
     private Button upgradeButton;
     [SerializeField]
-    private TextMeshProUGUI upgradeButtonText;
+    private TextMeshProUGUI costText;
     [SerializeField]
     private Image image;
     [SerializeField]
@@ -31,7 +31,7 @@ public class UpgradableShopItem : MonoBehaviour
         upgradeButton.interactable = item.IsUpgradable;
         titleText.text = item.itemName;
         if (item.IsUpgradable)
-            upgradeButtonText.text = $"Upgrade ({item.effectiveness[item.Level + 1].cost})";
+            costText.text = item.effectiveness[item.Level + 1].cost.ToString();
     }
 
     public void Upgrade() {

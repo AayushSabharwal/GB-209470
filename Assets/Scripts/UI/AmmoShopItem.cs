@@ -14,7 +14,7 @@ public class AmmoShopItem : MonoBehaviour
     [SerializeField]
     private Button buyButton;
     [SerializeField]
-    private TextMeshProUGUI buyButtonText;
+    private TextMeshProUGUI costText;
 
     private int _purchasableAmmo;
     private ProgressManager _progressManager;
@@ -35,7 +35,7 @@ public class AmmoShopItem : MonoBehaviour
         _purchasableAmmo =
             Mathf.Min(_progressManager.Data.Ammo[item.ammo.type].MaxAmmo - _progressManager.Data.Ammo[item.ammo.type].CurrentAmmo,
                       item.maxPurchaseAmount);
-        buyButtonText.text = $"Buy ({item.costPerAmmo * _purchasableAmmo})";
+        costText.text = (item.costPerAmmo * _purchasableAmmo).ToString();
         buyButton.interactable = _purchasableAmmo > 0;
     }
 

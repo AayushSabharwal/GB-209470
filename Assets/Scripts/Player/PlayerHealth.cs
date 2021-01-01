@@ -23,7 +23,7 @@ public class PlayerHealth : Health
     private float outOfCombatHealRate = 3f;
     private float MaxShieldHp => shield.effectiveness[shield.Level].effectiveness;
     private float _outOfCombatTimer;
-
+    
     private void Start() {
         ReferenceManager.Inst.PlayerShooter.OnShoot += (_, __) => _outOfCombatTimer = outOfCombatTime;
     }

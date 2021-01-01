@@ -27,8 +27,8 @@ public class Health : MonoBehaviour
     [ShowInInspector]
     public bool test;
 
-    [ShowIf("test"), OnValueChanged("@(_testHp-CurHp > 0f) ? Heal(_testHp-CurHp) : TakeDamage(CurHp-_testHp)"),
-     PropertyRange(0f, "_maxHp"), ShowInInspector]
+    [ShowIfGroup("test"), OnValueChanged("@(_testHp-CurHp > 0f) ? Heal(_testHp-CurHp) : TakeDamage(CurHp-_testHp)"),
+     PropertyRange(0f, "MaxHp"), ShowInInspector]
     private float _testHp;
 
     public event EventHandler<DamageTakenArgs> OnTakeDamage;
