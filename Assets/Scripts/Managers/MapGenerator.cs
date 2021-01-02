@@ -21,37 +21,38 @@ public class MapGenerator : SerializedMonoBehaviour
     private GenerationLayer[] generationLayers;
     [SerializeField]
     private BoxCollider2D cameraZone;
-
-    private Tilemap[,] _tilemaps;
-
-    public TilemapRenderer[,] Tilemaps { get; private set; }
-    public Bounds[,] TilemapBounds { get; private set; }
-    public Vector2Int ChunkCount { get; private set; }
-    public Vector2Int ChunkSize => chunkSize;
+    [SerializeField]
+    private Tilemap tilemap;
+    // private Tilemap[,] _tilemaps;
+    //
+    // public TilemapRenderer[,] Tilemaps { get; private set; }
+    // public Bounds[,] TilemapBounds { get; private set; }
+    // public Vector2Int ChunkCount { get; private set; }
+    // public Vector2Int ChunkSize => chunkSize;
 
     public TileType[] Map { get; private set; }
     public List<Vector2Int> Walkable { get; private set; }
 
     private void Awake() {
-        ChunkCount = new Vector2Int(Mathf.CeilToInt(worldDimensions.x / (float) chunkSize.x),
-                                    Mathf.CeilToInt(worldDimensions.y / (float) chunkSize.y));
-        _tilemaps = new Tilemap[ChunkCount.x, ChunkCount.y];
-        Tilemaps = new TilemapRenderer[ChunkCount.x, ChunkCount.y];
-        TilemapBounds = new Bounds[ChunkCount.x, ChunkCount.y];
-        for (int i = 0; i < ChunkCount.x; i++)
-            for (int j = 0; j < ChunkCount.y; j++) {
-                _tilemaps[i, j] = Instantiate(tilemapPrefab,
-                                              Vector3.zero,
-                                              Quaternion.identity,
-                                              transform)
-                    .GetComponent<Tilemap>();
-                Tilemaps[i, j] = _tilemaps[i, j].GetComponent<TilemapRenderer>();
-                TilemapBounds[i, j] = new Bounds(new Vector3((i + 0.5f) * ChunkSize.x, (j + 0.5f) * chunkSize.y, 0f),
-                                                 new Vector3(chunkSize.x, chunkSize.y, 0f));
-            }
+        // ChunkCount = new Vector2Int(Mathf.CeilToInt(worldDimensions.x / (float) chunkSize.x),
+        //                             Mathf.CeilToInt(worldDimensions.y / (float) chunkSize.y));
+        // _tilemaps = new Tilemap[ChunkCount.x, ChunkCount.y];
+        // Tilemaps = new TilemapRenderer[ChunkCount.x, ChunkCount.y];
+        // TilemapBounds = new Bounds[ChunkCount.x, ChunkCount.y];
+        // for (int i = 0; i < ChunkCount.x; i++)
+        //     for (int j = 0; j < ChunkCount.y; j++) {
+        //         _tilemaps[i, j] = Instantiate(tilemapPrefab,
+        //                                       Vector3.zero,
+        //                                       Quaternion.identity,
+        //                                       transform)
+        //             .GetComponent<Tilemap>();
+        //         Tilemaps[i, j] = _tilemaps[i, j].GetComponent<TilemapRenderer>();
+        //         TilemapBounds[i, j] = new Bounds(new Vector3((i + 0.5f) * ChunkSize.x, (j + 0.5f) * chunkSize.y, 0f),
+        //                                          new Vector3(chunkSize.x, chunkSize.y, 0f));
+        //     }
 
-        cameraZone.size = worldDimensions;
-        cameraZone.offset = worldDimensions / 2;
+        cameraZone.size = (Vector2) worldDimensions * 1.5f;
+        cameraZone.offset = (Vector2) worldDimensions * 0.75f;
     }
 
     private void Start() {
@@ -85,25 +86,45 @@ public class MapGenerator : SerializedMonoBehaviour
 
         ReferenceManager.Inst.SharedDataManager.PlayerStartPosition = Walkable[Random.Range(0, Walkable.Count)];
 
-        ClearTilemaps();
-
-        for (int x = 0; x < worldDimensions.x; x++)
-            for (int y = 0; y < worldDimensions.y; y++)
-                if (x == 0 || x == worldDimensions.x - 1 || y == 0 || y == worldDimensions.y - 1)
-                    _tilemaps[x / chunkSize.x, y / chunkSize.y]
-                        .SetTile(new Vector3Int(x, y, 0), tileTypeMap[TileType.Wall]);
-                else
-                    _tilemaps[x / chunkSize.x, y / chunkSize.y]
-                        .SetTile(new Vector3Int(x, y, 0), tileTypeMap[Map[PositionToIndex(x, y)]]);
+        for (int i = 0; i < worldDimensions.x; i++) {
+            Map[PositionToIndex(i, 0)] = TileType.Wall;
+            Map[PositionToIndex(i, worldDimensions.y - 1)] = TileType.Wall;
+        }
+        
+        for (int i = 0; i < worldDimensions.y; i++) {
+            Map[PositionToIndex(0, i)] = TileType.Wall;
+            Map[PositionToIndex(worldDimensions.x - 1, i)] = TileType.Wall;
+        }
+        Vector3Int[] posArray = new Vector3Int[Map.Length];
+        TileBase[] tiles = new TileBase[Map.Length];
+        for (int i = 0; i < Map.Length; i++) {
+            Vector2Int pos = IndexToPosition(i);
+            posArray[i] = new Vector3Int(pos.x, pos.y, 0);
+            tiles[i] = tileTypeMap[Map[i]];
+        }
+        tilemap.SetTiles(posArray, tiles);
+        // for (int x = 0; x < worldDimensions.x; x++)
+        //     for (int y = 0; y < worldDimensions.y; y++)
+        //         if (x == 0 || x == worldDimensions.x - 1 || y == 0 || y == worldDimensions.y - 1)
+        //             _tilemaps[x / chunkSize.x, y / chunkSize.y]
+        //                 .SetTile(new Vector3Int(x, y, 0), tileTypeMap[TileType.Wall]);
+        //         else
+        //             _tilemaps[x / chunkSize.x, y / chunkSize.y]
+        //                 .SetTile(new Vector3Int(x, y, 0), tileTypeMap[Map[PositionToIndex(x, y)]]);
         
         StartCoroutine(AstarScan());
     }
-
-    private void ClearTilemaps() {
-        for (int i = 0; i < ChunkCount.x; i++)
-            for (int j = 0; j < ChunkCount.y; j++)
-                _tilemaps[i, j].ClearAllTiles();
+    
+    [Button]
+    private void Clear() {
+        tilemap.ClearAllTiles();
     }
+
+    // private void ClearTilemaps() {
+    //     for (int i = 0; i < ChunkCount.x; i++)
+    //         for (int j = 0; j < ChunkCount.y; j++)
+    //             _tilemaps[i, j].ClearAllTiles();
+    // }
 
     private void HandleFloorLayer(GenerationLayer gl) {
         for (int i = 0; i < gl.count; i++) {

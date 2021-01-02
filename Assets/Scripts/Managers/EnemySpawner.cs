@@ -89,7 +89,7 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
 
             GameObject g = _objectPooler.Request(enemies[i].enemy.poolTag);
             Vector2Int pos = _mapGenerator.Walkable[Random.Range(0, _mapGenerator.Walkable.Count)];
-            g.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0f);
+            g.transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0f) * 1.5f;
 
             GetEnemy(g).data = enemies[i].enemy;
             g.SetActive(true);

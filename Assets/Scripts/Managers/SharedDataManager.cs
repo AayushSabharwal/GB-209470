@@ -7,7 +7,7 @@ public class SharedDataManager : SerializedMonoBehaviour
     public DistanceThreshold[] repathRateScaling;
 
     [NonSerialized]
-    public Vector2Int PlayerStartPosition;
+    public Vector2 PlayerStartPosition;
 }
 
 public struct DistanceThreshold

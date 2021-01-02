@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
 
         transform.position = new Vector3(ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.x + 0.5f,
-                                         ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.y + 0.5f);
+                                         ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.y + 0.5f) * 1.5f;
         _health.Respawned(maxHp);
 
         _isPaused = false;
