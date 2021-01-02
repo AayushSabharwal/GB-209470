@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foldersToSearchIn:
   - Assets/SO
-  autoFetchInPlaymode: 1
+  autoFetchInPlaymode: 0
   cachedReferences:
   - guid: 179e72533f6f76f4ca6966358426efdf
     scriptableObject: {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}

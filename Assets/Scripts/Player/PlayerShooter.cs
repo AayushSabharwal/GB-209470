@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TMPro;
@@ -34,12 +35,14 @@ public class PlayerShooter : Shooter, ISaveLoad
     private int _currentGun;
     private PlayerHealth _health;
     private AmmoData[] _ammoData;
+    private bool _canTween;
 
     protected override void Start() {
         base.Start();
         _health = GetComponent<PlayerHealth>();
         _currentGun = defaultGun;
         _ammoData = new AmmoData[guns.Length];
+        _canTween = true;
         for (int i = 0; i < guns.Length; i++) {
             _ammoData[i] =
                 new
@@ -92,11 +95,12 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     public void Reload() {
         if (AmmoData.RemainingAmmo == gun.clipSize || ammo[gun.ammoType].CurrentAmmo == 0) {
-            ammoTracker.DOPunchPosition(Vector3.right * punchForce, punchDuration);
+            if (!_canTween) return;
+            _canTween = false;
+            ammoTracker.DOPunchPosition(Vector3.right * punchForce, punchDuration).onComplete += () => _canTween = true;
+
             return;
         }
-
-        // TODO: Visual notification for being unable to reload
 
         AmmoData.Reload(ammo[gun.ammoType].CurrentAmmo >= gun.clipSize ? -1 : ammo[gun.ammoType].CurrentAmmo);
         ammo[gun.ammoType].CurrentAmmo = Mathf.Max(ammo[gun.ammoType].CurrentAmmo - gun.clipSize + AmmoData.RemainingAmmo, 0);
@@ -116,6 +120,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     public void AddAmmo(AmmoType type, int amount) {
         ammo[type].CurrentAmmo = Mathf.Min(ammo[type].CurrentAmmo + amount, ammo[type].MaxAmmo);
+        UpdateUI();
     }
 
     public void Save() {
@@ -128,7 +133,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     public void Load() {
         ammo = ReferenceManager.Inst.ProgressManager.Data.Ammo;
-        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns;
+        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns.Where(g => g!= null).ToArray();
     }
 }
 

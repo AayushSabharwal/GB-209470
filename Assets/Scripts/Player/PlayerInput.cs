@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
         _isPaused = false;
         ReferenceManager.Inst.UIManager.OnPause += OnPause;
         ReferenceManager.Inst.PlayerHealth.OnDeath += OnPlayerDeath;
-        ReferenceManager.Inst.EnemySpawner.OnLevelEnd += OnLevelEnd;
+        // ReferenceManager.Inst.EnemySpawner.OnLevelEnd += OnLevelEnd;
     }
 
     private void OnLevelEnd() {

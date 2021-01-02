@@ -37,6 +37,12 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
         _spawnTimer = spawnInterval;
 
         for (int i = 0; i < enemies.Count; i++) {
+            if (_level < enemies[i].startLevel) {
+                enemies.RemoveAt(i);
+                i--;
+                continue;
+            }
+            
             enemies[i].spawnedCount = 0;
             enemies[i].SpawnAmount = Mathf.Min((int) enemies[i].spawnAmountGenerator.Generate(_level),
                                                enemies[i].spawnCap);
@@ -124,6 +130,8 @@ public class EnemySpawnData : IFloatingProbability
     public EnemyData enemy;
     [InlineEditor]
     public ValueGenerator spawnAmountGenerator;
+    [SerializeField]
+    public int startLevel;
     [NonSerialized]
     public int SpawnAmount;
     [HorizontalGroup, LabelWidth(70f)]

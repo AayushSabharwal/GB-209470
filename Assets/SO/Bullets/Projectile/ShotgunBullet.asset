@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfffd6d4a55e06b40b82658cfc605516, type: 3}
   m_Name: ShotgunBullet
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 6
   poolTag: ProjectileBullet
   childProjectiles: []
   isProjectile: 1
-  speed: 10
+  speed: 30
   lifetime: 2
   isExplosive: 0
   explosionRadius: 0

@@ -57,12 +57,12 @@ public class DropManager : SerializedMonoBehaviour, ISaveLoad
             AmmoDropData data = _droppableAmmo[0];
             float f = Random.value;
             for (int j = 0; j < _droppableAmmo.Count; j++) {
-                if (f > _droppableAmmo[i].FloatingProbability) {
-                    f -= _droppableAmmo[i].FloatingProbability;
+                if (f > _droppableAmmo[j].FloatingProbability) {
+                    f -= _droppableAmmo[j].FloatingProbability;
                     continue;
                 }
 
-                data = _droppableAmmo[i];
+                data = _droppableAmmo[j];
             }
 
             GameObject g = _objectPooler.Request(data.poolTag);

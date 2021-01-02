@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69c9354174074831885d52b2f3371130, type: 3}
-  m_Name: Handgun
+  m_Script: {fileID: 11500000, guid: 927f1ee82b144bc5b0c3800b60b0dff0, type: 3}
+  m_Name: ShooterSpawnAmount
   m_EditorClassIdentifier: 
-  displayName: Handgun
-  description: The default gun. Reliably accurate, moderately fast. Uses %AMMO% ammo.
-  cost: 0
-  gun: {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
+  a: 0
+  b: 1
+  c: 0

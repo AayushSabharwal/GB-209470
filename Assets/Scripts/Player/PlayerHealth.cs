@@ -30,7 +30,7 @@ public class PlayerHealth : Health
 
     public override void Respawned(float maxHealth) {
         CurShieldHp = MaxShieldHp;
-        shieldSlider.gameObject.SetActive(MaxShieldHp > 0f);
+        shieldSlider.transform.parent.gameObject.SetActive(MaxShieldHp > 0f);
         
         base.Respawned(maxHealth);
     }

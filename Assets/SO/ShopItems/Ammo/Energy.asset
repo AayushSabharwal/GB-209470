@@ -15,5 +15,5 @@ MonoBehaviour:
   displayName: Energy Ammo
   description: Ammo used by the aliens' futuristic guns. Costs %CPA% per bullet.
   maxPurchaseAmount: 5
-  costPerAmmo: 20
+  costPerAmmo: 5
   ammo: {fileID: 11400000, guid: 825de9f2f9acee74186e56ad0f64396d, type: 2}

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: ec02013256c3e0c40b06d46162f1108a, type: 3}
-  fireRate: 1
+  fireRate: 1.5
   spreadAngle: 20
   isInfiniteAmmo: 0
   ammoType: 2
   clipSize: 4
-  reloadTime: 2
+  reloadTime: 1.5
   shots:
   - bullet: {fileID: 11400000, guid: d150cabf9fe189d4384c769be496ff09, type: 2}
     offsetAngle: 0

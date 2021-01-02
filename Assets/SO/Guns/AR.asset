@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 2218ff1a2c15d104e873b8dee7545bd3, type: 3}
   fireRate: 5
-  spreadAngle: 10
+  spreadAngle: 5
   isInfiniteAmmo: 0
   ammoType: 1
-  clipSize: 30
-  reloadTime: 1
+  clipSize: 45
+  reloadTime: 1.2
   shots:
   - bullet: {fileID: 11400000, guid: 142ad03682b562b478273db7d0ecb704, type: 2}
     offsetAngle: 0

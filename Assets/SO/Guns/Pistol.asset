@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 5889f3968634a8542a9d9b69ab53de31, type: 3}
-  fireRate: 1.5
-  spreadAngle: 3
+  fireRate: 2
+  spreadAngle: 2
   isInfiniteAmmo: 0
   ammoType: 0
   clipSize: 6

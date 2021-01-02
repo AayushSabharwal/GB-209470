@@ -22,7 +22,7 @@ MonoBehaviour:
   effectiveness:
   - effectiveness: 0
     cost: 0
-  - effectiveness: 10
-    cost: 10
   - effectiveness: 20
-    cost: 20
+    cost: 30
+  - effectiveness: 40
+    cost: 60

@@ -13,7 +13,7 @@ public class ScriptableObjectReferenceCache : ScriptableObject, IExternalStringR
     [FolderPath(RequireExistingPath = true)]
     [SerializeField] private string[] foldersToSearchIn;
 
-    [InlineButton(nameof(ClearReferences))] [InlineButton(nameof(FetchReferences))] [LabelWidth(140)] [PropertySpace(10)]
+    [InlineButton("ClearReferences")] [InlineButton("FetchReferences")] [LabelWidth(140)] [PropertySpace(10)]
     [SerializeField] private bool autoFetchInPlaymode = true;
     
     [ReadOnly]

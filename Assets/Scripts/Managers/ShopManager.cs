@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
     private void Start() {
         OnGunShopItemUpdateUI?.Invoke();
         for (int i = 0; i < equippableGuns; i++) {
-            if (i < _equippedGuns.Length)
+            if (i < _equippedGuns.Length && _equippedGuns[i] != null)
                 equipSlots[i].sprite = _equippedGuns[i]?.image;
             else
                 equipSlots[i].color = new Color(0f, 0f, 0f, 0f);
@@ -62,7 +63,6 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
         ReferenceManager.Inst.ProgressManager.Save();
         SceneManager.LoadScene(levelBuildIndex);
     }
-
 
     public void Save() { }
 

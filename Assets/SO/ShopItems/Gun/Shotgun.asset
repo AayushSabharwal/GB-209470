@@ -15,5 +15,5 @@ MonoBehaviour:
   displayName: Shotgun
   description: Very effective close range, fires multiple bullets in a cone. Uses
     %AMMO% ammo.
-  cost: 10
+  cost: 40
   gun: {fileID: 11400000, guid: 8cbe827dca58857429cb0d1c687bb68d, type: 2}

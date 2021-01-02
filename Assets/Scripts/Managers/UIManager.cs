@@ -1,23 +1,32 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField, BoxGroup("UI References")]
     private GameObject hud;
-    [SerializeField, BoxGroup("UI References")]
+    [SerializeField, FoldoutGroup("UI References/Pause Screen")]
     private GameObject pauseScreen;
+    [SerializeField, FoldoutGroup("UI References/Pause Screen")]
+    private RectTransform pauseSidebar;
     [SerializeField, BoxGroup("UI References")]
     private GameObject gameOverScreen;
-    [SerializeField, BoxGroup("UI References")]
+    [SerializeField, FoldoutGroup("UI References/Level Over Screen")]
     private GameObject levelOverScreen;
+    [SerializeField, FoldoutGroup("UI References/Level Over Screen")]
+    private RectTransform levelOverSidebar;
     [SerializeField, BoxGroup("UI References")]
     private Image[] gunSlots;
     [SerializeField, BoxGroup("Scenes")]
     private int shopSceneBuildIndex;
-    
+    [SerializeField, BoxGroup("Scenes")]
+    private int mainMenuBuildIndex;
+    [SerializeField, BoxGroup("Configuration")]
+    private float sidepanelAnimDuration = 0.8f;
     public delegate void OnPauseDelegate(bool isPaused);
 
     public event OnPauseDelegate OnPause;
@@ -46,9 +55,18 @@ public class UIManager : MonoBehaviour
 
     public void Pause() {
         _isPaused = !_isPaused;
-        hud.SetActive(!_isPaused);
-        pauseScreen.SetActive(_isPaused);
-        OnPause?.Invoke(_isPaused);
+        if (_isPaused) {
+            hud.SetActive(!_isPaused);
+            pauseScreen.SetActive(_isPaused);
+            pauseSidebar.DOAnchorPos(new Vector2(-500f, 0f), sidepanelAnimDuration);
+            OnPause?.Invoke(_isPaused);
+        }
+        else
+            pauseSidebar.DOAnchorPos(new Vector2(500f, 0f), sidepanelAnimDuration).onComplete += () => {
+                                                                                          OnPause?.Invoke(_isPaused);
+                                                                                          hud.SetActive(!_isPaused);
+                                                                                          pauseScreen.SetActive(_isPaused);
+                                                                                      };
     }
 
     public void Restart() {
@@ -56,7 +74,12 @@ public class UIManager : MonoBehaviour
     }
 
     public void NextLevel() {
+        ReferenceManager.Inst.ProgressManager.Save();
         SceneManager.LoadScene(shopSceneBuildIndex);
+    }
+
+    public void MainMenu() {
+        SceneManager.LoadScene(mainMenuBuildIndex);
     }
 
     private void GameOver() {
@@ -65,7 +88,13 @@ public class UIManager : MonoBehaviour
     }
 
     private void LevelOver() {
-        hud.SetActive(false);
         levelOverScreen.SetActive(true);
+        levelOverSidebar.DOAnchorPos(new Vector2(-500f, 0f), sidepanelAnimDuration);
+    }
+
+    private void OnApplicationPause(bool pauseStatus) {
+        if (pauseStatus && !_isPaused) {
+            Pause();
+        }
     }
 }

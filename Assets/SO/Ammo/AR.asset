@@ -16,6 +16,6 @@ MonoBehaviour:
   color: {r: 0.6603774, g: 0.49757624, b: 0, a: 1}
   poolTag: Ammo
   lifetime: 5
-  value: 4
+  value: 12
   type: 1
   probabilityWeight: 1
