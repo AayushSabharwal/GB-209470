@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using MEC;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -23,6 +24,7 @@ public class MapGenerator : SerializedMonoBehaviour
     private BoxCollider2D cameraZone;
     [SerializeField]
     private Tilemap tilemap;
+    private List<Vector2Int> _walkable;
     // private Tilemap[,] _tilemaps;
     //
     // public TilemapRenderer[,] Tilemaps { get; private set; }
@@ -31,7 +33,9 @@ public class MapGenerator : SerializedMonoBehaviour
     // public Vector2Int ChunkSize => chunkSize;
 
     public TileType[] Map { get; private set; }
-    public List<Vector2Int> Walkable { get; private set; }
+    public List<Vector2Int> Walkable {
+        get => _walkable;
+    }
 
     private void Awake() {
         // ChunkCount = new Vector2Int(Mathf.CeilToInt(worldDimensions.x / (float) chunkSize.x),
@@ -59,10 +63,8 @@ public class MapGenerator : SerializedMonoBehaviour
         GenerateTiles();
     }
 
-    private IEnumerator AstarScan() {
-        yield return new WaitForEndOfFrame();
-
-
+    private IEnumerator<float> AstarScan() {
+        yield return Timing.WaitForOneFrame;
         AstarPath.active.Scan(AstarPath.active.graphs);
     }
 
@@ -76,13 +78,11 @@ public class MapGenerator : SerializedMonoBehaviour
 
         GenerateWalkableComponents(out List<List<Vector2Int>> walkableComponents);
 
-        MergeWalkableComponents(in walkableComponents, out List<Vector2Int> allWalkable);
+        MergeWalkableComponents(in walkableComponents, out _walkable);
 
-        Walkable = new List<Vector2Int>(allWalkable);
         for (int i = 0; i < walkableComponents.Count; i++)
-            Walkable.AddRange(walkableComponents[i]);
+            _walkable.AddRange(walkableComponents[i]);
 
-        allWalkable.Clear();
 
         ReferenceManager.Inst.SharedDataManager.PlayerStartPosition = Walkable[Random.Range(0, Walkable.Count)];
 
@@ -90,11 +90,12 @@ public class MapGenerator : SerializedMonoBehaviour
             Map[PositionToIndex(i, 0)] = TileType.Wall;
             Map[PositionToIndex(i, worldDimensions.y - 1)] = TileType.Wall;
         }
-        
+
         for (int i = 0; i < worldDimensions.y; i++) {
             Map[PositionToIndex(0, i)] = TileType.Wall;
             Map[PositionToIndex(worldDimensions.x - 1, i)] = TileType.Wall;
         }
+
         Vector3Int[] posArray = new Vector3Int[Map.Length];
         TileBase[] tiles = new TileBase[Map.Length];
         for (int i = 0; i < Map.Length; i++) {
@@ -102,6 +103,7 @@ public class MapGenerator : SerializedMonoBehaviour
             posArray[i] = new Vector3Int(pos.x, pos.y, 0);
             tiles[i] = tileTypeMap[Map[i]];
         }
+
         tilemap.SetTiles(posArray, tiles);
         // for (int x = 0; x < worldDimensions.x; x++)
         //     for (int y = 0; y < worldDimensions.y; y++)
@@ -111,10 +113,10 @@ public class MapGenerator : SerializedMonoBehaviour
         //         else
         //             _tilemaps[x / chunkSize.x, y / chunkSize.y]
         //                 .SetTile(new Vector3Int(x, y, 0), tileTypeMap[Map[PositionToIndex(x, y)]]);
-        
-        StartCoroutine(AstarScan());
+
+        Timing.RunCoroutine(AstarScan());
     }
-    
+
     [Button]
     private void Clear() {
         tilemap.ClearAllTiles();

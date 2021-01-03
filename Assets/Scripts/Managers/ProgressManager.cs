@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -50,18 +51,18 @@ public class ProgressManager : SerializedMonoBehaviour
                                            StringReferenceResolver = soReferenceCache
                                        };
 
-        byte[] data = SerializationUtility.SerializeValue(Data, DataFormat.JSON, context);
-        File.WriteAllBytes(Application.persistentDataPath + "/savegame.json", data);
+        byte[] data = SerializationUtility.SerializeValue(Data, DataFormat.Binary, context);
+        File.WriteAllBytes(Application.persistentDataPath + "/savegame.sgm", data);
     }
 
     private void Load() {
-        if (File.Exists(Application.persistentDataPath + "/savegame.json")) {
-            byte[] data = File.ReadAllBytes(Application.persistentDataPath + "/savegame.json");
+        if (File.Exists(Application.persistentDataPath + "/savegame.sgm")) {
+            byte[] data = File.ReadAllBytes(Application.persistentDataPath + "/savegame.sgm");
             DeserializationContext context = new DeserializationContext
                                              {
                                                  StringReferenceResolver = soReferenceCache
                                              };
-            Data = SerializationUtility.DeserializeValue<DataContainer>(data, DataFormat.JSON, context);
+            Data = SerializationUtility.DeserializeValue<DataContainer>(data, DataFormat.Binary, context);
         }
         else
             Data = defaultSave;
@@ -74,10 +75,11 @@ public class ProgressManager : SerializedMonoBehaviour
 
     [Button]
     private void DeleteSave() {
-        if (File.Exists(Application.persistentDataPath + "/savegame.json"))
-            File.Delete(Application.persistentDataPath + "/savegame.json");
+        if (File.Exists(Application.persistentDataPath + "/savegame.sgm"))
+            File.Delete(Application.persistentDataPath + "/savegame.sgm");
     }
 }
+
 
 public class DataContainer
 {

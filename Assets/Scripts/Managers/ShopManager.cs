@@ -61,7 +61,7 @@ public class ShopManager : SerializedMonoBehaviour, ISaveLoad
 
     public void NextLevel() {
         ReferenceManager.Inst.ProgressManager.Save();
-        SceneManager.LoadScene(levelBuildIndex);
+        SceneManager.LoadSceneAsync(levelBuildIndex);
     }
 
     public void Save() { }
