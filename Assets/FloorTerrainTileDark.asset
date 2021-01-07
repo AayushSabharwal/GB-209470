@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e4e4fc705376343a3e65b25d94f0e2, type: 3}
+  m_Name: FloorTerrainTileDark
+  m_EditorClassIdentifier: 
+  m_Sprites:
+  - {fileID: 2680059509243147629, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: 39002514907328345, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -781918151079289944, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -127274114317262457, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -3986155286245174295, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: 1730917490876647196, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -804618698324138485, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -6348363131988899643, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -5234025086583865372, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: 2778841220134690926, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: 4932390031034502360, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -620818196577742060, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -4301512332168701620, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: 5836945659977381877, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}
+  - {fileID: -4510423762023501598, guid: 1158bba642c1ad94c97a4af58b527744, type: 3}

@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -20,8 +21,12 @@ public class PlayerController : MonoBehaviour
     private float dashSpeed = 10f;
     [SerializeField, FoldoutGroup("Dash")]
     private float dashDuration = 0.5f;
-    [SerializeField]
+    [SerializeField, PropertyRange(0f, 1f)]
     private float stickDeadzone = 0.1f;
+    [SerializeField, PropertyRange(0f, 1f)]
+    private float shootDeadzone = 0.4f;
+    [SerializeField]
+    private RectTransform shootDeadzoneDisplay;
 
     private bool _isPaused;
     private float _dashTimer;
@@ -32,9 +37,10 @@ public class PlayerController : MonoBehaviour
         _shooter = GetComponent<Shooter>();
         _input = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
-
-        transform.position = new Vector3(ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.x + 0.5f,
-                                         ReferenceManager.Inst.SharedDataManager.PlayerStartPosition.y + 0.5f) * 1.5f;
+        
+        shootDeadzoneDisplay.sizeDelta = Vector2.one * 400f * shootDeadzone; 
+        transform.position = new Vector3(ReferenceManager.Inst.SharedDataManager.playerStartPosition.x + 0.5f,
+                                         ReferenceManager.Inst.SharedDataManager.playerStartPosition.y + 0.5f) * 1.5f;
         _health.Respawned(maxHp);
 
         _isPaused = false;
@@ -52,8 +58,12 @@ public class PlayerController : MonoBehaviour
         if (_input.Shoot.sqrMagnitude >= stickDeadzone * stickDeadzone) {
             transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(_input.Shoot.y, _input.Shoot.x) * Mathf.Rad2Deg,
                                                       Vector3.forward);
-            _shooter.Shoot();
         }
+    }
+
+    private void LateUpdate() {
+        if(_input.Shoot.sqrMagnitude >= shootDeadzone * shootDeadzone)
+            _shooter.Shoot();
     }
 
     private void FixedUpdate() {

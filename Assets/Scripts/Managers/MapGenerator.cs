@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using MEC;
@@ -8,16 +7,16 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
-public class MapGenerator : SerializedMonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
+    // [SerializeField]
+    // private GameObject tilemapPrefab;
     [SerializeField]
-    private GameObject tilemapPrefab;
-    [SerializeField]
-    private Dictionary<TileType, TileBase> tileTypeMap;
+    private List<TileBase> tileTypeMap;
     [SerializeField]
     private Vector2Int worldDimensions;
-    [SerializeField]
-    public Vector2Int chunkSize;
+    // [SerializeField]
+    // public Vector2Int chunkSize;
     [SerializeField]
     private GenerationLayer[] generationLayers;
     [SerializeField]
@@ -83,8 +82,7 @@ public class MapGenerator : SerializedMonoBehaviour
         for (int i = 0; i < walkableComponents.Count; i++)
             _walkable.AddRange(walkableComponents[i]);
 
-
-        ReferenceManager.Inst.SharedDataManager.PlayerStartPosition = Walkable[Random.Range(0, Walkable.Count)];
+        ReferenceManager.Inst.SharedDataManager.playerStartPosition = Walkable[Random.Range(0, Walkable.Count)];
 
         for (int i = 0; i < worldDimensions.x; i++) {
             Map[PositionToIndex(i, 0)] = TileType.Wall;
@@ -101,7 +99,7 @@ public class MapGenerator : SerializedMonoBehaviour
         for (int i = 0; i < Map.Length; i++) {
             Vector2Int pos = IndexToPosition(i);
             posArray[i] = new Vector3Int(pos.x, pos.y, 0);
-            tiles[i] = tileTypeMap[Map[i]];
+            tiles[i] = tileTypeMap[(int) Map[i]];
         }
 
         tilemap.SetTiles(posArray, tiles);
@@ -166,8 +164,8 @@ public class MapGenerator : SerializedMonoBehaviour
     private void CircleLayer(Vector2Int center, int radius, TileType type) {
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
-                if (center.x + x < 0 || center.x + x >= worldDimensions.x || center.y + y < 0 ||
-                    center.y + y >= worldDimensions.y || x * x + y * y > radius * radius)
+                if (center.x + x <= 0 || center.x + x >= worldDimensions.x - 1 || center.y + y <= 0 ||
+                    center.y + y >= worldDimensions.y - 1 || x * x + y * y > radius * radius)
                     continue;
                 Map[PositionToIndex(center.x + x, center.y + y)] = type;
             }
@@ -177,7 +175,7 @@ public class MapGenerator : SerializedMonoBehaviour
     private void RectLayer(Vector2Int llc, Vector2Int dimensions, TileType type) {
         for (int x = llc.x; x < llc.x + dimensions.x; x++) {
             for (int y = llc.y; y < llc.y + dimensions.y; y++) {
-                if (x < 0 || x >= worldDimensions.x || y < 0 || y >= worldDimensions.y)
+                if (x <= 0 || x >= worldDimensions.x - 1 || y <= 0 || y >= worldDimensions.y - 1)
                     continue;
                 Map[PositionToIndex(x, y)] = type;
             }
@@ -187,7 +185,7 @@ public class MapGenerator : SerializedMonoBehaviour
     private void SquareLayer(Vector2Int llc, int side, TileType type) {
         for (int x = llc.x; x < llc.x + side; x++) {
             for (int y = llc.y; y < llc.y + side; y++) {
-                if (x < 0 || x >= worldDimensions.x || y < 0 || y >= worldDimensions.y)
+                if (x <= 0 || x >= worldDimensions.x - 1 || y <= 0 || y >= worldDimensions.y - 1)
                     continue;
                 Map[PositionToIndex(x, y)] = type;
             }
@@ -196,7 +194,7 @@ public class MapGenerator : SerializedMonoBehaviour
 
     private void MergeWalkableComponents(in List<List<Vector2Int>> walkableComponents,
                                          out List<Vector2Int> extraWalkable) {
-        extraWalkable = new List<Vector2Int>();
+        extraWalkable = new List<Vector2Int>((int) (worldDimensions.x * worldDimensions.y * 0.6f));
         for (int i = 0; i < walkableComponents.Count - 1; i++) {
             Vector2Int posA = walkableComponents[i][Random.Range(0, walkableComponents[i].Count)];
             Vector2Int posB = walkableComponents[i + 1][Random.Range(0, walkableComponents[i + 1].Count)];

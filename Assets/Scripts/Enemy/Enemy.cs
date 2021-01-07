@@ -127,10 +127,10 @@ public class Enemy : MonoBehaviour
     private void CheckRepathRate() {
         for (int i = 0; i < _sharedDataManager.repathRateScaling.Length; i++) {
             if (!((transform.position - _player.position).sqrMagnitude >
-                  _sharedDataManager.repathRateScaling[i].Distance *
-                  _sharedDataManager.repathRateScaling[i].Distance)) continue;
+                  _sharedDataManager.repathRateScaling[i].distance *
+                  _sharedDataManager.repathRateScaling[i].distance)) continue;
 
-            _repathRate = _sharedDataManager.repathRateScaling[i].Value;
+            _repathRate = _sharedDataManager.repathRateScaling[i].value;
             break;
         }
     }

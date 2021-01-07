@@ -1,37 +1,52 @@
-﻿using Sirenix.OdinInspector;
-using Sirenix.Serialization;
+﻿using UnityEngine;
 
-public class ReferenceManager : SerializedMonoBehaviour
+public class ReferenceManager : MonoBehaviour
 {
     public static ReferenceManager Inst;
+    [SerializeField]
+    private Health playerHealth;
+    [SerializeField]
+    private PlayerShooter playerShooter;
+    [SerializeField]
+    private AudioSource sfxAudio;
+    [SerializeField]
+    private MapGenerator mapGenerator;
+    [SerializeField]
+    private ObjectPooler objectPooler;
+    [SerializeField]
+    private DropManager dropManager;
+    [SerializeField]
+    private SharedDataManager sharedDataManager;
+    [SerializeField]
+    private EnemySpawner enemySpawner;
+    [SerializeField]
+    private CurrencyManager currencyManager;
+    [SerializeField]
+    private UIManager uiManager;
+    [SerializeField]
+    private ProgressManager progressManager;
+    [SerializeField]
+    private ShopManager shopManager;
+    [SerializeField]
+    private EquipGunDialog equipGunDialog;
+    [SerializeField]
+    private InfoDialog infoDialog;
 
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public Health PlayerHealth { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public PlayerShooter PlayerShooter { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public MapGenerator MapGenerator { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public ObjectPooler ObjectPooler { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public DropManager DropManager { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public SharedDataManager SharedDataManager { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public EnemySpawner EnemySpawner { get; private set; }
-    [OdinSerialize, ShowInInspector]
-    public CurrencyManager CurrencyManager { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("In Game")]
-    public UIManager UIManager { get; private set; }
-    [OdinSerialize, ShowInInspector]
-    public ProgressManager ProgressManager { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("Shop Screen")]
-    public ShopManager ShopManager { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("Shop Screen")]
-    public EquipGunDialog EquipGunDialog { get; private set; }
-    [OdinSerialize, ShowInInspector, FoldoutGroup("Shop Screen")]
-    public InfoDialog InfoDialog { get; private set; }
-    
+    public Health PlayerHealth => playerHealth;
+    public PlayerShooter PlayerShooter => playerShooter;
+    public AudioSource SfxAudio => sfxAudio;
+    public MapGenerator MapGenerator => mapGenerator;
+    public ObjectPooler ObjectPooler => objectPooler;
+    public DropManager DropManager => dropManager;
+    public SharedDataManager SharedDataManager => sharedDataManager;
+    public EnemySpawner EnemySpawner => enemySpawner;
+    public CurrencyManager CurrencyManager => currencyManager;
+    public UIManager UIManager => uiManager;
+    public ProgressManager ProgressManager => progressManager;
+    public ShopManager ShopManager => shopManager;
+    public EquipGunDialog EquipGunDialog => equipGunDialog;
+    public InfoDialog InfoDialog => infoDialog;
+
     private void Awake() {
         if (Inst == null)
             Inst = this;

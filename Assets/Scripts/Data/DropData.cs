@@ -14,4 +14,10 @@ public class DropData : ScriptableObject
     public float lifetime;
     [MinValue(1)]
     public int value;
+    [FoldoutGroup("Audio")]
+    public AudioClip pickupSound;
+    [FoldoutGroup("Audio")]
+    public float pitch;
+    [FoldoutGroup("Audio")]
+    public float pitchVariance;
 }

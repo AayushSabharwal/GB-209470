@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class DropManager : SerializedMonoBehaviour, ISaveLoad
+public class DropManager : MonoBehaviour, ISaveLoad
 {
     [SerializeField]
     private DropData single;
@@ -28,24 +28,20 @@ public class DropManager : SerializedMonoBehaviour, ISaveLoad
         coins = new List<GameObject>(value / 10 + value % 10);
         for (int i = 0; i < value / 10; i++) {
             GameObject g = _objectPooler.Request(ten.poolTag);
-            if (_coinScriptMap.ContainsKey(g.GetInstanceID()))
-                _coinScriptMap[g.GetInstanceID()].data = ten;
-            else {
+            if (!_coinScriptMap.ContainsKey(g.GetInstanceID()))
                 _coinScriptMap[g.GetInstanceID()] = g.GetComponent<Coin>();
-                _coinScriptMap[g.GetInstanceID()].data = ten;
-            }
+            
+            _coinScriptMap[g.GetInstanceID()].data = ten;
 
             coins.Add(g);
         }
 
         for (int i = 0; i < value % 10; i++) {
             GameObject g = _objectPooler.Request(single.poolTag);
-            if (_coinScriptMap.ContainsKey(g.GetInstanceID()))
-                _coinScriptMap[g.GetInstanceID()].data = single;
-            else {
+            if (!_coinScriptMap.ContainsKey(g.GetInstanceID()))
                 _coinScriptMap[g.GetInstanceID()] = g.GetComponent<Coin>();
-                _coinScriptMap[g.GetInstanceID()].data = single;
-            }
+            
+            _coinScriptMap[g.GetInstanceID()].data = single;
 
             coins.Add(g);
         }

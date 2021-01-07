@@ -18,3 +18,4 @@ MonoBehaviour:
   lifetime: 5
   value: 4
   type: 3
+  probabilityWeight: 0.5

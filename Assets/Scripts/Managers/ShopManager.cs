@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ShopManager : SerializedMonoBehaviour, ISaveLoad
+public class ShopManager : MonoBehaviour, ISaveLoad
 {
     [SerializeField]
     private int equippableGuns;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: FloorTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -3411548807712558045, guid: 26c58b87ab68d764a98a9bc7e3e8c5dd,
+  m_Sprite: {fileID: 2219186935273495358, guid: 1a0570e2d65fb9b4585914b24bde172d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:

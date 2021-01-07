@@ -14,6 +14,7 @@
     }
 
     protected override void OnPickup() {
+        base.OnPickup();
         _playerShooter.AddAmmo(_data.type, data.value);
     }
 }

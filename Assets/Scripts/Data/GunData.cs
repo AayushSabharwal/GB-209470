@@ -18,6 +18,12 @@ public class GunData : ScriptableObject, ISerializeReferenceByAssetGuid
     public int clipSize;
     [HideIf("isInfiniteAmmo")]
     public float reloadTime;
+    [FoldoutGroup("Audio")]
+    public AudioClip shootSound;
+    [FoldoutGroup("Audio")]
+    public float pitch;
+    [FoldoutGroup("Audio")]
+    public float pitchVariation;
     
     [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot")]
     public Shot[] shots;
@@ -40,5 +46,6 @@ public enum AmmoType
     Handgun,
     Automatic,
     Shell,
+    Rocket,
     Energy
 }

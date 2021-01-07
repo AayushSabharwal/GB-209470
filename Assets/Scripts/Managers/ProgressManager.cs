@@ -10,16 +10,31 @@ public class ProgressManager : SerializedMonoBehaviour
 {
     [SerializeField]
     private ScriptableObjectReferenceCache soReferenceCache;
-    [SerializeField]
-    private List<ISaveLoad> saveableItems;
-    [SerializeField, LabelText("Saveable SOs")]
-    private List<ISaveLoad> saveableSOs;
+    [SerializeField, ValidateInput("@ValidateMB()")]
+    private List<MonoBehaviour> saveableMonoBehaviours;
+    [SerializeField, LabelText("Saveable SOs"), ValidateInput("@ValidateSO()")]
+    private List<ScriptableObject> saveableSOs;
     [SerializeField]
     private DataContainer defaultSave;
     [ShowInInspector, ReadOnly]
     public DataContainer Data { get; private set; }
+    [ShowInInspector]
+    private List<ISaveLoad> _saveableItems;
 
     private void Awake() {
+        _saveableItems = new List<ISaveLoad>();
+        for (int i = 0; i < saveableMonoBehaviours.Count; i++) {
+            if (saveableMonoBehaviours[i] is ISaveLoad) {
+                _saveableItems.Add(saveableMonoBehaviours[i] as ISaveLoad);
+            }
+        }
+        
+        
+        for (int i = 0; i < saveableSOs.Count; i++) {
+            if (saveableSOs[i] is ISaveLoad) {
+                _saveableItems.Add(saveableSOs[i] as ISaveLoad);
+            }
+        }
         Load();
     }
 
@@ -28,23 +43,39 @@ public class ProgressManager : SerializedMonoBehaviour
             ReferenceManager.Inst.EnemySpawner.OnLevelEnd += Save;
     }
 
+    private bool ValidateMB() {
+        foreach (MonoBehaviour mb in saveableMonoBehaviours) {
+            if (!(mb is ISaveLoad))
+                return false;
+        }
+
+        return true;
+    }
+    
+    private bool ValidateSO() {
+        foreach (ScriptableObject mb in saveableSOs) {
+            if (!(mb is ISaveLoad))
+                return false;
+        }
+
+        return true;
+    }
+
     [Button("Find All ISaveLoad")]
     private void FindAllISaveLoad() {
-        saveableItems = new List<ISaveLoad>();
+        _saveableItems = new List<ISaveLoad>();
         GameObject[] roots = SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject g in roots) {
             ISaveLoad[] isl = g.GetComponentsInChildren<ISaveLoad>();
             foreach (ISaveLoad sl in isl) {
-                saveableItems.Add(sl);
+                _saveableItems.Add(sl);
             }
         }
     }
 
     public void Save() {
-        for (int i = 0; i < saveableItems.Count; i++)
-            saveableItems[i].Save();
-        for(int i = 0; i < saveableSOs.Count; i++)
-            saveableSOs[i].Save();
+        for(int i = 0; i < _saveableItems.Count; i++) 
+            _saveableItems[i].Save();
         
         SerializationContext context = new SerializationContext
                                        {
@@ -67,10 +98,9 @@ public class ProgressManager : SerializedMonoBehaviour
         else
             Data = defaultSave;
 
-        for (int i = 0; i < saveableItems.Count; i++)
-            saveableItems[i].Load();
-        for(int i = 0; i < saveableSOs.Count; i++)
-            saveableSOs[i].Load();
+        
+        for(int i = 0; i < _saveableItems.Count; i++) 
+            _saveableItems[i].Load();
     }
 
     [Button]

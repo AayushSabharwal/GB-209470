@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: LaserGun
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  fireRate: 3
+  fireRate: 3.5
   spreadAngle: 3
   isInfiniteAmmo: 0
   ammoType: 3
   clipSize: 10
-  reloadTime: 1
+  reloadTime: 1.1
+  shootSound: {fileID: 8300000, guid: adedfdf612364f24db962239bf66b06f, type: 3}
+  pitch: 1
+  pitchVariation: 0.2
   shots:
   - bullet: {fileID: 11400000, guid: b80b5791822da594fbbd50e053d06fb6, type: 2}
     offsetAngle: 0

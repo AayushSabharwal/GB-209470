@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class PlayerShooter : Shooter, ISaveLoad
 {
@@ -23,15 +22,12 @@ public class PlayerShooter : Shooter, ISaveLoad
     private float punchForce = 3f;
     [SerializeField, FoldoutGroup("GUI")]
     private float punchDuration = 0.4f;
-    [OdinSerialize,
-     ValidateInput("@ammo != null && ammo.Count == System.Enum.GetNames(typeof(AmmoType)).Length",
-                   "Account for all AmmoType")]
-    private Dictionary<AmmoType, AmmoTracker> ammo;
     [SerializeField, InlineEditor, ValidateInput("@enrage != null && enrage.itemName == \"Enrage\"")]
     private UpgradableShopItemData enrage;
     [SerializeField, PropertyRange(0f, 1f)]
     private float enrageThreshold;
 
+    private Dictionary<AmmoType, AmmoTracker> _ammo;
     private int _currentGun;
     private PlayerHealth _health;
     private AmmoData[] _ammoData;
@@ -46,11 +42,11 @@ public class PlayerShooter : Shooter, ISaveLoad
         for (int i = 0; i < guns.Length; i++) {
             _ammoData[i] =
                 new
-                    AmmoData(ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? guns[i].clipSize : ammo[guns[i].ammoType].CurrentAmmo,
+                    AmmoData(_ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? guns[i].clipSize : _ammo[guns[i].ammoType].CurrentAmmo,
                              guns[i].reloadTime,
                              guns[i].isInfiniteAmmo);
             _ammoData[i].OnReload += UpdateUI;
-            ammo[guns[i].ammoType].CurrentAmmo -= _ammoData[i].RemainingAmmo;
+            _ammo[guns[i].ammoType].CurrentAmmo -= _ammoData[i].RemainingAmmo;
         }
 
         gun = guns[defaultGun];
@@ -90,11 +86,11 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     private void UpdateUI() {
         ammoText.text =
-            $"{AmmoData.RemainingAmmo}/{(!gun.isInfiniteAmmo ? ammo[gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
+            $"{AmmoData.RemainingAmmo}/{(!gun.isInfiniteAmmo ? _ammo[gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
     }
 
     public void Reload() {
-        if (AmmoData.RemainingAmmo == gun.clipSize || ammo[gun.ammoType].CurrentAmmo == 0) {
+        if (AmmoData.RemainingAmmo == gun.clipSize || _ammo[gun.ammoType].CurrentAmmo == 0) {
             if (!_canTween) return;
             _canTween = false;
             ammoTracker.DOPunchPosition(Vector3.right * punchForce, punchDuration).onComplete += () => _canTween = true;
@@ -102,8 +98,9 @@ public class PlayerShooter : Shooter, ISaveLoad
             return;
         }
 
-        AmmoData.Reload(ammo[gun.ammoType].CurrentAmmo >= gun.clipSize ? -1 : ammo[gun.ammoType].CurrentAmmo);
-        ammo[gun.ammoType].CurrentAmmo = Mathf.Max(ammo[gun.ammoType].CurrentAmmo - gun.clipSize + AmmoData.RemainingAmmo, 0);
+        AmmoData.Reload(_ammo[gun.ammoType].CurrentAmmo >= gun.clipSize ? -1 : _ammo[gun.ammoType].CurrentAmmo);
+        _ammo[gun.ammoType].CurrentAmmo =
+            Mathf.Max(_ammo[gun.ammoType].CurrentAmmo - gun.clipSize + AmmoData.RemainingAmmo, 0);
         UpdateUI();
     }
 
@@ -114,26 +111,26 @@ public class PlayerShooter : Shooter, ISaveLoad
         gun = guns[to];
         AmmoData = _ammoData[to];
         _currentGun = to;
-        
+
         UpdateUI();
     }
 
     public void AddAmmo(AmmoType type, int amount) {
-        ammo[type].CurrentAmmo = Mathf.Min(ammo[type].CurrentAmmo + amount, ammo[type].MaxAmmo);
+        _ammo[type].CurrentAmmo = Mathf.Min(_ammo[type].CurrentAmmo + amount, _ammo[type].MaxAmmo);
         UpdateUI();
     }
 
     public void Save() {
         for (int i = 0; i < guns.Length; i++)
-            ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
+            _ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
 
-        ReferenceManager.Inst.ProgressManager.Data.Ammo = ammo;
+        ReferenceManager.Inst.ProgressManager.Data.Ammo = _ammo;
         ReferenceManager.Inst.ProgressManager.Data.EquippedGuns = guns;
     }
 
     public void Load() {
-        ammo = ReferenceManager.Inst.ProgressManager.Data.Ammo;
-        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns.Where(g => g!= null).ToArray();
+        _ammo = ReferenceManager.Inst.ProgressManager.Data.Ammo;
+        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns.Where(g => g != null).ToArray();
     }
 }
 

@@ -24,6 +24,7 @@ public class Coin : Drop
     }
 
     protected override void OnPickup() {
+        base.OnPickup();
         _currencyManager.AddCurrency(data.value);
     }
 }

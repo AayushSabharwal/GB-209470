@@ -17,3 +17,6 @@ MonoBehaviour:
   poolTag: Coin
   lifetime: 5
   value: 1
+  pickupSound: {fileID: 8300000, guid: 8ae0a811968854849b124da1cb30ef23, type: 3}
+  pitch: 2
+  pitchVariance: 0.07

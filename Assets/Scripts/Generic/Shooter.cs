@@ -3,11 +3,11 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Shooter : SerializedMonoBehaviour
+public class Shooter : MonoBehaviour
 {
     [InlineEditor, SerializeField, PropertyOrder(-1f)]
     public GunData gun;
-    [SceneObjectsOnly, SerializeField]
+    [SerializeField]
     protected Transform shootPoint;
 
     [HideInInspector]
@@ -17,11 +17,13 @@ public class Shooter : SerializedMonoBehaviour
 
     private float _shotTimer;
     private ObjectPooler _objectPooler;
+    private AudioSource _audioSource;
     protected bool IsPaused;
     protected bool IsPlayerDead;
 
     private void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Start() {
@@ -63,7 +65,9 @@ public class Shooter : SerializedMonoBehaviour
                         gun.shots[i].applySpread ? gun.spreadAngle : 0f,
                         gun.shots[i].groupSize);
         }
-
+        
+        _audioSource.pitch = gun.pitch + Random.Range(-gun.pitchVariation, gun.pitchVariation);
+        _audioSource.PlayOneShot(gun.shootSound);
         _shotTimer = 1f / gun.fireRate;
         OnShoot?.Invoke(this, EventArgs.Empty);
     }

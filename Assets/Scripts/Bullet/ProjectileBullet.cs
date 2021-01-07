@@ -31,8 +31,10 @@ public class ProjectileBullet : Bullet
 
     private void Update() {
         _lifetimer -= Time.deltaTime;
-        if (_lifetimer <= 0f)
+        if (_lifetimer < 0f) {
+            _lifetimer = 0f;
             ObjectPooler.Return(data.poolTag, gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
