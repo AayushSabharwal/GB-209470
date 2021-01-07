@@ -10,7 +10,7 @@ public class EnemyData : ScriptableObject
     public Color color;
     [LabelWidth(60f), HorizontalGroup("L0"), VerticalGroup("L0/C")]
     public string poolTag;
-
+    public Vector3 scale;
     [MinValue(0f), HorizontalGroup("L1"), LabelWidth(110f), PropertySpace]
     public float health;
     [MinValue(0.1f), HorizontalGroup("L1"), LabelWidth(110f), PropertySpace]

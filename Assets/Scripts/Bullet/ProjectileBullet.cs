@@ -5,11 +5,13 @@ public class ProjectileBullet : Bullet
 {
     private float _lifetimer;
     private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
     private bool _isPaused;
     private Collider2D[] _explosionHits;
     
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected override void Start() {
@@ -23,6 +25,9 @@ public class ProjectileBullet : Bullet
 
         _lifetimer = data.lifetime;
         _rb.velocity = transform.right * data.speed;
+        _spriteRenderer.sprite = data.sprite;
+        _spriteRenderer.color = data.colour;
+        transform.localScale = data.scale;
     }
 
     private void OnDisable() {

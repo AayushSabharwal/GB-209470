@@ -10,6 +10,8 @@ public class AmmoShopItem : MonoBehaviour
     [SerializeField]
     private Image image;
     [SerializeField]
+    private Vector2 imageMaxDimensions;
+    [SerializeField]
     private TextMeshProUGUI itemName;
     [SerializeField]
     private Button buyButton;
@@ -27,6 +29,9 @@ public class AmmoShopItem : MonoBehaviour
 
     private void Start() {
         image.sprite = item.ammo.sprite;
+        image.SetNativeSize();
+        Vector2 factor = new Vector2(imageMaxDimensions.x / image.rectTransform.sizeDelta.x, imageMaxDimensions.y / image.rectTransform.sizeDelta.y);
+        image.rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         itemName.text = item.displayName;
         UpdateUI();
     }

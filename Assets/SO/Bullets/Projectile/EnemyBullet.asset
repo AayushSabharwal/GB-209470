@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfffd6d4a55e06b40b82658cfc605516, type: 3}
   m_Name: EnemyBullet
   m_EditorClassIdentifier: 
-  damage: 6
+  damage: 8
   poolTag: ProjectileBullet
   childProjectiles: []
   isProjectile: 1
   speed: 6
   lifetime: 2
+  scale: {x: 0.2, y: 0.2, z: 1}
+  sprite: {fileID: 21300000, guid: e48387a23e90a3c4198f7ef9cdc9b8f9, type: 3}
+  colour: {r: 0.10980393, g: 0.7568628, b: 1, a: 1}
   isExplosive: 0
   explosionRadius: 0
   range: 10

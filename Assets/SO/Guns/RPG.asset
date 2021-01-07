@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0567feef6d691c24d9c0eb0e4587ea5b, type: 3}
   m_Name: RPG
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 837bde0e349efa24fa4fd77808011006, type: 3}
   fireRate: 0.8
   spreadAngle: 0
   isInfiniteAmmo: 0

@@ -10,6 +10,8 @@ public class DropData : ScriptableObject
     public Color color;
     [LabelWidth(60f), HorizontalGroup("L0"), VerticalGroup("L0/C")]
     public string poolTag;
+    public Vector3 scale;
+    public Vector2 colliderDimensions;
     [MinValue(0.1f)]
     public float lifetime;
     [MinValue(1)]

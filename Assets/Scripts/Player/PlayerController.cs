@@ -1,5 +1,4 @@
-﻿using System;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -31,14 +30,15 @@ public class PlayerController : MonoBehaviour
     private bool _isPaused;
     private float _dashTimer;
     private Vector2 _dashDirection;
+    public bool IsDashing => _dashTimer > 0f;
 
     private void Start() {
         _health = GetComponent<Health>();
         _shooter = GetComponent<Shooter>();
         _input = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
-        
-        shootDeadzoneDisplay.sizeDelta = Vector2.one * 400f * shootDeadzone; 
+
+        shootDeadzoneDisplay.sizeDelta = Vector2.one * 400f * shootDeadzone;
         transform.position = new Vector3(ReferenceManager.Inst.SharedDataManager.playerStartPosition.x + 0.5f,
                                          ReferenceManager.Inst.SharedDataManager.playerStartPosition.y + 0.5f) * 1.5f;
         _health.Respawned(maxHp);
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void LateUpdate() {
-        if(_input.Shoot.sqrMagnitude >= shootDeadzone * shootDeadzone)
+        if (_input.Shoot.sqrMagnitude >= shootDeadzone * shootDeadzone)
             _shooter.Shoot();
     }
 

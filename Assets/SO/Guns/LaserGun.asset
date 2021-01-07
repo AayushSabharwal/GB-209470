@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0567feef6d691c24d9c0eb0e4587ea5b, type: 3}
   m_Name: LaserGun
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 42d0e32d6fbccf3438cb33286fb41e44, type: 3}
   fireRate: 3.5
   spreadAngle: 3
   isInfiniteAmmo: 0

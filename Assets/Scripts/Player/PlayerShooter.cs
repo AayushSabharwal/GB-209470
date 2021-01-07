@@ -40,6 +40,8 @@ public class PlayerShooter : Shooter, ISaveLoad
         _ammoData = new AmmoData[guns.Length];
         _canTween = true;
         for (int i = 0; i < guns.Length; i++) {
+            if(guns[i] == null) continue;
+            
             _ammoData[i] =
                 new
                     AmmoData(_ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? guns[i].clipSize : _ammo[guns[i].ammoType].CurrentAmmo,
@@ -105,7 +107,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public void ChangeGun(int to) {
-        if (to >= guns.Length)
+        if (to >= guns.Length || guns[to] == null)
             return;
         _ammoData[_currentGun] = AmmoData;
         gun = guns[to];
@@ -122,7 +124,8 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     public void Save() {
         for (int i = 0; i < guns.Length; i++)
-            _ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
+            if(guns[i] != null)
+                _ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
 
         ReferenceManager.Inst.ProgressManager.Data.Ammo = _ammo;
         ReferenceManager.Inst.ProgressManager.Data.EquippedGuns = guns;
@@ -130,7 +133,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     public void Load() {
         _ammo = ReferenceManager.Inst.ProgressManager.Data.Ammo;
-        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns.Where(g => g != null).ToArray();
+        guns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns;
     }
 }
 

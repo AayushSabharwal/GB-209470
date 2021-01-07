@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   image: {fileID: 669514707579504754}
+  imageMaxDimensions: {x: 540, y: 240}
   itemName: {fileID: 8415095107374007720}
   buyButton: {fileID: 4245283586629243279}
   costText: {fileID: 3344959138312034400}

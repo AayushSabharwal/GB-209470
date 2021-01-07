@@ -13,6 +13,12 @@ public class BulletData : ScriptableObject
     [BoxGroup("Projectile Options")]
     public float lifetime;
     [BoxGroup("Projectile Options")]
+    public Vector3 scale;
+    [BoxGroup("Projectile Options")]
+    public Sprite sprite;
+    [BoxGroup("Projectile Options")]
+    public Color colour;
+    [BoxGroup("Projectile Options")]
     public bool isExplosive;
     [BoxGroup("Projectile Options"), ShowIf("isExplosive"), MinValue(0.1f)]
     public float explosionRadius;

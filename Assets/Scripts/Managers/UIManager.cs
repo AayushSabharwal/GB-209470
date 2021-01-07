@@ -1,9 +1,8 @@
-﻿using System;
+﻿using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -21,12 +20,15 @@ public class UIManager : MonoBehaviour
     private RectTransform levelOverSidebar;
     [SerializeField, BoxGroup("UI References")]
     private Image[] gunSlots;
+    [SerializeField]
+    private Vector2 gunSlotMaxDimensions;
     [SerializeField, BoxGroup("Scenes")]
     private int shopSceneBuildIndex;
     [SerializeField, BoxGroup("Scenes")]
     private int mainMenuBuildIndex;
     [SerializeField, BoxGroup("Configuration")]
     private float sidepanelAnimDuration = 0.8f;
+
     public delegate void OnPauseDelegate(bool isPaused);
 
     public event OnPauseDelegate OnPause;
@@ -48,8 +50,13 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < 3; i++) {
             if (i >= progressManager.Data.EquippedGuns.Length || progressManager.Data.EquippedGuns[i] == null)
                 gunSlots[i].color = new Color(0f, 0f, 0f, 0f);
-            else
+            else {
                 gunSlots[i].sprite = progressManager.Data.EquippedGuns[i].image;
+                gunSlots[i].SetNativeSize();
+                Vector2 factor = new Vector2(gunSlotMaxDimensions.x / gunSlots[i].rectTransform.sizeDelta.x,
+                                             gunSlotMaxDimensions.y / gunSlots[i].rectTransform.sizeDelta.y);
+                gunSlots[i].rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
+            }
         }
     }
 
@@ -63,10 +70,13 @@ public class UIManager : MonoBehaviour
         }
         else
             pauseSidebar.DOAnchorPos(new Vector2(500f, 0f), sidepanelAnimDuration).onComplete += () => {
-                                                                                          OnPause?.Invoke(_isPaused);
-                                                                                          hud.SetActive(!_isPaused);
-                                                                                          pauseScreen.SetActive(_isPaused);
-                                                                                      };
+                                                                                                     OnPause
+                                                                                                         ?.Invoke(_isPaused);
+                                                                                                     hud
+                                                                                                         .SetActive(!_isPaused);
+                                                                                                     pauseScreen
+                                                                                                         .SetActive(_isPaused);
+                                                                                                 };
     }
 
     public void Restart() {

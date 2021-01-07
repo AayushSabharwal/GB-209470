@@ -1,5 +1,4 @@
-﻿using System;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,15 +22,17 @@ public class PlayerHealth : Health
     private float outOfCombatHealRate = 3f;
     private float MaxShieldHp => shield.effectiveness[shield.Level].effectiveness;
     private float _outOfCombatTimer;
-    
+    private PlayerController _controller;
+
     private void Start() {
+        _controller = GetComponent<PlayerController>();
         ReferenceManager.Inst.PlayerShooter.OnShoot += (_, __) => _outOfCombatTimer = outOfCombatTime;
     }
 
     public override void Respawned(float maxHealth) {
         CurShieldHp = MaxShieldHp;
         shieldSlider.transform.parent.gameObject.SetActive(MaxShieldHp > 0f);
-        
+
         base.Respawned(maxHealth);
     }
 
@@ -46,11 +47,13 @@ public class PlayerHealth : Health
             _outOfCombatTimer -= Time.deltaTime;
         else {
             _outOfCombatTimer = 0f;
-            Heal(outOfCombatHealRate*Time.deltaTime);
+            Heal(outOfCombatHealRate * Time.deltaTime);
         }
     }
 
     public override void TakeDamage(float damage) {
+        if (_controller.IsDashing)
+            return;
         float shieldDamage = Mathf.Min(damage, CurShieldHp);
         _outOfCombatTimer = outOfCombatTime;
         CurShieldHp -= shieldDamage;

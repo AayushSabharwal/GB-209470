@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0567feef6d691c24d9c0eb0e4587ea5b, type: 3}
+  m_Name: EnemyFlamethrower
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  fireRate: 15
+  spreadAngle: 25
+  isInfiniteAmmo: 1
+  ammoType: 0
+  clipSize: 0
+  reloadTime: 0
+  shootSound: {fileID: 8300000, guid: fd2598888d6f60e49949b27fcd229072, type: 3}
+  pitch: 1
+  pitchVariation: 0.01
+  shots:
+  - bullet: {fileID: 11400000, guid: b3b13974a4c51df4a8ca1a7b0aa54b57, type: 2}
+    offsetAngle: 0
+    groupSize: 10
+    applySpread: 1

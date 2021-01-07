@@ -16,6 +16,8 @@ public class ShopManager : MonoBehaviour, ISaveLoad
     [SerializeField]
     private Image[] equipSlots;
     [SerializeField]
+    private Vector2 slotImageMaxDimensions;
+    [SerializeField]
     private int levelBuildIndex;
 
     public event Action OnGunShopItemUpdateUI;
@@ -23,8 +25,13 @@ public class ShopManager : MonoBehaviour, ISaveLoad
     private void Start() {
         OnGunShopItemUpdateUI?.Invoke();
         for (int i = 0; i < equippableGuns; i++) {
-            if (i < _equippedGuns.Length && _equippedGuns[i] != null)
-                equipSlots[i].sprite = _equippedGuns[i]?.image;
+            if (i < _equippedGuns.Length && _equippedGuns[i] != null) {
+                equipSlots[i].sprite = _equippedGuns[i].image;
+                equipSlots[i].SetNativeSize();
+                Vector2 factor = new Vector2(slotImageMaxDimensions.x / equipSlots[i].rectTransform.sizeDelta.x,
+                                             slotImageMaxDimensions.y / equipSlots[i].rectTransform.sizeDelta.y);
+                equipSlots[i].rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
+            }
             else
                 equipSlots[i].color = new Color(0f, 0f, 0f, 0f);
         }
@@ -44,6 +51,10 @@ public class ShopManager : MonoBehaviour, ISaveLoad
         if (index >= equippableGuns) return;
         _equippedGuns[index] = gun;
         equipSlots[index].sprite = gun.image;
+        equipSlots[index].SetNativeSize();
+        Vector2 factor = new Vector2(slotImageMaxDimensions.x / equipSlots[index].rectTransform.sizeDelta.x,
+                                     slotImageMaxDimensions.y / equipSlots[index].rectTransform.sizeDelta.y);
+        equipSlots[index].rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         OnGunShopItemUpdateUI?.Invoke();
     }
 

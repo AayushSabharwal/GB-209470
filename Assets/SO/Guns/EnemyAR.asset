@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyAR
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  fireRate: 1
+  fireRate: 1.5
   spreadAngle: 10
   isInfiniteAmmo: 1
   ammoType: 0

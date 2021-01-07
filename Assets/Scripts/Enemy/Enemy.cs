@@ -77,6 +77,7 @@ public class Enemy : MonoBehaviour
 
         _spriteRenderer.sprite = data.sprite;
         _spriteRenderer.color = data.color;
+        transform.localScale = data.scale;
 
         _health.Respawned(data.health);
     }
@@ -95,7 +96,7 @@ public class Enemy : MonoBehaviour
         ReachedEndOfPath = (transform.position - _player.position).sqrMagnitude <
                            data.approachRadius * data.approachRadius;
 
-        if (ReachedEndOfPath) transform.right = _player.position - transform.position;
+        if (ReachedEndOfPath) transform.up = _player.position - transform.position;
     }
 
     private void FixedUpdate() {
@@ -105,7 +106,7 @@ public class Enemy : MonoBehaviour
 
 
         _rb.AddForce(_targetDirNorm * data.speed);
-        transform.right = _rb.velocity;
+        transform.up = _rb.velocity;
 
         if ((_path.vectorPath[_currentWaypoint] - transform.position).sqrMagnitude >
             data.pathfindingRadius * data.pathfindingRadius) return;

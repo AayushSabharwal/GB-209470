@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0567feef6d691c24d9c0eb0e4587ea5b, type: 3}
   m_Name: AR
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 2218ff1a2c15d104e873b8dee7545bd3, type: 3}
+  image: {fileID: 21300000, guid: 956e9b15fe954794b9738af9165565fc, type: 3}
   fireRate: 5
   spreadAngle: 5
   isInfiniteAmmo: 0

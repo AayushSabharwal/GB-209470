@@ -10,6 +10,8 @@ public class GunShopItem : MonoBehaviour
     [SerializeField]
     private Image image;
     [SerializeField]
+    private Vector2 imageMaxDimensions;
+    [SerializeField]
     private TextMeshProUGUI itemName;
     [SerializeField]
     private GameObject buyButton;
@@ -32,6 +34,9 @@ public class GunShopItem : MonoBehaviour
 
     private void Start() {
         image.sprite = item.gun.image;
+        image.SetNativeSize();
+        Vector2 factor = new Vector2(imageMaxDimensions.x / image.rectTransform.sizeDelta.x, imageMaxDimensions.y / image.rectTransform.sizeDelta.y);
+        image.rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         itemName.text = item.displayName;
         costText.text = item.cost.ToString();
     }

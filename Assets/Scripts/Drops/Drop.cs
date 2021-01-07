@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class Drop : MonoBehaviour
 
     private ObjectPooler _objectPooler;
     private SpriteRenderer _spriteRenderer;
-    private AudioSource _audioSource;
+    private BoxCollider2D _collider;
 
     private float _lifetimer;
     private bool _isPaused;
@@ -17,7 +15,7 @@ public class Drop : MonoBehaviour
     protected virtual void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _audioSource = GetComponent<AudioSource>();
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     private void Start() {
@@ -31,9 +29,11 @@ public class Drop : MonoBehaviour
 
     protected virtual void OnEnable() {
         if (data == null) return;
-        
+
         _spriteRenderer.sprite = data.sprite;
         _spriteRenderer.color = data.color;
+        _collider.size = data.colliderDimensions;
+        transform.localScale = data.scale;
         _lifetimer = data.lifetime;
     }
 
@@ -45,7 +45,6 @@ public class Drop : MonoBehaviour
     }
 
     protected virtual void OnPickup() {
-        print("H");
         ReferenceManager.Inst.SfxAudio.pitch = data.pitch + Random.Range(-data.pitchVariance, data.pitchVariance);
         ReferenceManager.Inst.SfxAudio.PlayOneShot(data.pickupSound);
     }
