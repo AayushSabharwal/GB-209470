@@ -25,7 +25,7 @@ MonoBehaviour:
   hitRate: 10
   isRanged: 0
   gun: {fileID: 0}
-  coinsToDrop: {x: 10, y: 20}
-  ammoDropChance: 0.5
-  ammoDropCount: {x: 1, y: 3}
-  scatterRadius: {x: 2.0378377, y: 4.0054054}
+  coinsToDrop: {x: 15, y: 22}
+  ammoDropChance: 0.7
+  ammoDropCount: {x: 1, y: 6}
+  scatterRadius: {x: 1.7957747, y: 3.1338027}

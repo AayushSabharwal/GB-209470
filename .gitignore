@@ -6,6 +6,7 @@ _TerrainAutoUpgrade/
 Ludiq/
 Ludiq.Generated/
 Sirenix/
+!Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll
 .idea/
 ModernUI/
 

@@ -144,7 +144,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 public class AmmoTracker
 {
     public int CurrentAmmo;
-    public readonly int MaxAmmo;
+    public int MaxAmmo;
 
     public AmmoTracker(int currentAmmo, int maxAmmo) {
         CurrentAmmo = currentAmmo;

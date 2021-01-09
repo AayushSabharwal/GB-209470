@@ -36,7 +36,7 @@ public class ScriptableObjectReferenceCache : ScriptableObject, IExternalStringR
     {
         if (IsInitialized) return;
         
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ODIN_INSPECTOR
         if(autoFetchInPlaymode)
             FetchReferences();
 #endif
@@ -50,7 +50,7 @@ public class ScriptableObjectReferenceCache : ScriptableObject, IExternalStringR
         }
     }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ODIN_INSPECTOR
     private void ClearReferences()
     {
         cachedReferences.Clear();

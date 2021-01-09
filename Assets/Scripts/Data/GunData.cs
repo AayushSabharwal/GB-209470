@@ -25,7 +25,7 @@ public class GunData : ScriptableObject, ISerializeReferenceByAssetGuid
     [FoldoutGroup("Audio")]
     public float pitchVariation;
     
-    [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot")]
+    [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot"), SerializeField]
     public Shot[] shots;
 }
 
