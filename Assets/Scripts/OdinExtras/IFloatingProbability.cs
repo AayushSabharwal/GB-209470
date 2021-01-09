@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ODIN_INSPECTOR
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 
@@ -60,7 +60,7 @@ public class FloatingProbabilitySettingsAttribute : System.Attribute
     }
 }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ODIN_INSPECTOR
 public class FloatingProbabilityDrawer<T> : OdinValueDrawer<T>
     where T : IFloatingProbability
 {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb935d3e68c0e324e8239c3a78daf3e4, type: 3}
   m_Name: Enrage
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: c3e472f25f685b24cb873a70418519d3, type: 3}
+  sprite: {fileID: 21300000, guid: b1db0971051f0bb46ac028cf429c5a78, type: 3}
   itemName: Enrage
   description: 'Increase damage done when below 35% health
 

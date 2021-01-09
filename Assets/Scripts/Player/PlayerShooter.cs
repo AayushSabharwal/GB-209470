@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -14,6 +14,8 @@ public class PlayerShooter : Shooter, ISaveLoad
     private int defaultGun;
     [SerializeField]
     private TextMeshProUGUI ammoText;
+    [SerializeField]
+    private TextMeshProUGUI shadowText;
     [SerializeField, FoldoutGroup("GUI")]
     private Image reloadProgress;
     [SerializeField, FoldoutGroup("GUI")]
@@ -40,8 +42,8 @@ public class PlayerShooter : Shooter, ISaveLoad
         _ammoData = new AmmoData[guns.Length];
         _canTween = true;
         for (int i = 0; i < guns.Length; i++) {
-            if(guns[i] == null) continue;
-            
+            if (guns[i] == null) continue;
+
             _ammoData[i] =
                 new
                     AmmoData(_ammo[guns[i].ammoType].CurrentAmmo >= guns[i].clipSize ? guns[i].clipSize : _ammo[guns[i].ammoType].CurrentAmmo,
@@ -89,6 +91,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     private void UpdateUI() {
         ammoText.text =
             $"{AmmoData.RemainingAmmo}/{(!gun.isInfiniteAmmo ? _ammo[gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
+        shadowText.text = ammoText.text;
     }
 
     public void Reload() {
@@ -124,7 +127,7 @@ public class PlayerShooter : Shooter, ISaveLoad
 
     public void Save() {
         for (int i = 0; i < guns.Length; i++)
-            if(guns[i] != null)
+            if (guns[i] != null)
                 _ammo[guns[i].ammoType].CurrentAmmo += _ammoData[i].RemainingAmmo;
 
         ReferenceManager.Inst.ProgressManager.Data.Ammo = _ammo;
@@ -137,6 +140,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 }
 
+[Serializable]
 public class AmmoTracker
 {
     public int CurrentAmmo;

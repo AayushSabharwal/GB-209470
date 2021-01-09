@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR
 using Sirenix.Serialization;
+#else
+using OdinSerializer;
+#endif
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;

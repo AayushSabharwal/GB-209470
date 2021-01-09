@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb935d3e68c0e324e8239c3a78daf3e4, type: 3}
   m_Name: Magnet
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 575f0768799e8504a929d65ae3bc2c28, type: 3}
+  sprite: {fileID: 21300000, guid: 03c20fa5718ccc74ba35f5f6b2a031a1, type: 3}
   itemName: Magnet
   description: 'Make coins move towards you when you''re nearby
 

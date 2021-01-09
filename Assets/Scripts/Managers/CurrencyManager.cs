@@ -8,6 +8,8 @@ public class CurrencyManager : MonoBehaviour, ISaveLoad
     public int Currency { get; private set; }
     [SerializeField]
     private TextMeshProUGUI displayText;
+    [SerializeField]
+    private TextMeshProUGUI shadowText;
 
     private void Start() {
         UpdateUI();
@@ -15,6 +17,7 @@ public class CurrencyManager : MonoBehaviour, ISaveLoad
 
     private void UpdateUI() {
         displayText.text = Currency.ToString();
+        shadowText.text = displayText.text;
     }
 
     public void AddCurrency(int amount) {

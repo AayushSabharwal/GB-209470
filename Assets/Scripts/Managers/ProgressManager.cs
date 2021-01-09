@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR
 using Sirenix.Serialization;
+#else
+using OdinSerializer;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ProgressManager : SerializedMonoBehaviour
+public class ProgressManager : MonoBehaviour
 {
     [SerializeField]
     private ScriptableObjectReferenceCache soReferenceCache;
@@ -14,12 +18,15 @@ public class ProgressManager : SerializedMonoBehaviour
     private List<MonoBehaviour> saveableMonoBehaviours;
     [SerializeField, LabelText("Saveable SOs"), ValidateInput("@ValidateSO()")]
     private List<ScriptableObject> saveableSOs;
+    // [SerializeField]
+    // private DataContainer defaultSave;
     [SerializeField]
-    private DataContainer defaultSave;
+    private DisplayDataContainer defaultSaveGame;
     [ShowInInspector, ReadOnly]
-    public DataContainer Data { get; private set; }
+    public DataContainer Data => _data;
     [ShowInInspector]
     private List<ISaveLoad> _saveableItems;
+    private DataContainer _data;
 
     private void Awake() {
         _saveableItems = new List<ISaveLoad>();
@@ -82,7 +89,7 @@ public class ProgressManager : SerializedMonoBehaviour
                                            StringReferenceResolver = soReferenceCache
                                        };
 
-        byte[] data = SerializationUtility.SerializeValue(Data, DataFormat.Binary, context);
+        byte[] data = SerializationUtility.SerializeValue(_data, DataFormat.Binary, context);
         File.WriteAllBytes(Application.persistentDataPath + "/savegame.sgm", data);
     }
 
@@ -93,12 +100,10 @@ public class ProgressManager : SerializedMonoBehaviour
                                              {
                                                  StringReferenceResolver = soReferenceCache
                                              };
-            Data = SerializationUtility.DeserializeValue<DataContainer>(data, DataFormat.Binary, context);
+            _data = SerializationUtility.DeserializeValue<DataContainer>(data, DataFormat.Binary, context);
         }
         else
-            Data = defaultSave;
-
-        
+            _data = defaultSaveGame;
         for(int i = 0; i < _saveableItems.Count; i++) 
             _saveableItems[i].Load();
     }
@@ -110,15 +115,72 @@ public class ProgressManager : SerializedMonoBehaviour
     }
 }
 
+[Serializable]
+public class DisplayDataContainer
+{
+    public List<AmmoTrackerSaveData> ammo;
+    public GunData[] equippedGuns;
+    public List<AllGunsSaveData> allGuns;
+    public List<AmmoDropData> droppableAmmo;
+    public List<UpgradableItemLevelSaveData> upgradableItemLevels;
+    public int currency;
+    public int level;
+
+    public static implicit operator DataContainer(DisplayDataContainer display) {
+        DataContainer data = new DataContainer();
+        data.Ammo = new Dictionary<AmmoType, AmmoTracker>();
+        foreach (AmmoTrackerSaveData s in display.ammo) {
+            data.Ammo[s.type] = s.tracker;
+        }
+
+        data.EquippedGuns = display.equippedGuns;
+        data.AllGuns = new Dictionary<GunShopItemData, bool>();
+        foreach (AllGunsSaveData s in display.allGuns) {
+            data.AllGuns[s.gun] = s.isOwned;
+        }
+
+        data.DroppableAmmo = display.droppableAmmo;
+        
+        data.UpgradableItemLevels = new Dictionary<string, int>();
+        foreach (UpgradableItemLevelSaveData s in display.upgradableItemLevels) {
+            data.UpgradableItemLevels.Add(s.name, s.level);
+        }
+        
+        data.Currency = display.currency;
+        data.Level = display.level;
+        return data;
+    }
+}
+
 
 public class DataContainer
 {
     public Dictionary<AmmoType, AmmoTracker> Ammo;
     public GunData[] EquippedGuns;
     public Dictionary<GunShopItemData, bool> AllGuns;
-    [FloatingProbabilitySettings]
     public List<AmmoDropData> DroppableAmmo;
     public Dictionary<string, int> UpgradableItemLevels;
     public int Currency;
     public int Level;
+}
+
+[Serializable]
+public class AmmoTrackerSaveData
+{
+    public AmmoType type;
+    public AmmoTracker tracker;
+}
+
+[Serializable]
+public class AllGunsSaveData
+{
+    public GunShopItemData gun;
+    public bool isOwned;
+}
+
+[Serializable]
+public class UpgradableItemLevelSaveData
+{
+    public string name;
+    public int level;
 }

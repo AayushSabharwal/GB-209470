@@ -50,16 +50,16 @@ public class DropManager : MonoBehaviour, ISaveLoad
     public void RequestAmmo(int amount, out List<GameObject> ammo) {
         ammo = new List<GameObject>(amount);
         for (int i = 0; i < amount; i++) {
-            AmmoDropData data = _droppableAmmo[0];
-            float f = Random.value;
-            for (int j = 0; j < _droppableAmmo.Count; j++) {
-                if (f > _droppableAmmo[j].FloatingProbability) {
-                    f -= _droppableAmmo[j].FloatingProbability;
-                    continue;
-                }
-
-                data = _droppableAmmo[j];
-            }
+            AmmoDropData data = _droppableAmmo[_droppableAmmo.GetResult()];
+            // float f = Random.value;
+            // for (int j = 0; j < _droppableAmmo.Count; j++) {
+            //     if (f > _droppableAmmo[j].FloatingProbability) {
+            //         f -= _droppableAmmo[j].FloatingProbability;
+            //         continue;
+            //     }
+            //
+            //     data = _droppableAmmo[j];
+            // }
 
             GameObject g = _objectPooler.Request(data.poolTag);
             if (_ammoScriptMap.ContainsKey(g.GetInstanceID()))

@@ -68,20 +68,21 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
         if (_isPaused || _isPlayerDead) return;
 
         _spawnTimer -= Time.deltaTime;
-        if (_spawnTimer <= 0f) {
+        if (_spawnTimer <= 0f && enemies.Count > 0) {
             SpawnEnemy();
             _spawnTimer = spawnInterval;
         }
     }
 
     private void SpawnEnemy() {
-        float p = Random.value;
+        // float p = Random.value;
         int indexToRemove = -1;
-        for (int i = 0; i < enemies.Count; i++) {
-            if (p > enemies[i].probabilityMultiplier) {
-                p -= enemies[i].probabilityMultiplier;
-                continue;
-            }
+        int i = enemies.GetResult();
+        // for (int i = 0; i < enemies.Count; i++) {
+        //     if (p > enemies[i].probabilityMultiplier) {
+        //         p -= enemies[i].probabilityMultiplier;
+        //         continue;
+        //     }
 
             enemies[i].spawnedCount += 1;
             if (enemies[i].spawnedCount >= enemies[i].SpawnAmount)
@@ -93,15 +94,15 @@ public class EnemySpawner : MonoBehaviour, ISaveLoad
 
             GetEnemy(g).data = enemies[i].enemy;
             g.SetActive(true);
-            break;
-        }
+        //     break;
+        // }
 
         if (indexToRemove == -1) return;
 
-        float divideBy = 1f - enemies[indexToRemove].probabilityMultiplier;
+        // float divideBy = 1f - enemies[indexToRemove].probabilityMultiplier;
         enemies.RemoveAt(indexToRemove);
-        for (int i = 0; i < enemies.Count; i++)
-            enemies[i].probabilityMultiplier /= divideBy;
+        // for (int i = 0; i < enemies.Count; i++)
+        //     enemies[i].probabilityMultiplier /= divideBy;
     }
 
     private Enemy GetEnemy(GameObject g) {

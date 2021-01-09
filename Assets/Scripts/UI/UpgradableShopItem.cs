@@ -14,6 +14,8 @@ public class UpgradableShopItem : MonoBehaviour
     [SerializeField]
     private Image image;
     [SerializeField]
+    private Vector2 imageMaxDimensions;
+    [SerializeField]
     private TextMeshProUGUI titleText;
 
     private InfoDialog _infoDialog;
@@ -23,11 +25,15 @@ public class UpgradableShopItem : MonoBehaviour
     }
 
     private void Start() {
+        image.sprite = item.sprite;
+        
+        image.SetNativeSize();
+        Vector2 factor = new Vector2(imageMaxDimensions.x / image.rectTransform.sizeDelta.x, imageMaxDimensions.y / image.rectTransform.sizeDelta.y);
+        image.rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         UpdateUI();
     }
 
     private void UpdateUI() {
-        image.sprite = item.sprite;
         upgradeButton.interactable = item.IsUpgradable;
         titleText.text = item.itemName;
         if (item.IsUpgradable)

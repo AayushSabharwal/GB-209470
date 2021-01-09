@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb935d3e68c0e324e8239c3a78daf3e4, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 54628aafa20f64b40ae661038ee7abf0, type: 3}
+  sprite: {fileID: 21300000, guid: 7cbacf93cd3ca95478541eee511ad7ba, type: 3}
   itemName: Shield
   description: 'Add an extra shield to absorb some damage
 
