@@ -24,6 +24,18 @@ public class GunData : ScriptableObject, ISerializeReferenceByAssetGuid
     public float pitch;
     [FoldoutGroup("Audio")]
     public float pitchVariation;
+    [FoldoutGroup("Lighting")]
+    public Color muzzleFlashColour;
+    [FoldoutGroup("Lighting")]
+    public float muzzleFlashDuration;
+    [FoldoutGroup("Lighting"), PropertyRange(0f, 360f), MaxValue("muzzleFlashOuterAngle")]
+    public float muzzleFlashInnerAngle;
+    [FoldoutGroup("Lighting"), PropertyRange(0f, 360f), MinValue("muzzleFlashInnerAngle")]
+    public float muzzleFlashOuterAngle;
+    [FoldoutGroup("Lighting"), MinValue(0f)]
+    public float muzzleFlashInnerRadius;
+    [FoldoutGroup("Lighting"), MinValue("muzzleFlashInnerRadius")]
+    public float muzzleFlashOuterRadius;
     
     [ValidateInput("@shots.Length > 0", DefaultMessage = "Must have at least one shot"), SerializeField]
     public Shot[] shots;

@@ -16,6 +16,8 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   poolTag: MeleeEnemy
   scale: {x: 0.6, y: 0.6, z: 1}
+  boxColliderOffset: {x: -0.09000003, y: -1.024865}
+  boxColliderSize: {x: 2.4, y: 1.21027}
   health: 15
   speed: 5.5
   approachRadius: 2
@@ -25,6 +27,7 @@ MonoBehaviour:
   hitRate: 10
   isRanged: 0
   gun: {fileID: 0}
+  shootPointPosition: {x: 0, y: 0, z: 0}
   coinsToDrop: {x: 15, y: 22}
   ammoDropChance: 0.7
   ammoDropCount: {x: 1, y: 6}

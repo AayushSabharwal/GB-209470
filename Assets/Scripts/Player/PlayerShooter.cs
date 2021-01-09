@@ -77,7 +77,10 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public override void Shoot() {
+        if (!AmmoData.CanShoot)
+            return;
         base.Shoot();
+        reloadProgress.fillAmount = AmmoData.RemainingAmmo / (float) gun.clipSize;
         UpdateUI();
         HandleAmmo();
     }
@@ -116,12 +119,17 @@ public class PlayerShooter : Shooter, ISaveLoad
         gun = guns[to];
         AmmoData = _ammoData[to];
         _currentGun = to;
-
+        SetupMuzzleFlash();
         UpdateUI();
     }
 
     public void AddAmmo(AmmoType type, int amount) {
-        _ammo[type].CurrentAmmo = Mathf.Min(_ammo[type].CurrentAmmo + amount, _ammo[type].MaxAmmo);
+        print($"BEFORE {_ammo[type].CurrentAmmo} {amount} {_ammo[type].MaxAmmo} {type.ToString()}");
+        // _ammo[type].CurrentAmmo = Mathf.Min(_ammo[type].CurrentAmmo + amount, _ammo[type].MaxAmmo);
+        _ammo[type].CurrentAmmo += amount;
+        print($"AFTER {_ammo[type].CurrentAmmo}");
+        if (_ammo[type].CurrentAmmo > _ammo[type].MaxAmmo)
+            _ammo[type].CurrentAmmo = _ammo[type].MaxAmmo;
         UpdateUI();
     }
 

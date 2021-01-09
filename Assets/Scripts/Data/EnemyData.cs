@@ -10,7 +10,12 @@ public class EnemyData : ScriptableObject
     public Color color;
     [LabelWidth(60f), HorizontalGroup("L0"), VerticalGroup("L0/C")]
     public string poolTag;
+    [BoxGroup("Positioning")]
     public Vector3 scale;
+    [BoxGroup("Positioning")]
+    public Vector2 boxColliderOffset;
+    [BoxGroup("Positioning")]
+    public Vector2 boxColliderSize;
     [MinValue(0f), HorizontalGroup("L1"), LabelWidth(110f), PropertySpace]
     public float health;
     [MinValue(0.1f), HorizontalGroup("L1"), LabelWidth(110f), PropertySpace]
@@ -30,6 +35,8 @@ public class EnemyData : ScriptableObject
     public bool isRanged;
     [InlineEditor, ShowIf("isRanged"), BoxGroup("Attack")]
     public GunData gun;
+    [ShowIf("isRanged"), BoxGroup("Attack")]
+    public Vector3 shootPointPosition;
 
     [MinMaxSlider(0, 50), BoxGroup("Drops")]
     public Vector2Int coinsToDrop;

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 
 public class ProjectileBullet : Bullet
@@ -6,12 +7,14 @@ public class ProjectileBullet : Bullet
     private float _lifetimer;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+    private Light2D _light;
     private bool _isPaused;
     private Collider2D[] _explosionHits;
     
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _light = GetComponent<Light2D>();
     }
 
     protected override void Start() {
@@ -22,7 +25,7 @@ public class ProjectileBullet : Bullet
 
     private void OnEnable() {
         if (data == null) return;
-
+        _light.color = data.colour;
         _lifetimer = data.lifetime;
         _rb.velocity = transform.right * data.speed;
         _spriteRenderer.sprite = data.sprite;

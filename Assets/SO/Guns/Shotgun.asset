@@ -22,6 +22,12 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: cddd094561bc8d544a5d873e81fdd0f1, type: 3}
   pitch: 1.3
   pitchVariation: 0.05
+  muzzleFlashColour: {r: 1, g: 0.983102, b: 0, a: 1}
+  muzzleFlashDuration: 0.1
+  muzzleFlashInnerAngle: 0
+  muzzleFlashOuterAngle: 360
+  muzzleFlashInnerRadius: 0
+  muzzleFlashOuterRadius: 1
   shots:
   - bullet: {fileID: 11400000, guid: d150cabf9fe189d4384c769be496ff09, type: 2}
     offsetAngle: 0

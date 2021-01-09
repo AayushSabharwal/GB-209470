@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using MEC;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 public class Shooter : MonoBehaviour
@@ -9,7 +12,8 @@ public class Shooter : MonoBehaviour
     public GunData gun;
     [SerializeField]
     protected Transform shootPoint;
-
+    [SerializeField]
+    protected Light2D muzzleFlash;
     [HideInInspector]
     public AmmoData AmmoData;
     [NonSerialized]
@@ -44,7 +48,16 @@ public class Shooter : MonoBehaviour
     protected virtual void OnEnable() {
         if (gun == null)
             return;
+        SetupMuzzleFlash();
         AmmoData = new AmmoData(gun.clipSize, gun.reloadTime, gun.isInfiniteAmmo);
+    }
+
+    protected void SetupMuzzleFlash() {
+        muzzleFlash.color = gun.muzzleFlashColour;
+        muzzleFlash.pointLightInnerAngle = gun.muzzleFlashInnerAngle;
+        muzzleFlash.pointLightOuterAngle = gun.muzzleFlashOuterAngle;
+        muzzleFlash.pointLightInnerRadius = gun.muzzleFlashInnerRadius;
+        muzzleFlash.pointLightOuterRadius = gun.muzzleFlashOuterRadius;
     }
 
     protected virtual void Update() {
@@ -65,11 +78,18 @@ public class Shooter : MonoBehaviour
                         gun.shots[i].applySpread ? gun.spreadAngle : 0f,
                         gun.shots[i].groupSize);
         }
-        
+
+        Timing.RunCoroutine(MuzzleFlash());
         _audioSource.pitch = gun.pitch + Random.Range(-gun.pitchVariation, gun.pitchVariation);
         _audioSource.PlayOneShot(gun.shootSound);
         _shotTimer = 1f / gun.fireRate;
         OnShoot?.Invoke(this, EventArgs.Empty);
+    }
+
+    private IEnumerator<float> MuzzleFlash() {
+        muzzleFlash.enabled = true;
+        yield return Timing.WaitForSeconds(gun.muzzleFlashDuration);
+        muzzleFlash.enabled = false;
     }
 
     private void MakeBullets(BulletData bulletType, float offsetAngle, float spread, int groupSize) {

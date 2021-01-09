@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     private Transform _player;
     private ObjectPooler _objectPooler;
     private SharedDataManager _sharedDataManager;
+    private BoxCollider2D _collider;
     private Seeker _seeker;
     private Rigidbody2D _rb;
 
@@ -40,6 +41,7 @@ public class Enemy : MonoBehaviour
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
         _dropManager = ReferenceManager.Inst.DropManager;
         _sharedDataManager = ReferenceManager.Inst.SharedDataManager;
+        _collider = GetComponent<BoxCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
         _seeker = GetComponent<Seeker>();
         IsPlayerDead = false;
@@ -78,7 +80,8 @@ public class Enemy : MonoBehaviour
         _spriteRenderer.sprite = data.sprite;
         _spriteRenderer.color = data.color;
         transform.localScale = data.scale;
-
+        _collider.offset = data.boxColliderOffset;
+        _collider.size = data.boxColliderSize;
         _health.Respawned(data.health);
     }
 

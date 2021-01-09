@@ -19,6 +19,8 @@ public class ShopManager : MonoBehaviour, ISaveLoad
     private Vector2 slotImageMaxDimensions;
     [SerializeField]
     private int levelBuildIndex;
+    [SerializeField]
+    private int menuBuildIndex;
 
     public event Action OnGunShopItemUpdateUI;
 
@@ -74,6 +76,11 @@ public class ShopManager : MonoBehaviour, ISaveLoad
         SceneManager.LoadSceneAsync(levelBuildIndex);
     }
 
+    public void MainMenu() {
+        ReferenceManager.Inst.ProgressManager.Save();
+        SceneManager.LoadSceneAsync(menuBuildIndex);
+    }
+    
     public void Save() { }
 
     public void Load() {

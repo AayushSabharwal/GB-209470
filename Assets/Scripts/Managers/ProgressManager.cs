@@ -104,6 +104,7 @@ public class ProgressManager : MonoBehaviour
         }
         else
             _data = defaultSaveGame;
+        
         for(int i = 0; i < _saveableItems.Count; i++) 
             _saveableItems[i].Load();
     }

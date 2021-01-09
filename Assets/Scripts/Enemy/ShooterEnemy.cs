@@ -2,6 +2,9 @@
 
 public class ShooterEnemy : MonoBehaviour
 {
+    [SerializeField]
+    private Transform shootPoint;
+    
     private Enemy _self;
     private Shooter _shooter;
     private bool _isPaused;
@@ -26,6 +29,7 @@ public class ShooterEnemy : MonoBehaviour
     }
 
     private void OnEnable() {
+        shootPoint.localPosition = _self.data.shootPointPosition;
         _shooter.gun = _self.data.gun;
         _shooter.AmmoData = new AmmoData(_shooter.gun.clipSize, _shooter.gun.reloadTime, _shooter.gun.isInfiniteAmmo);
     }

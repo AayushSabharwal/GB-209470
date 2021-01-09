@@ -7,6 +7,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private int shopSceneBuildIndex;
     [SerializeField]
+    private int levelSceneBuildIndex;
+    [SerializeField]
     private ScriptableObjectReferenceCache refCache;
     
     private void Awake() {
@@ -18,6 +20,10 @@ public class MainMenuManager : MonoBehaviour
     }
 
     public void Play() {
+        SceneManager.LoadSceneAsync(levelSceneBuildIndex);
+    }
+
+    public void Shop() {
         SceneManager.LoadSceneAsync(shopSceneBuildIndex);
     }
 }
