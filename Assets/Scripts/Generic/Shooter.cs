@@ -80,8 +80,11 @@ public class Shooter : MonoBehaviour
         }
 
         Timing.RunCoroutine(MuzzleFlash());
-        _audioSource.pitch = gun.pitch + Random.Range(-gun.pitchVariation, gun.pitchVariation);
-        _audioSource.PlayOneShot(gun.shootSound);
+        if (gun.hasAudio) {
+            _audioSource.pitch = gun.pitch + Random.Range(-gun.pitchVariation, gun.pitchVariation);
+            _audioSource.PlayOneShot(gun.shootSound);            
+        }
+        
         _shotTimer = 1f / gun.fireRate;
         OnShoot?.Invoke(this, EventArgs.Empty);
     }

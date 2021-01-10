@@ -80,6 +80,7 @@ public class UIManager : MonoBehaviour
             skipButton.SetActive(false);
             storyText.anchoredPosition = new Vector2(0f, -Screen.height);
             storyPanel.color = new Color(0f, 0f, 0f, 0f);
+            AudioManager.Inst.ChangeAudio(AudioEvent.Story, 1f);
             Tween fadeInTween = storyPanel.DOColor(new Color(0f, 0f, 0f, 0.58f), fadeDuration).SetEase(Ease.Linear)
                                           .OnComplete(() => skipButton.SetActive(true))
                                           .Pause();
@@ -96,8 +97,11 @@ public class UIManager : MonoBehaviour
                                     .OnComplete(() => {
                                                     Pause();
                                                     storyPanel.gameObject.SetActive(false);
+                                                    AudioManager.Inst.ChangeAudio(AudioEvent.InGame, fadeDuration);
                                                 });
         }
+        else
+            AudioManager.Inst.ChangeAudio(AudioEvent.InGame, 1f);
     }
 
     public void Pause() {
@@ -126,16 +130,21 @@ public class UIManager : MonoBehaviour
     }
 
     public void Restart() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void NextLevel() {
         ReferenceManager.Inst.ProgressManager.Save();
-        SceneManager.LoadScene(shopSceneBuildIndex);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Shop() {
+        ReferenceManager.Inst.ProgressManager.Save();
+        SceneManager.LoadSceneAsync(shopSceneBuildIndex);
     }
 
     public void MainMenu() {
-        SceneManager.LoadScene(mainMenuBuildIndex);
+        SceneManager.LoadSceneAsync(mainMenuBuildIndex);
     }
 
     private void GameOver() {

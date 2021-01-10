@@ -23,7 +23,7 @@ public class HitscanBullet : Bullet
         _hit = Physics2D.Raycast(transform.position, transform.right, data.range, data.collisionMask);
         if(_hit.collider != null)
             TryDamage(_hit.collider.gameObject);
-        
+        DoOnHitFX();
         Timing.RunCoroutine(DrawLine(transform.position,
                                      _hit.collider == null
                                          ? transform.position + transform.right * data.range

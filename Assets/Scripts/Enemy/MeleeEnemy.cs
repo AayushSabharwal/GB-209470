@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class MeleeEnemy : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource passiveSource;
+    
     private Health _playerHealth;
     private Enemy _self;
     private float _attackTimer;
@@ -30,10 +33,19 @@ public class MeleeEnemy : MonoBehaviour
     private void Update() {
         if (_isPaused || _self.IsPlayerDead) return;
 
-        if (_self.ReachedEndOfPath && _attackTimer <= 0f) {
-            _playerHealth.TakeDamage(_self.data.damage);
-            _attackTimer = 1f / _self.data.hitRate;
+        if (_self.ReachedEndOfPath) {
+            if (_attackTimer <= 0f) {
+                _playerHealth.TakeDamage(_self.data.damage);
+                _attackTimer = 1f / _self.data.hitRate;                
+            }
+            if (_self.data.hasPassiveAttackingLoop && !passiveSource.isPlaying) {
+                passiveSource.clip = _self.data.passiveAttackingLoop;
+                passiveSource.loop = true;
+                passiveSource.Play();
+            }
         }
+        else if (_self.data.hasPassiveAttackingLoop && passiveSource.isPlaying)
+            passiveSource.Stop();
 
         _attackTimer -= Time.deltaTime;
     }

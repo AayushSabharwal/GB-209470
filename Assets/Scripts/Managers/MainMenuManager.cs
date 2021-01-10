@@ -50,6 +50,8 @@ public class MainMenuManager : MonoBehaviour
             continueButtonText.color = textDisabledColour;
             shopButtonText.color = textDisabledColour;
         }
+        
+        AudioManager.Inst.ChangeAudio(AudioEvent.MainMenu, 1f);
     }
 
     public void NewGame() {

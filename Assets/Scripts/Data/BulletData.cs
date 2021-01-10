@@ -29,6 +29,17 @@ public class BulletData : ScriptableObject
     public Gradient color;
     [BoxGroup("Hitscan Options")]
     public float size;
+
+    [BoxGroup("OnHitEffects")]
+    public bool hasOnHitEffects;
+    [ShowIfGroup("OnHitEffects/hasOnHitEffects")]
+    public string onHitEffectTag;
+    [ShowIfGroup("OnHitEffects/hasOnHitEffects")]
+    public Sprite onHitEffectSprite;
+    [ShowIfGroup("OnHitEffects/hasOnHitEffects")]
+    public Color onHitEffectColour;
+    [ShowIfGroup("OnHitEffects/hasOnHitEffects")]
+    public float onHitEffectRadius;
     
     public LayerMask collisionMask;
     public LayerMask damageMask;

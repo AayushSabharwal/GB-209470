@@ -18,11 +18,14 @@ public class GunData : ScriptableObject, ISerializeReferenceByAssetGuid
     public int clipSize;
     [HideIf("isInfiniteAmmo")]
     public float reloadTime;
+
     [FoldoutGroup("Audio")]
+    public bool hasAudio;
+    [ShowIfGroup("Audio/hasAudio")]
     public AudioClip shootSound;
-    [FoldoutGroup("Audio")]
+    [ShowIfGroup("Audio/hasAudio")]
     public float pitch;
-    [FoldoutGroup("Audio")]
+    [ShowIfGroup("Audio/hasAudio")]
     public float pitchVariation;
     [FoldoutGroup("Lighting")]
     public Color muzzleFlashColour;

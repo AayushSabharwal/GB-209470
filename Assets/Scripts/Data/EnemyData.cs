@@ -38,6 +38,10 @@ public class EnemyData : ScriptableObject
     [ShowIf("isRanged"), BoxGroup("Attack")]
     public Vector3 shootPointPosition;
 
+    public bool hasPassiveAttackingLoop;
+    [ShowIf("hasPassiveAttackingLoop")]
+    public AudioClip passiveAttackingLoop;
+
     [MinMaxSlider(0, 50), BoxGroup("Drops")]
     public Vector2Int coinsToDrop;
     [PropertyRange(0f, 1f),BoxGroup("Drops")]

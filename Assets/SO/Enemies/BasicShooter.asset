@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d68e514fa304a808c257be2f521ef62, type: 3}
   m_Name: BasicShooter
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1429150162701264529, guid: be2ea685b5bdda1498188871e2d6afe5, type: 3}
+  sprite: {fileID: 3556946319533195458, guid: 80e2d46bc9a2b1840ba982b8f3fe8162, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   poolTag: ShooterEnemy
   scale: {x: 0.6, y: 0.6, z: 1}

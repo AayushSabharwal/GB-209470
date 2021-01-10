@@ -55,6 +55,9 @@ public class ProjectileBullet : Bullet
             }
             else
                 TryDamage(other.gameObject);
+
+            DoOnHitFX();
+            
             ObjectPooler.Return(data.poolTag, gameObject);
         }
     }

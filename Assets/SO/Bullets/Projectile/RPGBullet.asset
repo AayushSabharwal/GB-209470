@@ -18,9 +18,9 @@ MonoBehaviour:
   isProjectile: 1
   speed: 7
   lifetime: 5
-  scale: {x: 0.22, y: 0.22, z: 1}
-  sprite: {fileID: 21300000, guid: ba5bbfacc7605084598518b0d6c5c90a, type: 3}
-  colour: {r: 1, g: 0.7536309, b: 0, a: 1}
+  scale: {x: 0.3, y: 0.3, z: 1}
+  sprite: {fileID: 21300000, guid: 7c6342355da8d5c45884c6a2e7e9110e, type: 3}
+  colour: {r: 0.0025007725, g: 1, b: 0, a: 1}
   isExplosive: 1
   explosionRadius: 2
   range: 0
@@ -54,6 +54,11 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   size: 0
+  hasOnHitEffects: 1
+  onHitEffectTag: OnHitFX
+  onHitEffectSprite: {fileID: 21300000, guid: f904827dc13387a49989875f02dc6306, type: 3}
+  onHitEffectColour: {r: 0.003921569, g: 1, b: 0, a: 1}
+  onHitEffectRadius: 2
   collisionMask:
     serializedVersion: 2
     m_Bits: 768

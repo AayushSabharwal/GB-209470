@@ -4,7 +4,9 @@ public class ShooterEnemy : MonoBehaviour
 {
     [SerializeField]
     private Transform shootPoint;
-    
+    [SerializeField]
+    private AudioSource passiveSource;
+
     private Enemy _self;
     private Shooter _shooter;
     private bool _isPaused;
@@ -37,7 +39,16 @@ public class ShooterEnemy : MonoBehaviour
     private void Update() {
         if (_isPaused || _self.IsPlayerDead) return;
 
-        if (_self.ReachedEndOfPath)
+        if (_self.ReachedEndOfPath) {
             _shooter.Shoot();
+            if (_self.data.hasPassiveAttackingLoop && !passiveSource.isPlaying) {
+                passiveSource.clip = _self.data.passiveAttackingLoop;
+                passiveSource.loop = true;
+                passiveSource.Play();
+            }
+        }
+        else if (_self.data.hasPassiveAttackingLoop && passiveSource.isPlaying)
+            passiveSource.Stop();
+            
     }
 }

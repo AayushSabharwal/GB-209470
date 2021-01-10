@@ -19,6 +19,7 @@ MonoBehaviour:
   ammoType: 3
   clipSize: 3
   reloadTime: 1.6
+  hasAudio: 1
   shootSound: {fileID: 8300000, guid: e30543e0a315f9044bd9bdb029609f9d, type: 3}
   pitch: 1
   pitchVariation: 0.2
