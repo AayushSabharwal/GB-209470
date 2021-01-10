@@ -51,7 +51,6 @@ public class ProgressManager : MonoBehaviour
         if (ReferenceManager.Inst.PlayerHealth != null)
             ReferenceManager.Inst.PlayerHealth.OnDeath += (_, __) => {
                                                               DeleteSave();
-                                                              SaveHighScore();
                                                           };
     }
 
@@ -96,21 +95,6 @@ public class ProgressManager : MonoBehaviour
 
         byte[] data = SerializationUtility.SerializeValue(_data, DataFormat.Binary, context);
         File.WriteAllBytes(Application.persistentDataPath + "/savegame.sgm", data);
-
-        SaveHighScore();
-    }
-
-    private void SaveHighScore() {
-        int bestLevel = 0;
-        if (File.Exists(Application.persistentDataPath + "/highscore.sgm")) {
-            byte[] hiscore = File.ReadAllBytes(Application.persistentDataPath + "/highscore.sgm");
-            bestLevel = SerializationUtility.DeserializeValue<int>(hiscore, DataFormat.Binary);
-        }
-
-        if (bestLevel < _data.Level) {
-            byte[] hiscore = SerializationUtility.SerializeValue(_data.Level, DataFormat.Binary);
-            File.WriteAllBytes(Application.persistentDataPath + "/highscore.sgm", hiscore);
-        }
     }
 
     private void Load() {
