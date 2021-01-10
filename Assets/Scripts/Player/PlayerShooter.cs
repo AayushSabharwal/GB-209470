@@ -22,6 +22,8 @@ public class PlayerShooter : Shooter, ISaveLoad
     private float punchForce = 3f;
     [SerializeField, FoldoutGroup("GUI")]
     private float punchDuration = 0.4f;
+    [SerializeField]
+    private AudioClip noReloadSound;
     [SerializeField, InlineEditor, ValidateInput("@enrage != null && enrage.itemName == \"Enrage\"")]
     private UpgradableShopItemData enrage;
     [SerializeField, PropertyRange(0f, 1f)]
@@ -75,8 +77,14 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public override void Shoot() {
+        if (AmmoData.RemainingAmmo == 0) {
+            Reload();
+            return;
+        }
         if (!AmmoData.CanShoot)
             return;
+        
+            
         base.Shoot();
         reloadProgress.fillAmount = AmmoData.RemainingAmmo / (float) gun.clipSize;
         UpdateUI();
@@ -99,7 +107,7 @@ public class PlayerShooter : Shooter, ISaveLoad
             if (!_canTween) return;
             _canTween = false;
             ammoTracker.DOPunchPosition(Vector3.right * punchForce, punchDuration).onComplete += () => _canTween = true;
-
+            AudioSource.PlayOneShot(noReloadSound);
             return;
         }
 

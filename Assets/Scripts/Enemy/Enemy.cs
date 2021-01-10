@@ -11,8 +11,9 @@ public class Enemy : MonoBehaviour
 {
     [InlineEditor]
     public EnemyData data;
-
-
+    [SerializeField]
+    private AudioClip deathSound;
+    
     private SpriteRenderer _spriteRenderer;
     private Health _health;
     private DropManager _dropManager;
@@ -160,6 +161,10 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        GameObject g = _objectPooler.Request("EnemyDeathFX");
+        g.transform.position = transform.position;
+        g.SetActive(true);
+        ReferenceManager.Inst.SfxAudio.PlayOneShot(deathSound);
         _objectPooler.Return(data.poolTag, gameObject);
     }
 }

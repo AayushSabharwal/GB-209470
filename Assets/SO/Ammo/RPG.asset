@@ -17,10 +17,10 @@ MonoBehaviour:
   poolTag: Ammo
   scale: {x: 0.5, y: 0.5, z: 1}
   colliderDimensions: {x: 2, y: 3.5}
-  lifetime: 5
+  lifetime: 999999
   value: 2
-  pickupSound: {fileID: 0}
-  pitch: 0
-  pitchVariance: 0
+  pickupSound: {fileID: 8300000, guid: 72a77d1c63b795249991e7184a5f00de, type: 3}
+  pitch: 1
+  pitchVariance: 0.05
   type: 3
   probabilityWeight: 0.7

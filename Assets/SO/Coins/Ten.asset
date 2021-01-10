@@ -17,7 +17,7 @@ MonoBehaviour:
   poolTag: Coin
   scale: {x: 0.2, y: 0.2, z: 1}
   colliderDimensions: {x: 2, y: 2}
-  lifetime: 5
+  lifetime: 999999
   value: 10
   pickupSound: {fileID: 8300000, guid: 8ae0a811968854849b124da1cb30ef23, type: 3}
   pitch: 2

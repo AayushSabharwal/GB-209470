@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4291657134414520097}
   - component: {fileID: 35920822931103662}
   - component: {fileID: 1274174538838177469}
-  - component: {fileID: 9054094138212409040}
   m_Layer: 5
   m_Name: InfoButtonShadow
   m_TagString: Untagged
@@ -74,60 +73,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9054094138212409040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13042277400231563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1274174538838177469}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2027360879137284396}
-        m_MethodName: Info
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &489302020684738947
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,11 +810,11 @@ MonoBehaviour:
   item: {fileID: 0}
   upgradeButton: {fileID: 2880502067732079211}
   costText: {fileID: 6724576576306796532}
-  costTextShadow: {fileID: 0}
   image: {fileID: 3664430749206588897}
   imageMaxDimensions: {x: 540, y: 240}
   titleText: {fileID: 3127266259488285046}
-  titleTextShadow: {fileID: 0}
+  cancelAudio: {fileID: 8300000, guid: e5d97104fe07ca64aaa9c21c97bb0b69, type: 3}
+  pressAudio: {fileID: 8300000, guid: 64190abf5a1f14449a6c25430fbb9b2c, type: 3}
 --- !u!1 &8975927759145431077
 GameObject:
   m_ObjectHideFlags: 0

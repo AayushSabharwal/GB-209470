@@ -17,14 +17,22 @@ public class AmmoShopItem : MonoBehaviour
     private Button buyButton;
     [SerializeField]
     private TextMeshProUGUI costText;
+    [SerializeField]
+    private TextMeshProUGUI ammoCounterText;
+    [SerializeField]
+    private AudioClip cancelAudio;
+    [SerializeField]
+    private AudioClip pressAudio;
 
     private int _purchasableAmmo;
     private ProgressManager _progressManager;
     private InfoDialog _infoDialog;
+    private AudioSource _audioSource;
 
     private void Awake() {
         _progressManager = ReferenceManager.Inst.ProgressManager;
         _infoDialog = ReferenceManager.Inst.InfoDialog;
+        _audioSource = ReferenceManager.Inst.SfxAudio;
     }
 
     private void Start() {
@@ -42,10 +50,15 @@ public class AmmoShopItem : MonoBehaviour
                       item.maxPurchaseAmount);
         costText.text = (item.costPerAmmo * _purchasableAmmo).ToString();
         buyButton.interactable = _purchasableAmmo > 0;
+        ammoCounterText.text = $"You have: {_progressManager.Data.Ammo[item.ammo.type].CurrentAmmo}";
     }
 
     public void Buy() {
-        if (!ReferenceManager.Inst.CurrencyManager.TrySubtractCurrency(_purchasableAmmo * item.costPerAmmo)) return;
+        if (!ReferenceManager.Inst.CurrencyManager.TrySubtractCurrency(_purchasableAmmo * item.costPerAmmo)) {
+            _audioSource.PlayOneShot(cancelAudio);
+            return;
+        }
+        _audioSource.PlayOneShot(pressAudio);
         _progressManager.Data.Ammo[item.ammo.type].CurrentAmmo += _purchasableAmmo;
         UpdateUI();
     }

@@ -21,13 +21,13 @@ public class Shooter : MonoBehaviour
 
     private float _shotTimer;
     private ObjectPooler _objectPooler;
-    private AudioSource _audioSource;
+    protected AudioSource AudioSource;
     protected bool IsPaused;
     protected bool IsPlayerDead;
 
     private void Awake() {
         _objectPooler = ReferenceManager.Inst.ObjectPooler;
-        _audioSource = GetComponent<AudioSource>();
+        AudioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Start() {
@@ -81,8 +81,8 @@ public class Shooter : MonoBehaviour
 
         Timing.RunCoroutine(MuzzleFlash());
         if (gun.hasAudio) {
-            _audioSource.pitch = gun.pitch + Random.Range(-gun.pitchVariation, gun.pitchVariation);
-            _audioSource.PlayOneShot(gun.shootSound);            
+            AudioSource.pitch = gun.pitch + Random.Range(-gun.pitchVariation, gun.pitchVariation);
+            AudioSource.PlayOneShot(gun.shootSound);            
         }
         
         _shotTimer = 1f / gun.fireRate;

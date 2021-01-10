@@ -37,6 +37,8 @@ public class ShopManager : MonoBehaviour, ISaveLoad
             else
                 equipSlots[i].color = new Color(0f, 0f, 0f, 0f);
         }
+        
+        AudioManager.Inst.ChangeAudio(AudioEvent.MainMenu, 1f);
     }
 
     public bool TryPurchaseGun(GunShopItemData gun) {

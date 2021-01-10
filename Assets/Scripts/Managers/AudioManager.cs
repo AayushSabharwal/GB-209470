@@ -30,12 +30,17 @@ public class AudioManager : MonoBehaviour
     private void Start() {
         foreach (BackgroundAudioOptions s in audioOptions) {
             mixer.SetFloat(s.volumeControl, -80f);
+            s.source.Stop();
         }
     }
 
     public void ChangeAudio(AudioEvent to, float duration) {
+        if (_currentClip == to) return;
+        
         if (_currentClip != AudioEvent.None) {
             StartCoroutine(StartFade(mixer, audioOptions[(int) _currentClip - 1].volumeControl, duration, 0f));
+            audioOptions[(int) to - 1].source.Stop();
+            audioOptions[(int) to - 1].source.Play();
             StartCoroutine(StartFade(mixer, audioOptions[(int) to - 1].volumeControl, duration,
                                      audioOptions[(int) to - 1].volume));
             _currentClip = to;
@@ -43,6 +48,8 @@ public class AudioManager : MonoBehaviour
         }
 
         mixer.SetFloat(audioOptions[(int) to - 1].volumeControl, Mathf.Log10(audioOptions[(int) to - 1].volume) * 20f);
+        audioOptions[(int) to - 1].source.Stop();
+        audioOptions[(int) to - 1].source.Play();
         _currentClip = to;
     }
 
@@ -76,4 +83,5 @@ public class BackgroundAudioOptions
     public string volumeControl;
     [PropertyRange(0.0001f, 1f)]
     public float volume;
+    public AudioSource source;
 }

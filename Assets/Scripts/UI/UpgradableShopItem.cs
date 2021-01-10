@@ -17,11 +17,17 @@ public class UpgradableShopItem : MonoBehaviour
     private Vector2 imageMaxDimensions;
     [SerializeField]
     private TextMeshProUGUI titleText;
+    [SerializeField]
+    private AudioClip cancelAudio;
+    [SerializeField]
+    private AudioClip pressAudio;
 
+    private AudioSource _audioSource;
     private InfoDialog _infoDialog;
 
     private void Awake() {
         _infoDialog = ReferenceManager.Inst.InfoDialog;
+        _audioSource = ReferenceManager.Inst.SfxAudio;
     }
 
     private void Start() {
@@ -46,7 +52,12 @@ public class UpgradableShopItem : MonoBehaviour
     }
 
     public void Upgrade() {
-        item.Upgrade();
+        if (!item.Upgrade()) {
+            _audioSource.PlayOneShot(cancelAudio);
+            return;
+        }
+
+        _audioSource.PlayOneShot(pressAudio);
         UpdateUI();
     }
 

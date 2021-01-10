@@ -19,15 +19,21 @@ public class GunShopItem : MonoBehaviour
     private TextMeshProUGUI costText;
     [SerializeField]
     private GameObject equipButton;
+    [SerializeField]
+    private AudioClip cancelAudio;
+    [SerializeField]
+    private AudioClip pressAudio;
     
     private EquipGunDialog _equipGunDialog;
     private InfoDialog _infoDialog;
     private ShopManager _shopManager;
+    private AudioSource _audioSource;
 
     private void Awake() {
         _shopManager = ReferenceManager.Inst.ShopManager;
         _equipGunDialog = ReferenceManager.Inst.EquipGunDialog;
         _infoDialog = ReferenceManager.Inst.InfoDialog;
+        _audioSource = ReferenceManager.Inst.SfxAudio;
         
         _shopManager.OnGunShopItemUpdateUI += UpdateUI;
     }
@@ -48,7 +54,11 @@ public class GunShopItem : MonoBehaviour
     }
 
     public void Buy() {
-        if (!_shopManager.TryPurchaseGun(item)) return;
+        if (!_shopManager.TryPurchaseGun(item)) {
+            _audioSource.PlayOneShot(cancelAudio);
+            return;
+        }
+        _audioSource.PlayOneShot(pressAudio);
         buyButton.SetActive(false);
         equipButton.SetActive(true);
     }
