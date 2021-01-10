@@ -13931,12 +13931,12 @@ MonoBehaviour:
     ammo:
     - type: 0
       tracker:
-        CurrentAmmo: 24
-        MaxAmmo: 120
+        CurrentAmmo: 30
+        MaxAmmo: 72
     - type: 1
       tracker:
         CurrentAmmo: 60
-        MaxAmmo: 240
+        MaxAmmo: 180
     - type: 2
       tracker:
         CurrentAmmo: 16
@@ -13944,15 +13944,15 @@ MonoBehaviour:
     - type: 3
       tracker:
         CurrentAmmo: 6
-        MaxAmmo: 30
+        MaxAmmo: 40
     - type: 4
       tracker:
         CurrentAmmo: 60
-        MaxAmmo: 240
+        MaxAmmo: 180
     equippedGuns:
     - {fileID: 11400000, guid: 3e33a2e707e1edd49bd324c638e9f72a, type: 2}
-    - {fileID: 11400000, guid: 21461e4c047fae245940aae8f19d79e2, type: 2}
-    - {fileID: 11400000, guid: 0786d40f7f16707489a0e37fc98143b6, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
     allGuns:
     - gun: {fileID: 11400000, guid: 893f711e23869e8419b163e1f40600dc, type: 2}
       isOwned: 0
