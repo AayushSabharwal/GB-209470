@@ -14,6 +14,8 @@ public class ShopManager : MonoBehaviour, ISaveLoad
     [ShowInInspector, ReadOnly]
     private GunData[] _equippedGuns;
     [SerializeField]
+    private List<AmmoDropData> ammoMap;
+    [SerializeField]
     private Image[] equipSlots;
     [SerializeField]
     private Vector2 slotImageMaxDimensions;
@@ -82,8 +84,13 @@ public class ShopManager : MonoBehaviour, ISaveLoad
         ReferenceManager.Inst.ProgressManager.Save();
         SceneManager.LoadSceneAsync(menuBuildIndex);
     }
-    
-    public void Save() { }
+
+    public void Save() {
+        ReferenceManager.Inst.ProgressManager.Data.DroppableAmmo = new List<AmmoDropData>();
+        foreach(GunData g in ReferenceManager.Inst.ProgressManager.Data.EquippedGuns)
+            if(g != null)
+                ReferenceManager.Inst.ProgressManager.Data.DroppableAmmo.Add(ammoMap[(int) g.ammoType]);
+    }
 
     public void Load() {
         _equippedGuns = ReferenceManager.Inst.ProgressManager.Data.EquippedGuns;

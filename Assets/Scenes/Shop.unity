@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -13012,6 +13012,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equippableGuns: 3
+  ammoMap:
+  - {fileID: 11400000, guid: b9874d80ef54d2446882514aec3b41d9, type: 2}
+  - {fileID: 11400000, guid: 179e72533f6f76f4ca6966358426efdf, type: 2}
+  - {fileID: 11400000, guid: f18594f86bff8814eb2c72e68b452941, type: 2}
+  - {fileID: 11400000, guid: fbbe3613dbdeeeb46bef7cc9aeebec8a, type: 2}
+  - {fileID: 11400000, guid: 825de9f2f9acee74186e56ad0f64396d, type: 2}
   equipSlots:
   - {fileID: 756326636}
   - {fileID: 2095611884}
@@ -13968,7 +13974,7 @@ MonoBehaviour:
     - name: Shield
       level: 0
     currency: 0
-    level: 2
+    level: 0
 --- !u!1001 &2703258898140988797
 PrefabInstance:
   m_ObjectHideFlags: 0
