@@ -14,13 +14,9 @@ public class AmmoShopItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI itemName;
     [SerializeField]
-    private TextMeshProUGUI itemNameShadow;
-    [SerializeField]
     private Button buyButton;
     [SerializeField]
     private TextMeshProUGUI costText;
-    [SerializeField]
-    private TextMeshProUGUI costTextShadow;
 
     private int _purchasableAmmo;
     private ProgressManager _progressManager;
@@ -37,7 +33,6 @@ public class AmmoShopItem : MonoBehaviour
         Vector2 factor = new Vector2(imageMaxDimensions.x / image.rectTransform.sizeDelta.x, imageMaxDimensions.y / image.rectTransform.sizeDelta.y);
         image.rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         itemName.text = item.displayName;
-        itemNameShadow.text = itemName.text;
         UpdateUI();
     }
 
@@ -46,7 +41,6 @@ public class AmmoShopItem : MonoBehaviour
             Mathf.Min(_progressManager.Data.Ammo[item.ammo.type].MaxAmmo - _progressManager.Data.Ammo[item.ammo.type].CurrentAmmo,
                       item.maxPurchaseAmount);
         costText.text = (item.costPerAmmo * _purchasableAmmo).ToString();
-        costTextShadow.text = costText.text;
         buyButton.interactable = _purchasableAmmo > 0;
     }
 

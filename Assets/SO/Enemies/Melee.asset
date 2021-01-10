@@ -28,7 +28,7 @@ MonoBehaviour:
   isRanged: 0
   gun: {fileID: 0}
   shootPointPosition: {x: 0, y: 0, z: 0}
-  coinsToDrop: {x: 15, y: 22}
-  ammoDropChance: 0.7
-  ammoDropCount: {x: 1, y: 6}
+  coinsToDrop: {x: 17, y: 28}
+  ammoDropChance: 0.5
+  ammoDropCount: {x: 3, y: 6}
   scatterRadius: {x: 1.7957747, y: 3.1338027}

@@ -14,8 +14,6 @@ public class PlayerShooter : Shooter, ISaveLoad
     private int defaultGun;
     [SerializeField]
     private TextMeshProUGUI ammoText;
-    [SerializeField]
-    private TextMeshProUGUI shadowText;
     [SerializeField, FoldoutGroup("GUI")]
     private Image reloadProgress;
     [SerializeField, FoldoutGroup("GUI")]
@@ -94,7 +92,6 @@ public class PlayerShooter : Shooter, ISaveLoad
     private void UpdateUI() {
         ammoText.text =
             $"{AmmoData.RemainingAmmo}/{(!gun.isInfiniteAmmo ? _ammo[gun.ammoType].CurrentAmmo.ToString() : "\u221E")}";
-        shadowText.text = ammoText.text;
     }
 
     public void Reload() {
@@ -124,12 +121,7 @@ public class PlayerShooter : Shooter, ISaveLoad
     }
 
     public void AddAmmo(AmmoType type, int amount) {
-        print($"BEFORE {_ammo[type].CurrentAmmo} {amount} {_ammo[type].MaxAmmo} {type.ToString()}");
-        // _ammo[type].CurrentAmmo = Mathf.Min(_ammo[type].CurrentAmmo + amount, _ammo[type].MaxAmmo);
-        _ammo[type].CurrentAmmo += amount;
-        print($"AFTER {_ammo[type].CurrentAmmo}");
-        if (_ammo[type].CurrentAmmo > _ammo[type].MaxAmmo)
-            _ammo[type].CurrentAmmo = _ammo[type].MaxAmmo;
+        _ammo[type].CurrentAmmo = Mathf.Min(_ammo[type].CurrentAmmo + amount, _ammo[type].MaxAmmo);
         UpdateUI();
     }
 

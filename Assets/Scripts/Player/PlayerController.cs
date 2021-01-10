@@ -58,12 +58,9 @@ public class PlayerController : MonoBehaviour
         if (_input.Shoot.sqrMagnitude >= stickDeadzone * stickDeadzone) {
             transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(_input.Shoot.y, _input.Shoot.x) * Mathf.Rad2Deg,
                                                       Vector3.forward);
+            if (_input.Shoot.sqrMagnitude >= shootDeadzone * shootDeadzone)
+                _shooter.Shoot();
         }
-    }
-
-    private void LateUpdate() {
-        if (_input.Shoot.sqrMagnitude >= shootDeadzone * shootDeadzone)
-            _shooter.Shoot();
     }
 
     private void FixedUpdate() {

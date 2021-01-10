@@ -14,13 +14,9 @@ public class GunShopItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI itemName;
     [SerializeField]
-    private TextMeshProUGUI itemNameShadow;
-    [SerializeField]
     private GameObject buyButton;
     [SerializeField]
     private TextMeshProUGUI costText;
-    [SerializeField]
-    private TextMeshProUGUI costTextShadow;
     [SerializeField]
     private GameObject equipButton;
     
@@ -42,15 +38,12 @@ public class GunShopItem : MonoBehaviour
         Vector2 factor = new Vector2(imageMaxDimensions.x / image.rectTransform.sizeDelta.x, imageMaxDimensions.y / image.rectTransform.sizeDelta.y);
         image.rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         itemName.text = item.displayName;
-        itemNameShadow.text = itemName.text;
         costText.text = item.cost.ToString();
-        costTextShadow.text = costText.text;
     }
 
     private void UpdateUI() {
         buyButton.SetActive(!_shopManager.IsOwned(item));
         costText.gameObject.SetActive(buyButton.activeSelf);
-        costTextShadow.gameObject.SetActive(costText.gameObject.activeSelf);
         equipButton.SetActive(_shopManager.IsOwned(item) && !_shopManager.IsEquipped(item.gun));
     }
 

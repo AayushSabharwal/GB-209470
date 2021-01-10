@@ -16,7 +16,7 @@ MonoBehaviour:
   poolTag: ProjectileBullet
   childProjectiles: []
   isProjectile: 1
-  speed: 6
+  speed: 7
   lifetime: 2
   scale: {x: 0.2, y: 0.2, z: 1}
   sprite: {fileID: 21300000, guid: 7c6342355da8d5c45884c6a2e7e9110e, type: 3}

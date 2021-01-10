@@ -1,5 +1,8 @@
 ﻿using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,6 +23,12 @@ public class UIManager : MonoBehaviour
     private RectTransform levelOverSidebar;
     [SerializeField, BoxGroup("UI References")]
     private Image[] gunSlots;
+    [SerializeField, BoxGroup("UI References")]
+    private Image storyPanel;
+    [SerializeField, BoxGroup("UI References")]
+    private RectTransform storyText;
+    [SerializeField, BoxGroup("UI References")]
+    private GameObject skipButton;
     [SerializeField]
     private Vector2 gunSlotMaxDimensions;
     [SerializeField, BoxGroup("Scenes")]
@@ -28,11 +37,16 @@ public class UIManager : MonoBehaviour
     private int mainMenuBuildIndex;
     [SerializeField, BoxGroup("Configuration")]
     private float sidepanelAnimDuration = 0.8f;
+    [SerializeField, BoxGroup("Configuration")]
+    private float storyDuration;
+    [SerializeField, BoxGroup("Configuration")]
+    private float fadeDuration;
 
     public delegate void OnPauseDelegate(bool isPaused);
 
     public event OnPauseDelegate OnPause;
     private bool _isPaused;
+    private Sequence _storySequence;
 
     private void Awake() {
         _isPaused = false;
@@ -58,6 +72,32 @@ public class UIManager : MonoBehaviour
                 gunSlots[i].rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
             }
         }
+
+        if (ReferenceManager.Inst.ProgressManager.Data.Level == 0) {
+            Pause();
+            pauseScreen.SetActive(false);
+            storyPanel.gameObject.SetActive(true);
+            skipButton.SetActive(false);
+            storyText.anchoredPosition = new Vector2(0f, -Screen.height);
+            storyPanel.color = new Color(0f, 0f, 0f, 0f);
+            Tween fadeInTween = storyPanel.DOColor(new Color(0f, 0f, 0f, 0.58f), fadeDuration).SetEase(Ease.Linear)
+                                          .OnComplete(() => skipButton.SetActive(true))
+                                          .Pause();
+            Tween storyTween = storyText.DOAnchorPosY(4557f, storyDuration).SetEase(Ease.Linear)
+                                        .OnComplete(() => skipButton.SetActive(false))
+                                        .Pause();
+            Tween fadeOutTween = storyPanel.DOColor(new Color(0f, 0f, 0f, 0f), fadeDuration).SetEase(Ease.Linear)
+                                           .Pause();
+            _storySequence = DOTween.Sequence()
+                                    .Append(fadeInTween)
+                                    .Append(storyTween)
+                                    .Append(fadeOutTween)
+                                    .Play()
+                                    .OnComplete(() => {
+                                                    Pause();
+                                                    storyPanel.gameObject.SetActive(false);
+                                                });
+        }
     }
 
     public void Pause() {
@@ -77,6 +117,12 @@ public class UIManager : MonoBehaviour
                                                                                                      pauseScreen
                                                                                                          .SetActive(_isPaused);
                                                                                                  };
+    }
+
+    public void SkipStory() {
+        if (_storySequence != null && _storySequence.IsPlaying()) {
+            _storySequence.Kill(true);
+        }
     }
 
     public void Restart() {

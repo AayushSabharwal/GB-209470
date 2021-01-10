@@ -12,15 +12,11 @@ public class UpgradableShopItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI costText;
     [SerializeField]
-    private TextMeshProUGUI costTextShadow;
-    [SerializeField]
     private Image image;
     [SerializeField]
     private Vector2 imageMaxDimensions;
     [SerializeField]
     private TextMeshProUGUI titleText;
-    [SerializeField]
-    private TextMeshProUGUI titleTextShadow;
 
     private InfoDialog _infoDialog;
 
@@ -35,18 +31,15 @@ public class UpgradableShopItem : MonoBehaviour
         image.rectTransform.sizeDelta *= Mathf.Min(factor.x, factor.y);
         
         titleText.text = item.itemName;
-        titleTextShadow.text = titleText.text;
         UpdateUI();
     }
 
     private void UpdateUI() {
         if (item.IsUpgradable) {
             costText.text = item.effectiveness[item.Level + 1].cost.ToString();
-            costTextShadow.text = costText.text;
         }
         else {
             costText.gameObject.SetActive(false);
-            costTextShadow.gameObject.SetActive(false);
             upgradeButton.gameObject.SetActive(false);
         }
             

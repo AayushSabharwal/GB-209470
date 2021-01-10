@@ -30,5 +30,5 @@ MonoBehaviour:
   shootPointPosition: {x: 0.6, y: 1.88, z: 0}
   coinsToDrop: {x: 15, y: 30}
   ammoDropChance: 0.8
-  ammoDropCount: {x: 3, y: 6}
+  ammoDropCount: {x: 2, y: 4}
   scatterRadius: {x: 1.7957747, y: 3.1338027}
